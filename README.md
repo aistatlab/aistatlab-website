@@ -4,11 +4,11 @@ Official website draft for the Artificial Intelligence & Statistics Lab at Chung
 
 ## Quick deployment (GitHub Pages)
 
-1. Sign in to GitHub as `changwon-lim`.
+1. Sign in to GitHub as `ngbslab`.
 2. Create a **Public** repository named `aistatlab-website` at https://github.com/new . Initialize it with a README if asked.
 3. Select **Add file → Upload files** and upload the contents of this folder, preserving `assets/` and `data/` subdirectories. A local Git client is more reliable for uploading the full folder structure; an alternative is to upload `index.html` and the two directories using the browser folder drag-and-drop function. Commit directly to `main`.
 4. Open **Settings → Pages**, select **Deploy from a branch**, `main`, and `/ (root)`, then Save.
-5. When publishing finishes, open https://changwon-lim.github.io/aistatlab-website/ . The domain and path only work if the repository was created with the proposed account and name.
+5. When publishing finishes, open https://ngbslab.github.io/aistatlab-website/ . The domain and path only work if the repository was created with the proposed account and name.
 
 ## Update
 
