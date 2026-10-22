@@ -1,0 +1,8 @@
+body.memory-viewer-open{overflow:hidden}
+.memory-viewer{width:fit-content;max-width:calc(100vw - 32px);max-height:calc(100dvh - 40px);padding:42px 16px 16px;border:0;border-radius:14px;background:#fff;color:var(--ink);box-shadow:0 24px 80px #0005}
+.memory-viewer::backdrop{background:#07152bb3}
+.memory-viewer figure{margin:0}
+.memory-viewer img{display:block;width:auto;height:auto;max-width:min(760px,calc(100vw - 64px));max-height:65dvh;object-fit:contain;margin:auto;border-radius:6px}
+.memory-viewer figcaption{max-width:760px;margin:12px 0 0;text-align:center;font-size:13px;line-height:1.5;color:var(--muted)}
+.memory-viewer-close{position:absolute;right:10px;top:5px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;color:var(--ink);font-size:28px;cursor:pointer}
+.memory-viewer-close:hover{background:var(--pale)}
