@@ -10,7 +10,7 @@ function renderOther(){
  const members=Array.isArray(content.members)?content.members:[],projects=Array.isArray(content.projects)?content.projects:[],news=Array.isArray(content.news)?content.news:[];
  const roles=[['PhD',lang==='ko'?'박사과정':'PhD Researchers'],['Master',lang==='ko'?'석사과정':'Master’s Researchers'],['Researcher',lang==='ko'?'연구원':'Research Staff'],['Undergraduate',lang==='ko'?'학부연구생':'Undergraduate Researchers']];
  $('#memberCount').textContent=`${members.length} ${tr[lang].memberCount}`;
- $('#memberResults').innerHTML=members.length?roles.map(([role,label])=>{const people=members.filter(x=>x.role===role);return !people.length?'':`<section class="member-group"><div class="group-heading"><h3>${esc(label)}</h3><span>${people.length}</span></div><div class="member-cards">${people.map(m=>`<article class="member-card"><div class="member-initial" aria-hidden="true">${esc(m.name.slice(0,1))}</div><div><h4>${esc(m.name)}</h4><p>${esc(m.area)}</p></div></article>`).join('')}</div></section>`}).join(''):empty(tr[lang].emptyMembers);
+ $('#memberResults').innerHTML=members.length?roles.map(([role,label])=>{const people=members.filter(x=>x.role===role);return !people.length?'':`<section class="member-group"><div class="group-heading"><h3>${esc(label)}</h3><span>${people.length}</span></div><div class="member-cards">${people.map(m=>`<article class="member-card">${m.image?`<img class="member-photo" src="${esc(m.image)}" alt="${esc(m.name)}" width="64" height="64" loading="lazy">`:`<div class="member-initial" aria-hidden="true">${esc(m.name.slice(0,1))}</div>`}<div class="member-details"><h4>${esc(m.name)}</h4><p>${esc(m.area)}</p>${m.email?`<a class="text-link member-email" href="mailto:${esc(m.email)}">${esc(m.email)} ↗</a>`:''}</div></article>`).join('')}</div></section>`}).join(''):empty(tr[lang].emptyMembers);
  $('#projectResults').innerHTML=projects.length?projects.map(p=>`<article class="project-card"><span class="num">${esc((p.tags||[]).join(' · '))}</span><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>${safeUrl(p.url)?`<a href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">${lang==='ko'?'과제 정보 ↗':'Details ↗'}</a>`:''}</article>`).join(''):empty(tr[lang].emptyProjects);
  $('#newsResults').innerHTML=news.length?news.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(n=>`<article class="news-item"><time>${esc(n.date)}</time><div>${safeUrl(n.url)?`<a href="${esc(n.url)}" target="_blank" rel="noopener noreferrer">${esc(n[lang]||n.en)} <span class="news-arrow">↗</span></a>`:esc(n[lang]||n.en)}</div></article>`).join(''):empty(tr[lang].emptyNews)
 }
@@ -18,7 +18,7 @@ const memoryEntries=Array.isArray(window.LAB_MEMORY)?window.LAB_MEMORY:[];
 let memoryYear='all';
 const memoryNames={conference:{en:'Conference',ko:'학회'},outing:{en:'Lab outing',ko:'연구실 야외활동'},graduation:{en:'Graduation',ko:'졸업식'},gathering:{en:'Gathering',ko:'연구실 모임'},workshop:{en:'Workshop',ko:'워크숍'}};
 const memorySymbols={conference:'✳',outing:'⌁',graduation:'✦',gathering:'♡',workshop:'◈'};
-function memoryImage(src){return /^assets\/img\/memory\/[A-Za-z0-9_./-]+\.(?:jpg|jpeg|png|webp)$/i.test(src||'')?src:null}
+function memoryImage(src){return /^assets\/img\/memory\/[A-Za-z0-9_가-힣./-]+\.(?:jpg|jpeg|png|webp)$/i.test(src||'')?src:null}
 function renderMemory(){
  const years=[...new Set(memoryEntries.map(m=>m.date.slice(0,4)))].sort((a,b)=>b.localeCompare(a));
  const yearsEl=$('#memoryYears');
@@ -27,9 +27,12 @@ function renderMemory(){
  $('#memoryCount').textContent=`${matching.length} ${tr[lang].memoryEvents}`;
  $('#memoryResults').innerHTML=matching.map((m,i)=>{
    const cat=memoryNames[m.category]||memoryNames.gathering;
-   const im=memoryImage(m.image);
+   const photos=(m.images||[m.image]).map(memoryImage).filter(Boolean);
+   const im=memoryImage(m.image)||photos[0];
+   const photoLink=im||'https://sites.google.com/view/aistatlab/activity/memory';
+   const gallery=photos.length?`<details class="memory-album"><summary>${lang==='ko'?'사진 보기':'View photos'} (${photos.length})</summary><div class="memory-thumbnails">${photos.map((src,index)=>`<a href="${esc(src)}" target="_blank" rel="noopener noreferrer"><img src="${esc(src)}" alt="${esc(m[lang])} · ${index+1}" loading="lazy"></a>`).join('')}</div></details>`:'';
    const imgmarkup=im?`<img src="${esc(im)}" loading="lazy" alt="${esc(m[lang])}" onerror="this.hidden=true;this.parentNode.classList.add('memory-missing-photo')">`:`<div class="memory-symbol" aria-hidden="true">${memorySymbols[m.category]||'✦'}</div><span class="memory-photo-pending">${lang==='ko'?'사진은 기존 갤러리에서 보기':'Photos in original gallery'}</span>`;
-   return `<article class="memory-card"><a class="memory-visual memory-visual-${esc(m.category)}" href="https://sites.google.com/view/aistatlab/activity/memory" target="_blank" rel="noopener noreferrer" aria-label="${esc(m[lang])}: ${lang==='ko'?'기존 사진 보기':'See original photos'}">${imgmarkup}<span class="memory-year-overlay">${esc(m.date.slice(0,4))}</span></a><div class="memory-card-body"><span class="memory-category">${esc(cat[lang])}</span><h3>${esc(m[lang])}</h3><div class="memory-card-bottom"><time datetime="${esc(m.date)}">${esc(m.date.replaceAll('-','. '))}</time><a href="https://sites.google.com/view/aistatlab/activity/memory" target="_blank" rel="noopener noreferrer" aria-label="${esc(m[lang])}: original album">↗</a></div></div></article>`;
+   return `<article class="memory-card"><a class="memory-visual memory-visual-${esc(m.category)}" href="${esc(photoLink)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(m[lang])}: ${lang==='ko'?'사진 보기':'View photo'}">${imgmarkup}<span class="memory-year-overlay">${esc(m.date.slice(0,4))}</span></a><div class="memory-card-body"><span class="memory-category">${esc(cat[lang])}</span><h3>${esc(m[lang])}</h3><div class="memory-card-bottom"><time datetime="${esc(m.date)}">${esc(m.date.replaceAll('-','. '))}</time><a href="${esc(photoLink)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(m[lang])}: photo">↗</a></div>${gallery}</div></article>`;
  }).join('');
  yearsEl.querySelectorAll('[data-memory-year]').forEach(b=>b.addEventListener('click',()=>{memoryYear=b.dataset.memoryYear;renderMemory()}));
 }
@@ -59,7 +62,8 @@ function renderAlumni(){
   const degreeNote=p.remark==='postdoc'?a.alumniPostdoc:p.remark==='external_phd'?a.alumniExternalPhD:p.category==='former'?a.alumniFormerTag:a.alumniGraduated;
   const current=p.remark==='current'?`<span class="alumni-tag alumni-tag-current">${esc(a.alumniCurrent)}</span>`:'';
   const thesis=p.thesis?`<p class="alumni-thesis"><strong>${esc(a.alumniThesis)} · </strong>${esc(p.thesis)}</p>`:'';
-  return `<article class="alumni-card"><div class="alumni-card-head"><h5>${esc(p.name)}</h5><span class="alumni-date">${esc(dt)}</span></div><div class="alumni-card-tags"><span class="alumni-tag">${esc(degreeNote)}</span>${current}</div>${thesis}</article>`;
+  const email=p.email?`<a class="text-link alumni-email" href="mailto:${esc(p.email)}">${esc(p.email)} ↗</a>`:'';
+  return `<article class="alumni-card"><div class="alumni-card-head"><div class="alumni-identity">${p.image?`<img class="alumni-photo" src="${esc(p.image)}" alt="${esc(p.name)}" width="56" height="56" loading="lazy">`:``}<h5>${esc(p.name)}</h5></div><span class="alumni-date">${esc(dt)}</span></div><div class="alumni-card-tags"><span class="alumni-tag">${esc(degreeNote)}</span>${current}</div>${email}${thesis}</article>`;
  };
  const limit=(alumniExpanded||query||alumniYear!=='all')?grads.length:12;
  $('#alumniResults').innerHTML=grads.length?grads.slice(0,limit).map(makeCard).join(''):`<div class="alumni-empty">${esc(a.alumniNone)}</div>`;
