@@ -1,31 +1,7 @@
 // Year-only dates have no confirmed month/day.
 window.LAB_MEMORY = [
   {
-    "date": "2026-07-02",
-    "category": "conference",
-    "en": "2026 Summer Meeting of the Korean Statistical Society",
-    "ko": "2026 하계 한국통계학회",
-    "image": "assets/img/memory/2026통계학회_4.jpg",
-    "images": [
-      "assets/img/memory/2026통계학회_1.jpg",
-      "assets/img/memory/2026통계학회_2.jpg",
-      "assets/img/memory/2026통계학회_3.jpg",
-      "assets/img/memory/2026통계학회_4.jpg"
-    ]
-  },
-  {
-    "date": "2026-02-13",
-    "category": "graduation",
-    "en": "Graduation Ceremony",
-    "ko": "졸업식",
-    "image": "assets/img/memory/2026_1_졸업식_1.jpg",
-    "images": [
-      "assets/img/memory/2026_1_졸업식_1.jpg",
-      "assets/img/memory/2026_1_졸업식_2.jpg"
-    ]
-  },
-  {
-    "date": "2026",
+    "date": "2026-09-23",
     "category": "conference",
     "en": "2026 CLEF Conference",
     "ko": "2026 CLEF 학회",
@@ -36,7 +12,7 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2026",
+    "date": "2026-09-09",
     "category": "conference",
     "en": "2026 ECCV Conference",
     "ko": "2026 ECCV 학회",
@@ -47,17 +23,7 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2026",
-    "category": "graduation",
-    "en": "2026 Graduation Ceremony (2)",
-    "ko": "2026 졸업식 (2)",
-    "image": "assets/img/memory/2026_2_졸업식_1.jpg",
-    "images": [
-      "assets/img/memory/2026_2_졸업식_1.jpg"
-    ]
-  },
-  {
-    "date": "2026",
+    "date": "2026-08-24",
     "category": "conference",
     "en": "2026 Korean Data Mining Conference",
     "ko": "2026 한국데이터마이닝학회",
@@ -76,7 +42,40 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2026",
+    "date": "2026-08-22",
+    "category": "graduation",
+    "en": "2026 Graduation Ceremony (2)",
+    "ko": "2026 졸업식 (2)",
+    "image": "assets/img/memory/2026_2_졸업식_1.jpg",
+    "images": [
+      "assets/img/memory/2026_2_졸업식_1.jpg"
+    ]
+  },
+  {
+    "date": "2026-07-02",
+    "category": "conference",
+    "en": "2026 Summer Meeting of the Korean Statistical Society",
+    "ko": "2026 하계 한국통계학회",
+    "image": "assets/img/memory/2026통계학회_4.jpg",
+    "images": [
+      "assets/img/memory/2026통계학회_1.jpg",
+      "assets/img/memory/2026통계학회_2.jpg",
+      "assets/img/memory/2026통계학회_3.jpg",
+      "assets/img/memory/2026통계학회_4.jpg"
+    ]
+  },
+  {
+    "date": "2026-05-15",
+    "category": "conference",
+    "en": "2026 Korean Data and Information Science Society Meeting",
+    "ko": "2026 한국데이터정보과학회",
+    "image": "assets/img/memory/2026한국데이터정보과학회.jpg",
+    "images": [
+      "assets/img/memory/2026한국데이터정보과학회.jpg"
+    ]
+  },
+  {
+    "date": "2026-05-13",
     "category": "gathering",
     "en": "2026 Teachers Day",
     "ko": "2026 스승의 날",
@@ -86,13 +85,14 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2026",
-    "category": "conference",
-    "en": "2026 Korean Data and Information Science Society Meeting",
-    "ko": "2026 한국데이터정보과학회",
-    "image": "assets/img/memory/2026한국데이터정보과학회.jpg",
+    "date": "2026-02-13",
+    "category": "graduation",
+    "en": "Graduation Ceremony",
+    "ko": "졸업식",
+    "image": "assets/img/memory/2026_1_졸업식_1.jpg",
     "images": [
-      "assets/img/memory/2026한국데이터정보과학회.jpg"
+      "assets/img/memory/2026_1_졸업식_1.jpg",
+      "assets/img/memory/2026_1_졸업식_2.jpg"
     ]
   },
   {
@@ -118,7 +118,7 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2025",
+    "date": "2025-08-28",
     "category": "conference",
     "en": "2025 Korean Data Mining Conference",
     "ko": "2025 한국데이터마이닝학회",
@@ -136,7 +136,7 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2025",
+    "date": "2025-05-15",
     "category": "gathering",
     "en": "2025 Teachers Day",
     "ko": "2025 스승의 날",
@@ -168,7 +168,7 @@ window.LAB_MEMORY = [
     ]
   },
   {
-    "date": "2024",
+    "date": "2024-05-15",
     "category": "gathering",
     "en": "2024 Teachers Day",
     "ko": "2024 스승의 날",
