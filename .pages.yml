@@ -1,0 +1,90 @@
+# AI Stat Lab Research Blog - collaborative Pages CMS editor configuration
+# https://app.pagescms.org
+# This file configures editorial fields. Sign-in and invitations are managed in Pages CMS.
+media:
+  input: assets/img/blog
+  output: assets/img/blog
+  rename: safe
+  extensions: [png, jpg, jpeg, webp, gif]
+
+content:
+  - name: posts
+    label: Lab Blog Posts
+    type: collection
+    path: content/blog
+    format: yaml-frontmatter
+    filename: "{year}-{month}-{day}-{fields.url_slug}.md"
+    view:
+      fields: [title, date, author, category, language, published]
+      primary: title
+      sort: [date, title]
+      search: [title, author, summary]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: url_slug
+        label: URL identifier (English, a-z / 0-9 / hyphens)
+        type: string
+        required: true
+        pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        description: "Example: audio-research-notes. Used for the stable public URL."
+      - name: title
+        label: Post title / 글 제목
+        type: string
+        required: true
+      - name: date
+        label: Publication date / 작성일
+        type: date
+        required: true
+      - name: author
+        label: Author(s) / 작성자
+        type: string
+        required: true
+        default: AI Stat Lab
+      - name: language
+        label: Post language / 글 언어
+        type: select
+        default: ko
+        options:
+          values:
+            - name: ko
+              label: 한국어 (Korean)
+            - name: en
+              label: English
+      - name: category
+        label: Topic / 카테고리
+        type: select
+        default: Research Insights
+        options:
+          values:
+            - Research Insights
+            - Technical Notes
+            - Lab Stories
+            - Tutorials
+      - name: summary
+        label: Short summary / 요약
+        type: text
+        required: true
+        options:
+          maxlength: 360
+      - name: cover
+        label: Cover image / 대표 이미지
+        type: image
+      - name: published
+        label: Published / 공개 여부 (OFF = draft)
+        type: boolean
+        default: false
+        description: "OFF hides the article from the website, but a public GitHub repository still exposes the draft source. Never put confidential materials in drafts."
+      - name: body
+        label: Article body / 본문
+        type: rich-text
+        required: true
+        options:
+          format: markdown
+          switcher: true
+          rename: safe
+settings:
+  content:
+    merge: true
+    
