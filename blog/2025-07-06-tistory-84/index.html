@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="이 논문은 대규모 언어 모델(LLM)의 사전 훈련 과정에서 발생하는 천문학적인 계산 비용(8비트 가중치 하나당 10^13~10^15 FLOPs) 문제를 해결하고자 하는 강력한 동기에서 출발합니다. 기존에는 LLM의 기능을 확장하거나 특정 작업에 적응시키기 위해 경사 기반 미세 조정(gradient-based fine-tuning)이나 RLHF(Reinforcement Learning from Human Feedback)와 같은 방법들이 사용되었는데, 이들은 매우">
+<meta property="og:type" content="article"><meta property="og:title" content="&quot;Assembly of Experts: Linear-time construction of the Chimera LLM variants with emergent and adaptable behaviors&quot; 리뷰">
+<meta property="og:description" content="이 논문은 대규모 언어 모델(LLM)의 사전 훈련 과정에서 발생하는 천문학적인 계산 비용(8비트 가중치 하나당 10^13~10^15 FLOPs) 문제를 해결하고자 하는 강력한 동기에서 출발합니다. 기존에는 LLM의 기능을 확장하거나 특정 작업에 적응시키기 위해 경사 기반 미세 조정(gradient-based fine-tuning)이나 RLHF(Reinforcement Learning from Human Feedback)와 같은 방법들이 사용되었는데, 이들은 매우">
+<title>&quot;Assembly of Experts: Linear-time construction of the Chimera LLM variants with emergent and adaptable behaviors&quot; 리뷰 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Paper Review</a>
+<div class="article-meta"><time datetime="2025-07-06">2025-07-06</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>&quot;Assembly of Experts: Linear-time construction of the Chimera LLM variants with emergent and adaptable behaviors&quot; 리뷰</h1>
+<p class="article-lead">이 논문은 대규모 언어 모델(LLM)의 사전 훈련 과정에서 발생하는 천문학적인 계산 비용(8비트 가중치 하나당 10^13~10^15 FLOPs) 문제를 해결하고자 하는 강력한 동기에서 출발합니다. 기존에는 LLM의 기능을 확장하거나 특정 작업에 적응시키기 위해 경사 기반 미세 조정(gradient-based fine-tuning)이나 RLHF(Reinforcement Learning from Human Feedback)와 같은 방법들이 사용되었는데, 이들은 매우</p>
+
+<div class="blog-prose"><p>이 논문은 대규모 언어 모델(LLM)의 사전 훈련 과정에서 발생하는 <strong>천문학적인 계산 비용(8비트 가중치 하나당 10^13~10^15 FLOPs)</strong> 문제를 해결하고자 하는 강력한 동기에서 출발합니다. 기존에는 LLM의 기능을 확장하거나 특정 작업에 적응시키기 위해 경사 기반 미세 조정(gradient-based fine-tuning)이나 RLHF(Reinforcement Learning from Human Feedback)와 같은 방법들이 사용되었는데, 이들은 매우 효과적이지만 <strong>엄청난 계산 비용과 방대한 훈련 데이터를 요구</strong>합니다. 이 연구는 이러한 비용이 많이 드는 패러다임을 **&quot;Assembly-of-Experts&quot; (AoE)**라는 새로운 모델 구성 방법을 통해 혁신하고자 합니다. AoE는 부모 모델의 파라미터를 선택하거나 보간(interpolation)함으로써 새로운 자식 모델을 <strong>선형 시간(linear time)</strong> 내에 구축하는 경량화된 접근 방식입니다.</p>
+<h3>Assembly-of-Experts (AoE) 방법론의 상세 설명</h3>
+<p>AoE는 여러 부모 모델의 파라미터(가중치 텐서)를 병합하여 새로운 모델을 구성하는 방법입니다. 이 방법은 특히 <strong>MoE(Mixture-of-Experts) 아키텍처</strong>의 세밀한 구조를 활용합니다.</p>
+<ol>
+<li><strong>개별 가중치 텐서 보간</strong>:
+<ul>
+<li>AoE는 모델의 가중치 텐서를 개별적으로 보간합니다. 이를 통해 부모 모델이 가진 의미론적 특징을 <strong>강화하거나 억제</strong>할 수 있습니다.</li>
+<li>논문은 동일한 아키텍처를 공유하는 여러 부모 모델 $M^{(i)}$ ($i = 1, ..., n$)를 가정합니다. 이들로부터 병합될 모델 $M^{(<em>)}$의 텐서 $W^{(</em>)}_l$를 도출합니다.</li>
+</ul>
+</li>
+<li><strong>모델 선택 및 가중치 부여</strong>:
+<ul>
+<li><strong>병합할 텐서 하위 집합($\mathcal{S} ⊂ \mathcal{L}$)을 선택</strong>합니다. 이 집합은 모든 텐서를 포함할 수도 있고, 특정 유형의 텐서(예: 라우팅된 전문가(routed experts)만)를 포함할 수도 있습니다. 선택되지 않은 나머지 텐서는 기본 모델 $M^{(1)}$에서 가져옵니다.</li>
+<li>각 부모 모델 $M^{(i)}$에는 **가중치 계수($λ_i$)**가 부여됩니다. 대부분의 경우, <strong>볼록 조합(convex combination)</strong>, 즉 $λ_i ≥ 0$ 이고 $∑λ_i = 1$을 만족하는 방식으로 가중 평균을 적용합니다.</li>
+</ul>
+</li>
+<li><strong>임계값(Thresholding) 적용</strong>:
+<ul>
+<li><code>TIES-merging</code> 방법에서 영감을 받아, AoE는 특정 임계값($δ ≥ 0$)을 초과하는 텐서들만 병합에 포함되도록 제한할 수 있습니다.</li>
+<li>이는 선택된 기준 모델 $M^{(1)}$과 다른 모델 $M^{(i)}$ 간의 <strong>정규화된 Frobenius 노름(norm) 차이</strong>가 $δ$를 초과하는 텐서에만 적용됩니다. 이는 모델 간의 **&quot;관련성 있는 차이(relevant differences)&quot;**에 병합을 집중시키기 위함이며, 중복되거나 불필요한 적응으로 인한 바람직하지 않은 영향을 피하는 데 도움이 됩니다.</li>
+</ul>
+</li>
+<li><strong>병합 시나리오 (DeepSeek-V3-0324와 DeepSeek-R1의 예시)</strong>:<br>
+논문은 $n=2$인 특정 예시, 즉 DeepSeek-V3-0324를 기본 모델 $M^{(1)}$으로, DeepSeek-R1을 $M^{(2)}$로 사용하여 세 가지 시나리오를 정의합니다.
+<ul>
+<li><strong>가중 평균 병합 (Weighted-Average Merging)</strong>:
+<ul>
+<li>DeepSeek-V3-0324($λ_1$)와 DeepSeek-R1($λ_2$)의 상대적 기여도를 $λ_1 + λ_2 = 1$인 가중치로 제어합니다.</li>
+<li>$λ_1 = λ_2 = 0.5$인 경우, 이는 **표준 모델 병합(uniform averaging)**과 동일합니다. $λ = (0, 1)$은 R1에서 모든 병합된 텐서를 가져오는 것이고, $λ = (1, 0)$은 V3-0324 기본 모델을 그대로 사용하는 것입니다.</li>
+</ul>
+</li>
+<li><strong>임계값 적용 (Thresholding)</strong>:
+<ul>
+<li>기준 모델과 특정 텐서 그룹(예: 어텐션 텐서, 라우팅된 전문가 텐서, 공유 전문가 텐서) 간의 정규화된 Frobenius 노름 차이 분포를 분석하여, $δ &gt; 0$인 임계값을 넘어설 때만 텐서를 병합에 포함합니다.</li>
+<li>논문은 임계값 변화에 따른 지능 점수와 추론 비용 변화를 분석하여, $δ=3$까지는 모델 성능이 안정적으로 유지되지만, 그 이상에서는 R1 라우팅 전문가의 사용이 줄어들면서 지능 점수가 감소함을 보여줍니다.</li>
+</ul>
+</li>
+<li><strong>전문가 대 전체 병합 (Expert vs. Full Merging)</strong>:
+<ul>
+<li>MoE 아키텍처의 미세한 전문가 하위 구조를 활용하여 다양한 병합 전략을 탐색합니다.</li>
+<li><strong>전체 병합(Full-merging)</strong>: 모든 텐서($\mathcal{S} := \mathcal{L}$)가 병합에 포함됩니다.</li>
+<li><strong>전문가 병합(Expert-merging)</strong>: <strong>라우팅된 전문가 블록의 텐서만 병합</strong>되며, 게이팅 텐서는 제외됩니다. 실험 결과, <strong>라우팅된 전문가 텐서만 병합하는 것이 추론 비용을 획기적으로 줄여주는 것</strong>으로 나타났습니다.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>구현 상세</strong>:
+<ul>
+<li>이 병합 방법은 PyTorch를 사용하여 구현되었습니다.</li>
+<li>DeepSeek-V3 모델 계열의 <strong>6,710억 개 모델 파라미터</strong>는 <code>.safetensors</code> 형식으로 저장된 모델 가중치 파일을 직접 파싱하여 접근합니다.</li>
+<li>총 91,991개의 텐서 객체를 순차적으로 반복하여 병합 절차를 수행합니다.</li>
+</ul>
+</li>
+</ol>
+<h3>실험 설정 및 평가 지표</h3>
+<ul>
+<li><strong>하드웨어</strong>: 8xNVIDIA H100 94GB NVL 클러스터와 8xAMD MI325X 256GB 클러스터에서 실험이 진행되었으며, vLLM 추론 엔진이 사용되었습니다.</li>
+<li><strong>벤치마크</strong>: 병합된 모델의 품질을 검증하기 위해 주로 <strong>MT-Bench와 AIME-2024</strong>를 사용했습니다. DeepSeek-R1T-Chimera 모델은 추가적으로 코딩 벤치마크인 <strong>BigCodeBench</strong>로도 평가되었습니다.</li>
+<li><strong>추론 여부 지표</strong>: 모델이 추론(reasoning)을 하는지 여부를 분류하기 위해, 모델 답변이 <code>&lt;think&gt;</code> 토큰으로 시작하는지 여부를 확인하고, <code>&lt;think&gt;</code> 토큰이 포함된 답변의 빈도를 측정했습니다. R1과 R1-Zero 모델은 이 빈도가 1인 반면, V3와 V3-0324는 0입니다.</li>
+</ul>
+<h3>주요 결과 및 발견</h3>
+<ol>
+<li><strong>모델의 기능성 및 견고성</strong>:
+<ul>
+<li>AoE 방법으로 생성된 거의 모든 모델은 <strong>기능적이고 유능했습니다</strong>. 성능이 저조하거나 손상된 모델은 발견되지 않아, 모델 공간 탐색이 매우 용이하다는 것을 보여줍니다.</li>
+<li>이는 <code>DeepSeek-V3</code>, <code>V3-0324</code>, <code>R1</code> 및 관련 미세 조정 모델들이 **&quot;공유 손실 계곡(shared loss valley)&quot;**을 차지하고 있다는 가설을 뒷받침합니다. 이 계곡 내에서 보간된 모델은 성능 저하 없이 바람직한 특성을 유지하거나 재조합할 수 있습니다.</li>
+</ul>
+</li>
+<li><strong>속성의 점진적 변화 및 급격한 출현</strong>:
+<ul>
+<li>병합된 모델의 일부 속성(예: 일반 지능 점수)은 DeepSeek-R1의 기여도에 따라 <strong>점진적으로 변화</strong>했습니다.</li>
+<li>그러나 <code>&lt;think&gt;</code> 태그의 출현과 같은 <strong>다른 행동 특성</strong>은 특정 임계값(R1 기여도 약 <strong>0.504 이상</strong>)에서 <strong>급격하게 나타났습니다</strong>. 이 임계값을 넘어서면 병합된 모델이 R1의 추론 방식인 <code>&lt;think&gt;...&lt;/think&gt;</code> 구조를 사용하여 추론 결과를 생성하기 시작합니다.</li>
+</ul>
+</li>
+<li><strong>DeepSeek-R1T-Chimera 모델</strong>:
+<ul>
+<li><strong>구성</strong>: DeepSeek V3-0324와 R1을 결합하여 생성되었으며, 특히 <strong>R1의 라우팅된 전문가 텐서(routed expert tensors)만을 상속</strong>받고, 나머지 텐서는 V3-0324에서 가져왔습니다. 이는 DeepSeek-R1의 향상된 추론 능력에 라우팅된 전문가 텐서가 핵심적인 역할을 하며, V3-0324의 나머지 텐서가 성능 저하 없이 이러한 추론 구성 요소를 조정하거나 인터페이스하기에 충분하다는 가설을 뒷받침합니다.</li>
+<li><strong>성능</strong>: <code>R1</code> 수준의 지능을 달성하면서도 <strong>출력 토큰을 약 40% 적게 사용</strong>하여 V3의 속도에 근접했습니다. 이는 지능 손실이 거의 없이 <strong>장황함(verbosity)을 크게 줄인 것</strong>입니다.</li>
+<li><strong>추론 효율성</strong>: Chimera는 부모 모델에 비해 놀랍도록 <strong>간결하고 정돈된 추론</strong>을 보여주어, 추론 효율성이 향상되었음을 나타냅니다.</li>
+<li><strong>배포 및 활용</strong>: <code>R1</code>을 대체할 수 있으며, 내부 GPU 클러스터에 배포되었고 Hugging Face에 오픈 소스로 공개되었습니다. 2025년 5월 말까지 Chutes 서버리스 AI 플랫폼을 통해 하루에 약 <strong>50억 토큰을 처리</strong>하는 등 실제 활용도 또한 높았습니다.</li>
+</ul>
+</li>
+</ol>
+<h3>결론 및 시사점</h3>
+<p>이 연구는 **6,710억 파라미터에 달하는 매우 큰 언어 모델(MoE 아키텍처 기반)**을 성공적으로 병합한 <strong>최초의 시도</strong>이며, <code>DeepSeek-V3-0324</code>의 답변 스타일과 <code>DeepSeek-R1</code>의 추론 능력을 결합하여 <strong>DeepSeek-R1T-Chimera</strong> 모델을 생성했습니다. 이 모델은 향상된 추론 효율성을 유지하면서도 강력한 성능을 보여주었습니다.</p>
+<p>논문은 이러한 모델 어셈블리 기술이 미래의 <code>DeepSeek-V3-MoE</code> 아키텍처의 미세 조정 변형에 적용되어 <strong>더욱 효율적인 추론 모델을 구축</strong>하고 다른 바람직한 특성을 결합하는 데 활용될 수 있다고 강조합니다. 이는 기존의 고비용 미세 조정 패러다임을 벗어나, <strong>선형 시간 내에 새로운, 유능한 LLM 변형을 생성</strong>할 수 있는 새로운 가능성을 제시합니다.</p>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/84">https://ai-stat-lab.tistory.com/84</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

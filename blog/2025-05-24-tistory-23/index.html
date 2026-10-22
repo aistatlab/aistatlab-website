@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="1단계 — 지식 기반(코퍼스) 설계 &amp; 데이터 파이프라인 구성 요소 설계 포인트 이유 다층 지식 저장소 · 기성 대규모 텍스트(웹+도서+학술)· 도메인별 레퍼런스(논문·코드·법령 등)· 동적 웹 검색 커넥터 · 원천 문서에 고유 ID·메타데이터 부여· chunk ↔ citation 양방향 매핑 테이블 구축 “출처 태그”가 살아있어야 후단(메타인지·사실 검증)에서 근거를 확인·인용 가능 ( ACM 통신 ) 데이터 품질 루프 · 다단계 필터: 저품질·중복·허위 제거">
+<meta property="og:type" content="article"><meta property="og:title" content="“사람처럼 스스로 검증·수정하며 사실적 글을 만드는 LLM” 설계 로드맵">
+<meta property="og:description" content="1단계 — 지식 기반(코퍼스) 설계 &amp; 데이터 파이프라인 구성 요소 설계 포인트 이유 다층 지식 저장소 · 기성 대규모 텍스트(웹+도서+학술)· 도메인별 레퍼런스(논문·코드·법령 등)· 동적 웹 검색 커넥터 · 원천 문서에 고유 ID·메타데이터 부여· chunk ↔ citation 양방향 매핑 테이블 구축 “출처 태그”가 살아있어야 후단(메타인지·사실 검증)에서 근거를 확인·인용 가능 ( ACM 통신 ) 데이터 품질 루프 · 다단계 필터: 저품질·중복·허위 제거">
+<title>“사람처럼 스스로 검증·수정하며 사실적 글을 만드는 LLM” 설계 로드맵 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Projects</a>
+<div class="article-meta"><time datetime="2025-05-24">2025-05-24</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>“사람처럼 스스로 검증·수정하며 사실적 글을 만드는 LLM” 설계 로드맵</h1>
+<p class="article-lead">1단계 — 지식 기반(코퍼스) 설계 &amp; 데이터 파이프라인 구성 요소 설계 포인트 이유 다층 지식 저장소 · 기성 대규모 텍스트(웹+도서+학술)· 도메인별 레퍼런스(논문·코드·법령 등)· 동적 웹 검색 커넥터 · 원천 문서에 고유 ID·메타데이터 부여· chunk ↔ citation 양방향 매핑 테이블 구축 “출처 태그”가 살아있어야 후단(메타인지·사실 검증)에서 근거를 확인·인용 가능 ( ACM 통신 ) 데이터 품질 루프 · 다단계 필터: 저품질·중복·허위 제거</p>
+
+<div class="blog-prose"><h2>1단계 — 지식 기반(코퍼스) 설계 &amp; 데이터 파이프라인</h2>
+<p>구성 요소 설계 포인트 이유</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>다층 지식 저장소</strong>· 기성 대규모 텍스트(웹+도서+학술)· 도메인별 레퍼런스(논문·코드·법령 등)· 동적 웹 검색 커넥터</td>
+<td>· 원천 문서에 고유 ID·메타데이터 부여· chunk ↔ citation 양방향 매핑 테이블 구축</td>
+<td>“출처 태그”가 살아있어야 후단(메타인지·사실 검증)에서 근거를 확인·인용 가능 (<a href="https://cacm.acm.org/news/shining-a-light-on-ai-hallucinations/?utm_source=chatgpt.com">ACM 통신</a>)</td>
+</tr>
+<tr>
+<td><strong>데이터 품질 루프</strong></td>
+<td>· 다단계 필터: 저품질·중복·허위 제거· 검증 실패 사례를 주기적으로 추가 학습</td>
+<td>데이터 노이즈가 “학습--&gt;믿음(=망상)”으로 굳는 것을 차단 (<a href="https://arxiv.org/pdf/2503.06709?utm_source=chatgpt.com">arXiv</a>)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>2단계 — 기본 언어모델(Encoder-Decoder) &amp; “빠른 사고” 회로</h2>
+<ol>
+<li><strong>모델 크기·토크나이저</strong>: 7B~34B 토큰 단위로 실험 → 도메인 특화일수록 compact 모델 + 강한 retrieval 가 유리</li>
+<li><strong>예비 학습(Pre-training)</strong>: 품질 필터된 대규모 코퍼스 → 언어·추론·요약 일반 능력 확보</li>
+<li><strong>Instruction Fine-tuning</strong>: QA·요약·논증 프롬프트 + chain-of-thought(CoT) 라벨 병행
+<ul>
+<li><strong>CoT 공개 학습</strong>: 모델이 “중간 생각”을 말로 드러내는 습관 형성 → 후단 자기검열에 사용 (<a href="https://www.aperio-intelligence.com/2025/04/22/the-metacognitive-frontier-ai-enhanced-investigative-research/?utm_source=chatgpt.com">aperio-intelligence.com</a>)</li>
+</ul>
+</li>
+<li><strong>LoRA/QLoRA 슬롯</strong>: 도메인·언어별 경량 어댑터 삽입 → 파라미터 효율 보존</li>
+</ol>
+<hr>
+<h2>3단계 — 느린 사고(Reasoning) 모듈: 검색·트리 서치·토론</h2>
+<p>하위 모듈 기능 구현 제안</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Retrieval-Augmented Generation (RAG)</strong></td>
+<td>질의-응답 전, 벡터+키워드 혼합 검색 → 관련 문서 n개 삽입</td>
+<td>다중 패스 검색(“보오트스트랩”)으로 누락 완화 (<a href="https://www.edenai.co/post/the-2025-guide-to-retrieval-augmented-generation-rag?utm_source=chatgpt.com">Eden AI</a>)</td>
+</tr>
+<tr>
+<td><strong>Tree-of-Thought / MCTS</strong></td>
+<td>후보 답변을 분기-평가-선택 → “느린 탐색”</td>
+<td>HaluSearch·HSP 류 알고리즘 적용 (<a href="https://arxiv.org/html/2501.01306v2?utm_source=chatgpt.com">arXiv</a>, <a href="https://link.springer.com/article/10.1007/s40747-025-01833-9?utm_source=chatgpt.com">스프링거링크</a>)</td>
+</tr>
+<tr>
+<td><strong>Self-Debate / Reflection</strong></td>
+<td>동일 모델 두 인스턴스가 상호 비판·재귀적 수정</td>
+<td>메타인지 능력 증진, 오류 확률↓ (<a href="https://arxiv.org/html/2505.13763v1?utm_source=chatgpt.com">arXiv</a>, <a href="https://github.com/GovernanceIsAlignment/OpenCall/blob/main/Metacognition.md?utm_source=chatgpt.com">GitHub</a>)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>4단계 — 메타인지 &amp; 불확실성 추정 계층</h2>
+<ol>
+<li><strong>Confidence Head</strong>: Transformer 최종 hidden → 로지스틱 회귀로 “p(correct)” 예측</li>
+<li><strong>Source-Agreement Score</strong>: 생성 토큰별로 근거 문서와 embedding 유사도·attention 가중치 계산 → 낮으면 꺾인 밑줄 표시(UX)</li>
+<li><strong>Contradiction Detector</strong>: 미니 BERT-NLI를 탑재, 출력 ↔ 근거 간 entailment 검사; contradict면 재생성 트리거</li>
+</ol>
+<hr>
+<h2>5단계 — 출력 후 실시간 사실 검증 &amp; 인용 삽입</h2>
+<ol>
+<li><strong>Span-level Alignment</strong>: 문장별로 근거 chunk id 삽입 → 인용 가능성 ≥ τ만 노출 (유사 HSP)</li>
+<li><strong>외부 체크 API</strong>: SciFact·WikiFact 등 DB와 실시간 크로스 체크 → “근거 미확인” 태그 달기</li>
+<li><strong>Post-generation RARR</strong>: 자체 편집기로 오류 부분만 부분 재생성 → 품질 회복 (<a href="https://lilianweng.github.io/posts/2024-07-07-hallucination/?utm_source=chatgpt.com">lilianweng.github.io</a>)</li>
+</ol>
+<hr>
+<h2>6단계 — 학습 후 강화 루프(RLAIF + 자기 교정)</h2>
+<p>단계 신호 목적</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RLAIF</strong> (RL with AI Feedback)</td>
+<td>자동 비평 모델이 주는 “사실성·근거성” 보상</td>
+<td>RLHF 대비 인력↓, 편향↓; factual reward shaping</td>
+</tr>
+<tr>
+<td><strong>Hard-negative Mining</strong></td>
+<td>시스템이 틀린 케이스 → retriever 학습에 역샘플</td>
+<td>검색 회수율·정확도 동시 개선</td>
+</tr>
+<tr>
+<td><strong>Curriculum</strong></td>
+<td>쉬운→난해→모호 순으로 fact-sensitive 샘플 투입</td>
+<td>메타인지·자신감 추정 안정화</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>7단계 — 평가·모니터링 체계</h2>
+<p>지표 설명</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Intrinsic</strong>: Faithfulness F1, Knowledge-F1, HALUEval, TruthfulQA-style “거짓률”</td>
+<td>답변 자체의 사실 적합성</td>
+</tr>
+<tr>
+<td><strong>Extrinsic</strong>: 사용자 신뢰도 투표, 수정 요청율, 평균 확인 링크 클릭율</td>
+<td>실제 서비스 품질</td>
+</tr>
+<tr>
+<td><strong>리그레션 Test Farm</strong>: 버전마다 1만+ 골드 Q/A 자동 비교</td>
+<td>배포 전 회귀 방지</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3>통합 아키텍처 도식 (고수준)</h3>
+<pre><code>         ┌──────────────────────────┐
+User Q → │  Orchestrator / Router   │
+         └────┬─────────┬───────────┘
+              │         │
+      ┌───────▼───┐ ┌───▼────────┐
+      │ Fast LLM  │ │ Retriever  │ (multi-index)
+      └───────┬───┘ └───┬────────┘
+              │         │
+              ▼         ▼
+        [Slow-ToT / Debate / MCTS]  ←→  Evidence DB
+              │
+              ▼
+      [Verifier &amp; RARR Editor]
+              │
+              ▼
+        Final Answer + Citations + Confidence
+</code></pre>
+<hr>
+<h2>실행 우선순위 체크리스트</h2>
+<ol>
+<li><strong>데이터→RAG 파이프라인</strong> 확보 (기반 시설이 사실성의 60 %)</li>
+<li><strong>Verifier + Confidence Head</strong> 같이 붙이기 (메타인지 토대)</li>
+<li><strong>Tree-of-Thought / Self-Debate</strong>: 서버 비용 고려해 선택적 활성화</li>
+<li><strong>RLAIF 반복</strong>: 초기엔 소량 인력 HF, 이후 AI Feedback 확대</li>
+<li><strong>정량 지표 대시보드</strong> 자동화 → 릴리스 전 Stop-Ship 기준 설정</li>
+</ol>
+<hr>
+<h3>마무리</h3>
+<p>사람처럼 “입력→재구성→검증→수정”을 계층적으로 흉내 내면, LLM도 <strong>사실 기반·자기-검열·근거 제시</strong> 능력을 갖출 수 있습니다.<br>
+위 7단계 로드맵을 <strong>모듈화</strong>해서 점진 도입하면, 기존 오픈소스 모델도 현실적인 비용으로 신뢰 가능한 대화·저술 엔진으로 발전시킬 수 있습니다.</p>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/23">https://ai-stat-lab.tistory.com/23</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

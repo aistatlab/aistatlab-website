@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="아래 절차는 IP 거래 목적 AI 가치평가 모델 이 실제 계약·회계 보고서·담보 심사 등에 쓰일 때 “신뢰할 만하다”는 것을 증명하는 전사(全社)적 검증 프레임워크 입니다. 국제 밸류에이션 표준(IVS 2024), ISO 10668(브랜드), IFRS 13(공정가치), 美 연준 SR 11-7(Model Risk Management) 등의 요구사항을 모두 교차 반영했습니다. ( ivsc.org , Brand Finance , IFRS Foundation , Hom">
+<meta property="og:type" content="article"><meta property="og:title" content="IP 거래 목적 AI 가치평가 모델 검증 프레임워크">
+<meta property="og:description" content="아래 절차는 IP 거래 목적 AI 가치평가 모델 이 실제 계약·회계 보고서·담보 심사 등에 쓰일 때 “신뢰할 만하다”는 것을 증명하는 전사(全社)적 검증 프레임워크 입니다. 국제 밸류에이션 표준(IVS 2024), ISO 10668(브랜드), IFRS 13(공정가치), 美 연준 SR 11-7(Model Risk Management) 등의 요구사항을 모두 교차 반영했습니다. ( ivsc.org , Brand Finance , IFRS Foundation , Hom">
+<title>IP 거래 목적 AI 가치평가 모델 검증 프레임워크 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Projects</a>
+<div class="article-meta"><time datetime="2025-05-24">2025-05-24</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>IP 거래 목적 AI 가치평가 모델 검증 프레임워크</h1>
+<p class="article-lead">아래 절차는 IP 거래 목적 AI 가치평가 모델 이 실제 계약·회계 보고서·담보 심사 등에 쓰일 때 “신뢰할 만하다”는 것을 증명하는 전사(全社)적 검증 프레임워크 입니다. 국제 밸류에이션 표준(IVS 2024), ISO 10668(브랜드), IFRS 13(공정가치), 美 연준 SR 11-7(Model Risk Management) 등의 요구사항을 모두 교차 반영했습니다. ( ivsc.org , Brand Finance , IFRS Foundation , Hom</p>
+
+<div class="blog-prose"><p>아래 절차는 <strong>IP 거래 목적 AI 가치평가 모델</strong>이 실제 계약·회계 보고서·담보 심사 등에 쓰일 때 “신뢰할 만하다”는 것을 증명하는 <strong>전사(全社)적 검증 프레임워크</strong>입니다. 국제 밸류에이션 표준(IVS 2024), ISO 10668(브랜드), IFRS 13(공정가치), 美 연준 SR 11-7(Model Risk Management) 등의 요구사항을 모두 교차 반영했습니다. (<a href="https://ivsc.org/new-edition-of-the-international-valuation-standards-ivs-published/?utm_source=chatgpt.com">ivsc.org</a>, <a href="https://brandfinance.com/wp-content/uploads/1/iso_10668_overview.pdf?utm_source=chatgpt.com">Brand Finance</a>, <a href="https://www.ifrs.org/issued-standards/list-of-standards/ifrs-13-fair-value-measurement/?utm_source=chatgpt.com">IFRS Foundation</a>, <a href="https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm?utm_source=chatgpt.com">Home</a>)</p>
+<hr>
+<h2>1. 거버넌스 - “세 줄 방어선” 구축</h2>
+<p>Line 책임 주체 핵심 역할</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1차 (개발)</strong></td>
+<td>데이터·모델 엔지니어</td>
+<td>설계·코딩, 자기검증, 문서화</td>
+</tr>
+<tr>
+<td><strong>2차 (독립 검증)</strong></td>
+<td>모델리스크 전담 조직·외부 감정평가사</td>
+<td>개념·코드·성능 검증, 승인/거절 권한</td>
+</tr>
+<tr>
+<td><strong>3차 (감사)</strong></td>
+<td>내부감사·외부 감사법인</td>
+<td>정책·기록·통제 체계 준수 여부 점검</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>SR 11-7은 “검증 조직은 개발·운용과 <strong>독립적</strong>이어야 한다”고 규정합니다. (<a href="https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm?utm_source=chatgpt.com">Home</a>)</p>
+</blockquote>
+<hr>
+<h2>2. 데이터·입력 검증</h2>
+<p>단계 점검 항목 주요 절차</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>적합성</strong></td>
+<td>샘플이 최신 거래 환경·산업 분포를 대표하는가</td>
+<td>산업·연도별 분포 χ² 검정, ±20 % 내 편차 기준</td>
+</tr>
+<tr>
+<td><strong>정밀성</strong></td>
+<td>거래가격·로열티·현금흐름 레이블 오류 여부</td>
+<td>이중입력(Dual Entry)·계약서 원문 대조</td>
+</tr>
+<tr>
+<td><strong>정보누수</strong></td>
+<td>미래 정보가 학습에 포함됐는지</td>
+<td>시점 t₀ 이전 변수만 허용(블라인드 창)</td>
+</tr>
+<tr>
+<td><strong>법적 컴플라이언스</strong></td>
+<td>라이선스·개인정보 사용권</td>
+<td>DB 공급계약·GDPR/개인정보보호법 리뷰</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>3. 개념 타당성(Conceptual Soundness) 검증</h2>
+<ol>
+<li><strong>평가 이론 적합성</strong> – 모델이 수익·시장·비용 접근을 모두 내포하거나, 최소한 <strong>개념적 링크</strong>를 제공하는지 확인</li>
+<li><strong>변수 선택 근거</strong> – 잔여 존속기간이 가치에 <strong>양(+)의 기여</strong>를 해야 한다는 등, 경제적 직관과 일치하는 SHAP 방향성을 확인</li>
+<li><strong>수학적 안정성</strong> – 손실 함수, 정규화, 히든 레이어 활성화가 발산 없이 수렴하는지 재현 실험</li>
+</ol>
+<hr>
+<h2>4. 구현 검증(Code &amp; Process)</h2>
+<p>체크리스트 수행 방법</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>재현성</strong></td>
+<td>Docker image + MLflow run을 다른 노드에서 동일 결과(±1e-6) 확인</td>
+</tr>
+<tr>
+<td><strong>테스트 커버리지</strong></td>
+<td>유닛 80 %↑, 통합 60 %↑</td>
+</tr>
+<tr>
+<td><strong>보안</strong></td>
+<td>SBOM, OpenSSL-FIPS 모드, API 인증·권한</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>5. 정량 성능 검증</h2>
+<h3>5-1. 데이터 분할·교차검증</h3>
+<ul>
+<li><strong>Out-of-Time Forward-Chain</strong> (예: 2016-20 학습 → 2021 검증 → 2022 테스트)</li>
+<li>산업·국가 Strata별 <strong>Blocked K-Fold(5)</strong> – 분할 기준이 시계열·도메인 양쪽을 커버</li>
+</ul>
+<h3>5-2. 핵심 지표 &amp; 허용 한도</h3>
+<p>지표 목표치(예) 검정</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MAPE</strong></td>
+<td>≤ 25 % (전체) / ≤ 15 % (Top-quartile 가치)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>PICP</strong> (예측구간 포함률)</td>
+<td>90 % 예측구간이 실제 87-93 % 포함</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Rank-Ordering</strong></td>
+<td>실제 가치 상위 10 %를 모델이 상위 15 % 내에 80 % 이상 포함</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Prediction Drift</strong></td>
+<td>최근 분기 MAE가 기준시점 대비 +50 % 초과 시 경보</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>5-3. 벤치마크·백테스트</h3>
+<ol>
+<li><strong>Naïve base</strong> – 역사 평균/산업 평균 로열티율</li>
+<li><strong>전통 DCF·시장 비교</strong> – 모델 예측 오차가 DCF 오차보다 20 % 이상 낮을 것</li>
+<li><strong>실거래 사후(Test-Post)</strong> – 거래 완료 후 6-12 개월 지난 케이스 30건 이상으로 백테스트</li>
+</ol>
+<hr>
+<h2>6. 스트레스 &amp; 민감도 분석</h2>
+<p>분석 시나리오 예 합격 기준</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>매크로 스트레스</strong></td>
+<td>할인율 +300 bp, 산업 성장률 –50 %</td>
+<td>가치 변동률 &lt; 35 %</td>
+</tr>
+<tr>
+<td><strong>피처 민감도</strong></td>
+<td>잔여존속 10 → 5년, 인용수 –1 SD</td>
+<td>SHAP 기여도 부호 유지</td>
+</tr>
+<tr>
+<td><strong>데이터 손상</strong></td>
+<td>입력 5 % 랜덤 결측 → 임퓨팅</td>
+<td>MAPE 상승 ≤ 5 %</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>7. 설명가능성·전문가 적합성 검증</h2>
+<ol>
+<li><strong>글로벌-SHAP/Permutation</strong> 보고서 자동 생성 → 변수 Top-10이 전문 평가사 “주요 고려 요소” 목록과 ≥ 70 % 겹치는지 확인</li>
+<li><strong>Partial Dependence Plot(PDP)</strong> – 변수-가치 곡선이 경제적 상식과 역전되지 않는지</li>
+<li><strong>가치 분석 워크숍</strong> – IP 감정사·회계사에게 무작위 50건 예측·설명 제공 → 수용률 ≥ 80 %</li>
+</ol>
+<hr>
+<h2>8. 공정성·편향 점검</h2>
+<p>축 테스트 예시 기준</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>산업</strong></td>
+<td>ICT vs Bio vs 제조 MAPE 편차</td>
+<td>≤ 10 pp</td>
+</tr>
+<tr>
+<td><strong>국가</strong></td>
+<td>OECD vs 비-OECD 편차</td>
+<td>≤ 15 pp</td>
+</tr>
+<tr>
+<td><strong>성별·기업 규모</strong></td>
+<td>스타트업 vs 대기업 편차</td>
+<td>설명 가능·수용 가능 범위 내</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>9. 규제·표준 적합성 Check-list</h2>
+<p>표준·가이드 요구사항 ↔ 대응 조치</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IVS 104(Data &amp; Inputs)</strong></td>
+<td>데이터 품질·출처 문서화, 전처리 로그 보존 (<a href="https://ivsc.org/new-edition-of-the-international-valuation-standards-ivs-published/?utm_source=chatgpt.com">ivsc.org</a>)</td>
+</tr>
+<tr>
+<td><strong>ISO 10668(브랜드)</strong></td>
+<td>수익·시장·비용 3 접근 검증표 첨부, 보고서 템플릿 사용 (<a href="https://brandfinance.com/wp-content/uploads/1/iso_10668_overview.pdf?utm_source=chatgpt.com">Brand Finance</a>)</td>
+</tr>
+<tr>
+<td><strong>IFRS 13</strong></td>
+<td>‘Level 3’ 공정가치 입력·평가 기법 공시, 비가관측 입력에 대한 민감도 공개 (<a href="https://www.ifrs.org/issued-standards/list-of-standards/ifrs-13-fair-value-measurement/?utm_source=chatgpt.com">IFRS Foundation</a>)</td>
+</tr>
+<tr>
+<td><strong>SR 11-7</strong></td>
+<td>독립 검증·주기적 재검토·보드 보고체계 구축 (<a href="https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm?utm_source=chatgpt.com">Home</a>)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>10. 문서화·감사 추적</h2>
+<ul>
+<li><strong>자동 보고서</strong> : YAML → PDF 변환; 데이터 버전, 모델 해시, SHAP 그래프, 성능표, 결재 로그 포함</li>
+<li><strong>변경관리</strong> : Git-tag + MLflow Stage (“Staging→Production”)</li>
+<li><strong>보존 기간</strong> : 7년(회계·세무) + 1년 윤년 버퍼</li>
+</ul>
+<hr>
+<h2>11. 운영 중 모니터링 &amp; 재검증</h2>
+<ol>
+<li><strong>리얼-타임 drift dash</strong> (Evidently + Grafana)</li>
+<li><strong>Quarterly Stability Test</strong> – P-value(KS) &lt; 0.05 시 재학습 의무</li>
+<li><strong>Annual Full Re-validation</strong> – 데이터·개념·코드·성능 모든 단계 재점검 (IVS “reliability over time” 권고)</li>
+</ol>
+<hr>
+<h3>✅ 요약 체크리스트 (현업용)</h3>
+<ul>
+<li>대표성 있는 <strong>Out-of-Time 테스트</strong> 통과 (MAPE ≤ 25 %)</li>
+<li><strong>PICP 90 %</strong> 캘리브레이션 적합</li>
+<li>전통 DCF·시장비교 대비 <strong>우수</strong></li>
+<li><strong>SHAP Top-10</strong> ↔ 전문가 판단 ≥ 70 % 일치</li>
+<li>IVS·ISO 10668·IFRS 13·SR 11-7 <strong>모두 만족</strong></li>
+<li>Drift 경보·재검증 주기 자동화 완료</li>
+</ul>
+<p>이 과정을 체계적으로 실행하면 회계감사·세무조사·담보심사 등 **어떤 외부 심사에서도 “모델이 신뢰할 만하다”**는 근거를 명확히 제시할 수 있습니다.</p>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/27">https://ai-stat-lab.tistory.com/27</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

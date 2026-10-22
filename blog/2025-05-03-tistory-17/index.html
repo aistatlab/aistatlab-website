@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="1. 서론 정확한 장기 시계열 예측(Long-Term Time Series Forecasting, LTSF)은 날씨 예측, 교통, 에너지 관리 등 다양한 분야에서 매우 중요한 역할을 수행하며, 조기 경보 및 사전 계획을 위한 통찰력을 제공합니다. 1 단기 예측과는 달리, LTSF는 데이터의 장기적인 의존성을 파악해야 하는 본질적인 어려움을 내포하고 있습니다. 2 즉, 장기 예측은 최근의 시간적 정보에만 의존할 수 없으며, 데이터 내에 존재하는 근본적인 장기 의존">
+<meta property="og:type" content="article"><meta property="og:title" content="&quot;CycleNet: 주기적 패턴 모델링을 통한 시계열 예측 향상&quot; 논문 리뷰">
+<meta property="og:description" content="1. 서론 정확한 장기 시계열 예측(Long-Term Time Series Forecasting, LTSF)은 날씨 예측, 교통, 에너지 관리 등 다양한 분야에서 매우 중요한 역할을 수행하며, 조기 경보 및 사전 계획을 위한 통찰력을 제공합니다. 1 단기 예측과는 달리, LTSF는 데이터의 장기적인 의존성을 파악해야 하는 본질적인 어려움을 내포하고 있습니다. 2 즉, 장기 예측은 최근의 시간적 정보에만 의존할 수 없으며, 데이터 내에 존재하는 근본적인 장기 의존">
+<title>&quot;CycleNet: 주기적 패턴 모델링을 통한 시계열 예측 향상&quot; 논문 리뷰 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Paper Review</a>
+<div class="article-meta"><time datetime="2025-05-03">2025-05-03</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>&quot;CycleNet: 주기적 패턴 모델링을 통한 시계열 예측 향상&quot; 논문 리뷰</h1>
+<p class="article-lead">1. 서론 정확한 장기 시계열 예측(Long-Term Time Series Forecasting, LTSF)은 날씨 예측, 교통, 에너지 관리 등 다양한 분야에서 매우 중요한 역할을 수행하며, 조기 경보 및 사전 계획을 위한 통찰력을 제공합니다. 1 단기 예측과는 달리, LTSF는 데이터의 장기적인 의존성을 파악해야 하는 본질적인 어려움을 내포하고 있습니다. 2 즉, 장기 예측은 최근의 시간적 정보에만 의존할 수 없으며, 데이터 내에 존재하는 근본적인 장기 의존</p>
+
+<div class="blog-prose"><h4><strong>1. 서론</strong></h4>
+<p>정확한 장기 시계열 예측(Long-Term Time Series Forecasting, LTSF)은 날씨 예측, 교통, 에너지 관리 등 다양한 분야에서 매우 중요한 역할을 수행하며, 조기 경보 및 사전 계획을 위한 통찰력을 제공합니다.1 단기 예측과는 달리, LTSF는 데이터의 장기적인 의존성을 파악해야 하는 본질적인 어려움을 내포하고 있습니다.2 즉, 장기 예측은 최근의 시간적 정보에만 의존할 수 없으며, 데이터 내에 존재하는 근본적인 장기 의존성 또는 안정적인 주기성을 이해하는 것이 중요합니다.1 많은 실제 시계열 데이터는 일별 전력 소비나 연간 날씨 패턴과 같이 예측 가능한 주기적인 행동을 나타내므로, 이러한 반복적인 패턴을 명시적으로 모델링하는 것은 장기 예측의 정확성을 크게 향상시킬 수 있습니다. 이러한 맥락에서 &quot;CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns&quot; 논문은 데이터에 존재하는 주기적인 패턴을 명시적으로 모델링하여 LTSF를 개선하는 것을 목표로 합니다.4 이 연구는 잔차 주기 예측(Residual Cycle Forecasting, RCF)이라는 새로운 기술을 도입하고 이를 CycleNet 모델에 통합하여 장기 시계열 예측 분야에 새로운 기여를 제시합니다.</p>
+<h4><strong>2. 관련 연구</strong></h4>
+<p>LTSF 분야에서는 이미 다양한 접근 방식이 연구되어 왔습니다. 2에 따르면 Informer, Autoformer, PatchTST와 같은 모델들은 Transformer 아키텍처의 장거리 모델링 능력을 활용하여 LTSF 문제를 해결하고자 시도했습니다. Transformer 기반 모델은 self-attention 메커니즘을 통해 과거의 다양한 시점들의 중요도를 가중치로 학습하여 장기적인 시간적 관계를 파악하는 데 강점을 보여왔습니다. 그러나 CycleNet 연구진은 복잡한 모델의 목적이 주기적인 특징을 추출하는 데 있다면, 왜 이러한 패턴을 직접적으로 모델링하지 않는가라는 의문을 제기합니다.2 CycleNet은 복잡한 아키텍처의 암묵적인 학습에 의존하는 대신, 주기성을 활용하는 더 직접적이고 잠재적으로 더 효율적인 방법을 제시합니다.</p>
+<p>CycleNet의 핵심 기술인 RCF는 시계열 분해(Seasonal-Trend Decomposition, STD) 방법의 범주에 속합니다.1 STD 방법은 시계열 데이터를 추세, 계절성, 잔차 성분으로 분해하여 분석 및 예측을 용이하게 하는 전통적인 접근 방식입니다.6 RCF는 학습 가능한 순환 주기를 사용하여 독립적인 시퀀스 내에서 전역적인 주기적 패턴을 명시적으로 모델링한다는 점에서 기존 STD 방법과 차별점을 갖습니다.1 최근에는 기존 STD 방법에서 고정된 이동 평균 커널을 학습 가능한 분해(Learnable Decomposition, LD) 커널로 대체하여 성능 향상을 꾀하는 연구(예: Leddam 5, LD 3)도 등장하고 있으며, 이는 시계열 분해 기술이 더욱 적응적이고 데이터 중심적인 방향으로 발전하고 있음을 시사합니다.</p>
+<p>CycleNet은 TimeSter, TimeLinear 12, DUET 12, SparseTSF 12, DEPTS 12, Autoformer 12, LSTNet 12, Informer 12, TiDE 12, ETSformer 12, PRformer 15, MoLE-RMLP 15, PatchTST 15, TSMixer 15, xPatch 15, SegRNN 16, RLinear 3, RevInformer 3, CATS 18와 같은 다른 LTSF 모델들과 차별화됩니다. 이러한 모델들이 복잡한 아키텍처를 통해 주기성을 암묵적으로 학습하거나 고정된 분해 방식을 사용하는 반면, CycleNet은 RCF 기술을 통해 주기적 패턴을 명시적으로 학습하고 활용하는 데 초점을 맞춥니다. 이러한 접근 방식은 특히 강하고 안정적인 주기적 성분을 갖는 시계열 데이터에서 성능 이점을 제공할 수 있습니다.</p>
+<h4><strong>3. 잔차 주기 예측 (RCF) 기술</strong></h4>
+<p>잔차 주기 예측(RCF) 기술은 CycleNet 모델의 핵심을 이루며, 시계열 데이터 내에 존재하는 주기적인 패턴을 명시적으로 모델링하고 이를 기반으로 예측을 수행하는 혁신적인 방법입니다.1 RCF 기술은 크게 두 단계로 구성됩니다.</p>
+<p>첫 번째 단계는 주기적 패턴 모델링입니다. 이 단계에서는 모델이 학습 가능한 순환 주기 (Q)를 생성합니다. 이 순환 주기는 (R^{W \times D})의 형태를 가지며, 여기서 (W)는 주기의 길이, (D)는 시계열 데이터의 채널 또는 변수의 개수를 나타냅니다.1 주기의 길이 (W)는 데이터의 도메인 특성에 따라 결정되며 2, 예를 들어 시간별 전력 소비 데이터의 경우 일별 주기(24) 및 주간 주기(168)를 고려할 수 있습니다.2 순환 주기 (Q)는 초기에는 0으로 설정되며, 데이터에 내재된 주기적인 패턴을 나타냅니다. 학습 과정에서 이 파라미터들은 모델의 다른 파라미터들과 함께 경사 하강법을 통해 최적화되어 실제 데이터의 주기적인 행동을 효과적으로 포착하도록 학습됩니다.4 학습된 순환 주기는 초기 0 값과는 다른 표현을 가지게 되며, 시퀀스 내에 숨겨진 주기적 패턴을 드러냅니다.20</p>
+<p>두 번째 단계는 잔차 예측입니다. 먼저 학습된 순환 주기 (Q)를 정렬하고 반복하여 주기적 성분 (C)를 도출합니다. 이 주기적 성분 (C)는 입력 데이터에서 제거되어 잔차 성분 (R)을 생성합니다.4 이 과정은 전통적인 시계열 모델링에서 잔차를 분석하는 개념과 유사합니다.21 그런 다음 선형 계층(Linear layer) 또는 다층 퍼셉트론(Multi-Layer Perceptron, MLP)과 같은 백본 모델을 사용하여 이 잔차 성분 (R)에 대한 예측을 수행합니다.1 RCF 기술은 특정 백본 모델에 종속되지 않는 모델 독립적인(model-agnostic) 솔루션입니다.3 마지막으로 미래 시점에 대한 예측을 위해 학습된 순환 주기에서 다시 주기적 성분을 도출하고, 예측된 잔차에 이를 더하여 최종 예측값 (\hat{Y})를 얻습니다.4 이 덧셈 방식은 미래에도 과거와 유사한 주기적인 행동이 지속될 것이라는 가정을 기반으로 합니다.</p>
+<h4><strong>4. CycleNet 모델</strong></h4>
+<p>CycleNet 모델은 앞서 설명한 잔차 주기 예측(RCF) 기술과 간단한 백본 네트워크를 결합한 형태로, 간결하면서도 강력한 시계열 예측 성능을 제공하는 것을 목표로 합니다.1 구체적으로 CycleNet은 RCF 기술과 단일 계층 선형 계층(Linear layer) 또는 2개 계층의 MLP를 백본으로 사용하여 구성됩니다.1 이러한 간단한 구조는 모델의 파라미터 수를 줄여 효율성을 높이는 데 기여합니다.24</p>
+<p>CycleNet 모델은 여러 장점을 갖습니다. 1에서 강조하듯이, CycleNet은 다양한 도메인에서 최첨단 성능을 달성하면서도 필요한 파라미터 수를 90% 이상 줄여 상당한 효율성을 제공합니다.1 이는 CycleNet이 예측 정확도와 계산 효율성 사이에서 매력적인 균형을 제공함을 시사합니다. 또한 RCF 기술은 플러그 앤 플레이 방식으로 기존 모델(예: PatchTST, iTransformer)의 예측 정확도를 향상시키는 데에도 활용될 수 있습니다.19 이는 주기적 패턴을 명시적으로 모델링하는 것이 다양한 시계열 예측 모델의 성능 향상에 일반적으로 유익한 접근 방식임을 시사합니다.</p>
+<p>CycleNet 모델에서 각 데이터 샘플이 순환 주기 내의 어느 위치에 해당하는지 파악하기 위해 주기 인덱스(t mod W)를 생성하는 과정이 필요합니다.20 이 인덱싱 메커니즘은 데이터 포인트를 학습된 주기적 패턴과 정확하게 정렬하여 주기적 성분의 정확한 제거 및 잔차 예측을 가능하게 합니다.20</p>
+<h4><strong>5. 실험 설정</strong></h4>
+<p>CycleNet 연구에서는 모델의 성능을 평가하기 위해 다양한 벤치마크 데이터셋을 사용했습니다. 여기에는 강한 주기적 패턴(예: 일별, 주간)을 보이는 ETT 시리즈 (ETTh1, ETTh2, ETTm1, ETTm2) 4, Traffic 4, Weather 4, Electricity 4, Solar-Energy 4 데이터셋이 포함됩니다.1 이러한 다양한 데이터셋을 사용한 실험은 CycleNet이 다양한 주기적 특성을 갖는 여러 도메인에 걸쳐 일반화될 수 있음을 보여줍니다. 각 데이터셋은 전통적인 비율에 따라 학습, 검증 및 테스트 세트로 분할되었으며 4, 모델은 PyTorch 프레임워크를 사용하여 구현되었고, Adam 옵티마이저와 데이터셋별 변수 수를 고려하여 신중하게 선택된 배치 크기를 사용하여 30 에포크 동안 학습되었으며, 조기 중단을 위해 patience 값 5가 사용되었습니다.4 모델의 성능은 다양한 예측 Horizon(96, 192, 336, 720 단계 앞)에 걸쳐 평균 제곱 오차(Mean Squared Error, MSE)와 평균 절대 오차(Mean Absolute Error, MAE)를 사용하여 측정되었습니다.1 MSE는 예측값과 실제값의 제곱 차이의 평균을 나타내며, MAE는 예측값과 실제값의 절대 차이의 평균을 나타내는 일반적인 시계열 예측 평가 지표입니다.</p>
+<h4><strong>6. 결과 및 논의</strong></h4>
+<p>CycleNet은 다양한 벤치마크 데이터셋에서 최첨단 성능을 입증했으며, 많은 복잡한 모델보다 우수한 결과를 보였습니다.1 이는 RCF 기술이 주기적 패턴을 효과적으로 모델링하여 데이터의 기본 구조를 잘 포착하기 때문으로 해석될 수 있습니다.</p>
+<p>다음 표는 CycleNet/Linear 및 CycleNet/MLP 모델의 성능 지표(MSE 및 MAE)를 다양한 데이터셋 및 예측 Horizon에 대해 요약한 것입니다. (자세한 결과는 원본 논문의 Table 2 및 Table 7을 참조하십시오 1).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데이터셋</td>
+<td>모델</td>
+<td>Horizon</td>
+<td>MSE</td>
+<td>MAE</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/Linear</td>
+<td>96</td>
+<td>0.355 ± 0.001</td>
+<td>0.348 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/Linear</td>
+<td>192</td>
+<td>0.410 ± 0.001</td>
+<td>0.386 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/Linear</td>
+<td>336</td>
+<td>0.470 ± 0.001</td>
+<td>0.427 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/Linear</td>
+<td>720</td>
+<td>0.504 ± 0.001</td>
+<td>0.448 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/MLP</td>
+<td>96</td>
+<td>0.356 ± 0.001</td>
+<td>0.349 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/MLP</td>
+<td>192</td>
+<td>0.409 ± 0.001</td>
+<td>0.386 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/MLP</td>
+<td>336</td>
+<td>0.468 ± 0.001</td>
+<td>0.426 ± 0.001</td>
+</tr>
+<tr>
+<td>ETTh1</td>
+<td>CycleNet/MLP</td>
+<td>720</td>
+<td>0.502 ± 0.001</td>
+<td>0.447 ± 0.001</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/Linear</td>
+<td>96</td>
+<td>0.209 ± 0.001</td>
+<td>0.260 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/Linear</td>
+<td>192</td>
+<td>0.231 ± 0.001</td>
+<td>0.269 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/Linear</td>
+<td>336</td>
+<td>0.246 ± 0.001</td>
+<td>0.275 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/Linear</td>
+<td>720</td>
+<td>0.255 ± 0.001</td>
+<td>0.274 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/MLP</td>
+<td>96</td>
+<td>0.190 ± 0.001</td>
+<td>0.247 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/MLP</td>
+<td>192</td>
+<td>0.210 ± 0.001</td>
+<td>0.266 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/MLP</td>
+<td>336</td>
+<td>0.217 ± 0.001</td>
+<td>0.266 ± 0.001</td>
+</tr>
+<tr>
+<td>Solar-Energy</td>
+<td>CycleNet/MLP</td>
+<td>720</td>
+<td>0.223 ± 0.001</td>
+<td>0.266 ± 0.001</td>
+</tr>
+</tbody>
+</table>
+<p>RCF 기술의 주요 장점은 특히 주기성이 강한 도메인에서 예측 정확도를 향상시키고, 최첨단 모델보다 훨씬 적은 파라미터 수로 높은 정확도를 유지함으로써 효율성을 높이는 것입니다.4</p>
+<p>데이터셋별 성능을 살펴보면, ETT 시리즈에서 CycleNet/Linear와 CycleNet/MLP 모두 최첨단 또는 차선책의 성능을 보였으며, 일반적으로 CycleNet/Linear가 약간 더 나은 성능을 나타냈습니다.1 Weather 데이터셋에서는 CycleNet/MLP가 모든 예측 Horizon에서 다른 모델보다 우수한 최첨단 성능을 보였습니다.1 Traffic 데이터셋에서 CycleNet의 성능은 다변량 관계를 모델링하는 iTransformer보다 낮았는데, 이는 Traffic 데이터셋의 시공간적 특성 때문일 수 있습니다. 그러나 CycleNet은 여전히 다른 기준 모델보다 우수한 성능을 보였습니다.1 Electricity 데이터셋에서는 CycleNet/MLP와 CycleNet/Linear 모두 최첨단 성능을 달성하며 모든 예측 Horizon에서 다른 모델보다 지속적으로 우수한 결과를 보였습니다.1 Solar-Energy 데이터셋에서는 CycleNet/MLP가 MSE와 MAE 모두에서 최고의 성능을 나타냈습니다.1</p>
+<p>CycleNet의 또 다른 중요한 특징은 파라미터 효율성입니다. CycleNet은 최첨단 모델보다 훨씬 적은 수의 파라미터로 높은 정확도를 달성했습니다.1 이러한 파라미터 효율성은 CycleNet을 LTSF를 위한 잠재적으로 더 실용적이고 확장 가능한 솔루션으로 만듭니다.</p>
+<h4><strong>7. 한계점</strong></h4>
+<p>CycleNet은 몇 가지 한계점을 가지고 있습니다. 4에서 언급했듯이, 불안정한 주기 길이를 갖는 경우나 고정된 주기적 패턴을 나타내지 않는 데이터셋의 경우에는 효과적으로 작동하지 못할 수 있습니다. 또한 상당한 이상치(outlier)가 존재하거나 복잡한 시공간적 관계가 중요한 데이터셋(예: 교통 데이터)의 경우 성능이 저하될 수 있습니다.4 CycleNet의 성능은 안정적이고 예측 가능한 주기성이 존재하는 시계열 데이터에 크게 의존합니다. 데이터의 기본 주기적 패턴이 시간에 따라 변하거나 일관되게 나타나지 않는다면, CycleNet이 가정하는 고정된 주기 길이가 적절하지 않아 예측 정확도가 떨어질 수 있습니다. 더불어 CycleNet은 각 채널의 주기성을 독립적으로 모델링하므로, 채널 간의 강한 상호 의존성이 있는 데이터셋의 경우 이러한 복잡한 관계를 충분히 포착하지 못할 수 있습니다. 또한 2에서 지적했듯이, 주기 길이 (W)를 데이터셋의 사전 특성을 기반으로 미리 결정해야 한다는 점도 한계로 작용할 수 있습니다. 실제 응용에서 정확한 주기 길이를 식별하는 것은 도메인 전문 지식이나 자기 상관 함수(Autocorrelation Function, ACF) 분석과 같은 탐색적 데이터 분석 기술을 필요로 할 수 있습니다.41</p>
+<h4><strong>8. 향후 연구 방향</strong></h4>
+<p>CycleNet 연구진은 향후 연구 방향으로 채널 간 관계를 더 잘 모델링하는 방법을 모색할 것을 제안합니다.4 이는 다변량 시계열 데이터에서 변수 간의 의존성을 포착하는 능력을 향상시켜 교통 데이터와 같은 데이터셋에서 성능 향상을 기대할 수 있습니다. 또한 이상치에 대한 견고성을 개선하는 것 역시 중요한 연구 방향으로 제시되었습니다.4 이는 학습된 주기와 잔차 예측에 이상치가 미치는 영향을 완화하는 기술을 개발하여 모델의 신뢰성을 높이는 데 기여할 수 있습니다.</p>
+<p>이러한 제안 외에도 다음과 같은 추가적인 향후 연구 방향을 고려해 볼 수 있습니다. 최적의 주기 길이 (W)를 자동으로 결정하는 방법 연구, 비정상적이거나 진화하는 주기적 패턴을 갖는 시계열에 대한 RCF의 적용 가능성 탐색, 선형 계층 및 MLP 이상의 고급 백본 아키텍처와 RCF를 결합하여 더 복잡한 잔차 역학을 포착할 가능성 연구, 더 넓은 범위의 실제 데이터셋에 대한 CycleNet의 성능 평가 및 더 광범위한 기준 모델과의 비교, RCF 기술의 다양한 구성 요소의 기여도를 더 잘 이해하기 위한 제거 연구(ablation study) 47, 계절성 분해 6 또는 ARIMA 모델 42과 같은 다른 시계열 분석 기술과 CycleNet을 함께 사용하는 방법 연구 등이 있습니다.</p>
+<h4><strong>9. 결론</strong></h4>
+<p>본 보고서는 &quot;CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns&quot; 논문에 대한 상세한 내용을 정리한 것입니다. CycleNet은 장기 시계열 예측을 위해 주기적 패턴을 명시적으로 모델링하는 새로운 잔차 주기 예측(RCF) 기술을 제시합니다. CycleNet은 다양한 벤치마크 데이터셋에서 최첨단 예측 정확도를 달성하면서도 파라미터 수 측면에서 상당한 효율성을 유지합니다. 또한 RCF 기술은 플러그 앤 플레이 방식으로 다른 예측 모델의 성능을 향상시킬 수 있는 잠재력을 보여줍니다. 결론적으로, 시계열 데이터의 내재된 패턴, 특히 주기성을 강력하게 처리하는 것이 더 나은 예측 결과를 가져올 수 있으며, CycleNet은 많은 예측 시나리오에서 경쟁력 있는 이점을 제공합니다. 연구진은 추가 연구 및 검증을 위해 소스 코드를 공개적으로 제공하고 있습니다.1</p>
+<h4>참고 자료</h4>
+<ol>
+<li>arxiv.org, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2409.18479">https://arxiv.org/pdf/2409.18479</a></li>
+<li>NeurIPS Poster CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://neurips.cc/virtual/2024/poster/94391">https://neurips.cc/virtual/2024/poster/94391</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=clBiQUgj4w">https://openreview.net/forum?id=clBiQUgj4w</a>¬eId=FR2G9XP2t0</li>
+<li>[Literature Review] CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - Moonlight, 5월 3, 2025에 액세스, <a href="https://www.themoonlight.io/en/review/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns">https://www.themoonlight.io/en/review/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2409.18479v2">https://arxiv.org/html/2409.18479v2</a></li>
+<li>7 Powerful Techniques: Seasonal Decomposition in Time Series, 5월 3, 2025에 액세스, <a href="https://www.numberanalytics.com/blog/7-powerful-techniques-seasonal-decomposition-time-series">https://www.numberanalytics.com/blog/7-powerful-techniques-seasonal-decomposition-time-series</a></li>
+<li>Decomposition of time series - Wikipedia, 5월 3, 2025에 액세스, <a href="https://en.wikipedia.org/wiki/Decomposition_of_time_series">https://en.wikipedia.org/wiki/Decomposition_of_time_series</a></li>
+<li>www.datacamp.com, 5월 3, 2025에 액세스, <a href="https://www.datacamp.com/tutorial/time-series-decomposition#:~:text=Classical%20decomposition%20has%20several%20limitations,do%20not%20change%20over%20time.">https://www.datacamp.com/tutorial/time-series-decomposition#:~:text=Classical decomposition has several limitations,do not change over time.</a></li>
+<li>3.4 Classical decomposition | Forecasting: Principles and Practice (3rd ed) - OTexts, 5월 3, 2025에 액세스, <a href="https://otexts.com/fpp3/classical-decomposition.html">https://otexts.com/fpp3/classical-decomposition.html</a></li>
+<li>Stat 142 Lesson 2.1 (Time Series Decomposition) - RPubs, 5월 3, 2025에 액세스, <a href="https://rpubs.com/bertmilla/1014262">https://rpubs.com/bertmilla/1014262</a></li>
+<li>Time Series Decomposition: Understand Trends, Seasonality, and Noise - DataCamp, 5월 3, 2025에 액세스, <a href="https://www.datacamp.com/tutorial/time-series-decomposition">https://www.datacamp.com/tutorial/time-series-decomposition</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://www.semanticscholar.org/paper/CycleNet%3A-Enhancing-Time-Series-Forecasting-through-Lin-Lin/3df16d5c56bbb4939935351090479b3c0a65e4af">https://www.semanticscholar.org/paper/CycleNet%3A-Enhancing-Time-Series-Forecasting-through-Lin-Lin/3df16d5c56bbb4939935351090479b3c0a65e4af</a></li>
+<li>lss-1138/SparseTSF: [ICML 2024 Oral] Official repository of the SparseTSF paper: &quot;SparseTSF: Modeling Long-term Time Series Forecasting with 1k Parameters&quot;. This work is developed by the Lab of Professor Weiwei Lin (linww@scut.edu.cn), South China University of Technology; Pengcheng - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/lss-1138/SparseTSF">https://github.com/lss-1138/SparseTSF</a></li>
+<li>AverageTime: Enhance Long-Term Time Series Forecasting with Simple Averaging - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2412.20727?">https://arxiv.org/pdf/2412.20727?</a></li>
+<li>Time Series Forecasting on Electricity (96) - Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/sota/time-series-forecasting-on-electricity-96">https://paperswithcode.com/sota/time-series-forecasting-on-electricity-96</a></li>
+<li>Weather (192) Benchmark (Time Series Forecasting) - Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/sota/time-series-forecasting-on-weather-192">https://paperswithcode.com/sota/time-series-forecasting-on-weather-192</a></li>
+<li>The official repository of the SegRNN paper: &quot;Segment Recurrent Neural Network for Long-Term Time Series Forecasting.&quot; This work is developed by the Lab of Professor Weiwei Lin (linww@scut.edu.cn), South China University of Technology; Pengcheng Laboratory. - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/lss-1138/SegRNN">https://github.com/lss-1138/SegRNN</a></li>
+<li>Are Self-Attentions Effective for Time Series Forecasting? - NIPS papers, 5월 3, 2025에 액세스, <a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/cf66f995883298c4db2f0dcba28fb211-Paper-Conference.pdf">https://proceedings.neurips.cc/paper_files/paper/2024/file/cf66f995883298c4db2f0dcba28fb211-Paper-Conference.pdf</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - SlidesLive, 5월 3, 2025에 액세스, <a href="https://slideslive.com/39028295/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns?ref=recommended">https://slideslive.com/39028295/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns?ref=recommended</a></li>
+<li>&quot;CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns&quot;. This work is developed by the Lab of Professor Weiwei Lin (linww@scut.edu.cn), South China University of Technology; Pengcheng Laboratory. - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/ACAT-SCUT/CycleNet">https://github.com/ACAT-SCUT/CycleNet</a></li>
+<li>3.3 Residual diagnostics | Forecasting: Principles and Practice (2nd ed) - OTexts, 5월 3, 2025에 액세스, <a href="https://otexts.com/fpp2/residuals.html">https://otexts.com/fpp2/residuals.html</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/paper/cyclenet-enhancing-time-series-forecasting">https://paperswithcode.com/paper/cyclenet-enhancing-time-series-forecasting</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling, 5월 3, 2025에 액세스, <a href="https://chatpaper.com/chatpaper/de/paper/62556">https://chatpaper.com/chatpaper/de/paper/62556</a></li>
+<li>Difference between Multilayer Perceptron and Linear Regression - GeeksforGeeks, 5월 3, 2025에 액세스, <a href="https://www.geeksforgeeks.org/difference-between-multilayer-perceptron-and-linear-regression/">https://www.geeksforgeeks.org/difference-between-multilayer-perceptron-and-linear-regression/</a></li>
+<li>Merged ETT Dataset for Time Series Forecasting - IEEE DataPort, 5월 3, 2025에 액세스, <a href="https://ieee-dataport.org/documents/merged-ett-dataset-time-series-forecasting">https://ieee-dataport.org/documents/merged-ett-dataset-time-series-forecasting</a></li>
+<li>ETT - IEEE DataPort, 5월 3, 2025에 액세스, <a href="https://ieee-dataport.org/keywords/ett">https://ieee-dataport.org/keywords/ett</a></li>
+<li>Time Series Forecasts - Popular Benchmark Datasets - Kaggle, 5월 3, 2025에 액세스, <a href="https://www.kaggle.com/datasets/giochelavaipiatti/time-series-forecasts-popular-benchmark-datasets">https://www.kaggle.com/datasets/giochelavaipiatti/time-series-forecasts-popular-benchmark-datasets</a></li>
+<li>Web Traffic Time Series Forecasting - SJSU ScholarWorks, 5월 3, 2025에 액세스, <a href="https://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=2342&amp;context=etd_projects">https://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=2342&amp;context=etd_projects</a></li>
+<li>Traffic Dataset | Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/dataset/traffic">https://paperswithcode.com/dataset/traffic</a></li>
+<li>Traffic Time Series Dataset - Kaggle, 5월 3, 2025에 액세스, <a href="https://www.kaggle.com/datasets/stealthtechnologies/traffic-time-series-dataset">https://www.kaggle.com/datasets/stealthtechnologies/traffic-time-series-dataset</a></li>
+<li>Weather Dataset - Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/dataset/weather-ltsf">https://paperswithcode.com/dataset/weather-ltsf</a></li>
+<li>Weather Long-term Time Series Forecasting - Kaggle, 5월 3, 2025에 액세스, <a href="https://www.kaggle.com/datasets/alistairking/weather-long-term-time-series-forecasting">https://www.kaggle.com/datasets/alistairking/weather-long-term-time-series-forecasting</a></li>
+<li>Day 26- Time Series Forecasting of Electricity Consumption using LSTM (Intro to Deep Learning) - Akansha Saxena, 5월 3, 2025에 액세스, <a href="https://akanshasaxena.com/challenge/ml/30-days-30-ml-projects-day-26/">https://akanshasaxena.com/challenge/ml/30-days-30-ml-projects-day-26/</a></li>
+<li>Electric Power Consumption Forecasting - Kaggle, 5월 3, 2025에 액세스, <a href="https://www.kaggle.com/code/nechbamohammed/electric-power-consumption-forecasting">https://www.kaggle.com/code/nechbamohammed/electric-power-consumption-forecasting</a></li>
+<li>Power Consumption- Time Series- ARIMA - Kaggle, 5월 3, 2025에 액세스, <a href="https://www.kaggle.com/code/sunaysawant/power-consumption-time-series-arima">https://www.kaggle.com/code/sunaysawant/power-consumption-time-series-arima</a></li>
+<li>Time-series Data - SolarAnywhere, 5월 3, 2025에 액세스, <a href="https://www.solaranywhere.com/support/historical-data/time-series/">https://www.solaranywhere.com/support/historical-data/time-series/</a></li>
+<li>Time Series Forecasting in Wind &amp; Solar Grid Management - - Datategy, 5월 3, 2025에 액세스, <a href="https://www.datategy.net/2024/08/06/time-series-forecasting-in-wind-solar-grid-management/">https://www.datategy.net/2024/08/06/time-series-forecasting-in-wind-solar-grid-management/</a></li>
+<li>Solar Power Data for Integration Studies | Grid Modernization - NREL, 5월 3, 2025에 액세스, <a href="https://www.nrel.gov/grid/solar-power-data.html">https://www.nrel.gov/grid/solar-power-data.html</a></li>
+<li>Time Series with TensorFlow: Common Evaluation Metrics - MLQ.ai, 5월 3, 2025에 액세스, <a href="https://blog.mlq.ai/time-series-with-tensorflow-evaluation-metrics/">https://blog.mlq.ai/time-series-with-tensorflow-evaluation-metrics/</a></li>
+<li>What are the limitations of time series analysis? - Milvus, 5월 3, 2025에 액세스, <a href="https://milvus.io/ai-quick-reference/what-are-the-limitations-of-time-series-analysis">https://milvus.io/ai-quick-reference/what-are-the-limitations-of-time-series-analysis</a></li>
+<li>Detecting Seasonality Through Autocorrelation - Hex, 5월 3, 2025에 액세스, <a href="https://hex.tech/blog/detecting-seasonality-through-autocorrelation/">https://hex.tech/blog/detecting-seasonality-through-autocorrelation/</a></li>
+<li>Autocorrelation and Partial Autocorrelation in Time Series Data - Statistics By Jim, 5월 3, 2025에 액세스, <a href="https://statisticsbyjim.com/time-series/autocorrelation-partial-autocorrelation/">https://statisticsbyjim.com/time-series/autocorrelation-partial-autocorrelation/</a></li>
+<li>Autocorrelation function (ACF) and its interpretation | Intro to Time Series Class Notes, 5월 3, 2025에 액세스, <a href="https://library.fiveable.me/intro-time-series/unit-4/autocorrelation-function-acf-interpretation/study-guide/kRV2Op01nfiMsv6o">https://library.fiveable.me/intro-time-series/unit-4/autocorrelation-function-acf-interpretation/study-guide/kRV2Op01nfiMsv6o</a></li>
+<li>2.8 Autocorrelation | Forecasting: Principles and Practice (3rd ed) - OTexts, 5월 3, 2025에 액세스, <a href="https://otexts.com/fpp3/acf.html">https://otexts.com/fpp3/acf.html</a></li>
+<li>10.2 - Autocorrelation and Time Series Methods | STAT 462, 5월 3, 2025에 액세스, <a href="https://online.stat.psu.edu/stat462/node/188/">https://online.stat.psu.edu/stat462/node/188/</a></li>
+<li>2.8 Autocorrelation | Forecasting: Principles and Practice (2nd ed) - OTexts, 5월 3, 2025에 액세스, <a href="https://otexts.com/fpp2/autocorrelation.html">https://otexts.com/fpp2/autocorrelation.html</a></li>
+<li>Ablation Studies: XAI Methods for Tabular Data | Capital One, 5월 3, 2025에 액세스, <a href="https://www.capitalone.com/tech/machine-learning/xai-ablation-study/">https://www.capitalone.com/tech/machine-learning/xai-ablation-study/</a></li>
+<li>Machine Learning: What Is Ablation Study? | Baeldung on Computer Science, 5월 3, 2025에 액세스, <a href="https://www.baeldung.com/cs/ml-ablation-study">https://www.baeldung.com/cs/ml-ablation-study</a></li>
+<li>Running an Ablation Study — pykeen 1.11.1 documentation, 5월 3, 2025에 액세스, <a href="https://pykeen.readthedocs.io/en/stable/tutorial/running_ablation.html">https://pykeen.readthedocs.io/en/stable/tutorial/running_ablation.html</a></li>
+<li>[P] Ablation study using a subset of data? : r/MachineLearning - Reddit, 5월 3, 2025에 액세스, <a href="https://www.reddit.com/r/MachineLearning/comments/1h1kzsh/p_ablation_study_using_a_subset_of_data/">https://www.reddit.com/r/MachineLearning/comments/1h1kzsh/p_ablation_study_using_a_subset_of_data/</a></li>
+<li>CycleNet: Rethinking Cycle Consistency in Text-Guided Diffusion for Image Manipulation, 5월 3, 2025에 액세스, <a href="https://neurips.cc/virtual/2023/poster/69913">https://neurips.cc/virtual/2023/poster/69913</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2409.18479">https://arxiv.org/abs/2409.18479</a></li>
+</ol>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/17">https://ai-stat-lab.tistory.com/17</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

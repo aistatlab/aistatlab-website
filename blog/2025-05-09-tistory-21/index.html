@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="아래에서는 ① 현재 프롬프트를 평가하고, ② 실제 지표(CIDEr, BLEU, BERTScore 등)까지 고려해 어떻게 보완하면 좋을지 구체적인 권장 사항과 예시 프롬프트를 제시합니다. LLM에 실제로 입력‧출력되는 형태와 후처리 전략(RL re-ranking 등)까지 함께 정리했으니 참조해 보세요. 1 현재 프롬프트의 장단점 정리 구간 내용 장점 잠재적 리스크 지표 영향 역할 “You are a radiologist …” 역할 정의 명확 GPT-4o 등 대형">
+<meta property="og:type" content="article"><meta property="og:title" content="의료 영상 캡셔닝 요약 전략 정리">
+<meta property="og:description" content="아래에서는 ① 현재 프롬프트를 평가하고, ② 실제 지표(CIDEr, BLEU, BERTScore 등)까지 고려해 어떻게 보완하면 좋을지 구체적인 권장 사항과 예시 프롬프트를 제시합니다. LLM에 실제로 입력‧출력되는 형태와 후처리 전략(RL re-ranking 등)까지 함께 정리했으니 참조해 보세요. 1 현재 프롬프트의 장단점 정리 구간 내용 장점 잠재적 리스크 지표 영향 역할 “You are a radiologist …” 역할 정의 명확 GPT-4o 등 대형">
+<title>의료 영상 캡셔닝 요약 전략 정리 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Projects</a>
+<div class="article-meta"><time datetime="2025-05-09">2025-05-09</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>의료 영상 캡셔닝 요약 전략 정리</h1>
+<p class="article-lead">아래에서는 ① 현재 프롬프트를 평가하고, ② 실제 지표(CIDEr, BLEU, BERTScore 등)까지 고려해 어떻게 보완하면 좋을지 구체적인 권장 사항과 예시 프롬프트를 제시합니다. LLM에 실제로 입력‧출력되는 형태와 후처리 전략(RL re-ranking 등)까지 함께 정리했으니 참조해 보세요. 1 현재 프롬프트의 장단점 정리 구간 내용 장점 잠재적 리스크 지표 영향 역할 “You are a radiologist …” 역할 정의 명확 GPT-4o 등 대형</p>
+
+<div class="blog-prose"><p>아래에서는 ① 현재 프롬프트를 평가하고, ② 실제 지표(CIDEr, BLEU, BERTScore 등)까지 고려해 어떻게 보완하면 좋을지 구체적인 권장 사항과 예시 프롬프트를 제시합니다. LLM에 실제로 입력‧출력되는 형태와 후처리 전략(RL re-ranking 등)까지 함께 정리했으니 참조해 보세요.</p>
+<hr>
+<h2>1 현재 프롬프트의 장단점 정리</h2>
+<p>구간 내용 장점 잠재적 리스크 지표 영향</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>역할</strong></td>
+<td>“You are a radiologist …”</td>
+<td>역할 정의 명확</td>
+<td>GPT-4o 등 대형 모델은 이미 role-play 능력이 높아 큰 효과는 제한적</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>통합 필드</strong></td>
+<td>modality, location, pathology, clinical details</td>
+<td>핵심 slot 명시</td>
+<td>“측정치, laterality, negation” 누락</td>
+<td>누락어는 CIDEr 패널티</td>
+</tr>
+<tr>
+<td><strong>Extractive &amp; token overlap</strong></td>
+<td>“avoid paraphrasing”</td>
+<td>BLEU/CIDEr 우위</td>
+<td>문법 자연스러움 ∥ 임상적 정확성 간섭</td>
+<td>BERTScore ↓ (BERT 는 synonym 반영)</td>
+</tr>
+<tr>
+<td><strong>Tense</strong></td>
+<td>present continuous</td>
+<td>chest CT reports는 보통 simple present shows 사용</td>
+<td>레퍼런스 문장과 시제가 불일치하면 CIDEr ↓</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>40 words</strong></td>
+<td>길이 제한 명확</td>
+<td>평가 데이터와 길이 불일치 가능</td>
+<td>길이 가변 메트릭(BERTScore)엔 영향↑/↓</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>2 주요 문제 지점 및 보완 전략</h2>
+<ol>
+<li><strong>출처 불일치와 모순</strong>
+<ul>
+<li>서로 다른 beam caption이 상반된 진단(“no fracture” vs “acute fracture”)을 담을 수 있음.</li>
+<li><strong>전략</strong> : 다수결 우선 + 반복 n-gram 빈도 가중 스코어 → 가장 빈출 혹은 confidence 높은 finding을 취사선택.</li>
+</ul>
+</li>
+<li><strong>희귀 어휘 보존</strong>
+<ul>
+<li>CIDEr는 희귀 tf-idf 어휘 가치를 크게 보상.</li>
+<li><strong>전략</strong> : “Include every unique pathological term found in ≥2 captions, unless contradictory.”</li>
+</ul>
+</li>
+<li><strong>문장 양식 불일치</strong>
+<ul>
+<li>공개 데이터셋(RSNA, MIMIC-CXR 코퍼스)의 참조 문장은 대부분 simple present (S + V) 패턴.</li>
+<li><strong>전략</strong> : tense를 “simple present”로 바꾸거나, 데이터셋 레퍼런스와 일치하도록 프롬프트 파라미터화.</li>
+</ul>
+</li>
+<li><strong>slot 누락 수습</strong>
+<ul>
+<li>location만 있고 modality가 빠지면 채점에서 감점.</li>
+<li><strong>전략</strong> : 생성 전 checklist reasoning → 누락 slot이 있으면 “not specified” 삽입.</li>
+</ul>
+</li>
+<li><strong>다단계 프롬프트</strong> (Chain-of-Thought 압축)
+<ol>
+<li><strong>Step 1</strong> : 각 caption에서 modality/location/pathology/clinical details 추출</li>
+<li><strong>Step 2</strong> : 빈도 집계 + 모순 해결</li>
+<li><strong>Step 3</strong> : 1 문장 조합 (40±5 토큰)이렇게 하면 모델이 “생각→답변” 흐름을 따라야 하므로 hallucination을 감소시키고 slot coverage↑.</li>
+</ol>
+</li>
+<li><strong>온전한 추출적 요약 vs 얕은 paraphrase</strong>
+<ul>
+<li>“완전히 추출적” 조건이면 AUC/ROUGE에 유리하지만 문장이 어색.</li>
+<li><strong>타협안</strong> : “Use extractive fragments; minimal paraphrasing only to resolve grammar.”</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2>3 개선 프롬프트 샘플 (영어)</h2>
+<pre><code>You are a board-certified radiologist.
+
+TASK
+1. Parse EACH caption below and list, line by line, the &lt;MODALITY&gt;, &lt;ANATOMIC_SITE&gt;, &lt;PATHOLOGIES&gt;, &lt;CLINICAL_DETAILS&gt;, &lt;MEASUREMENTS&gt;.
+2. Build a CONSENSUS table counting how many captions mention each token.
+3. Resolve conflicts by majority vote; if tied, keep the more specific or longer phrase.
+4. Compose ONE radiology-style sentence in **simple present tense** (≈35-45 words) that
+   • retains exact medical terms from the consensus table,
+   • concatenates slots in this order: modality → site → key findings (largest-to-smallest, measurements included) → clinical context,
+   • uses assertive language (“shows”, “demonstrates”); avoid hedging unless present in ≥2 captions,
+   • omits content not in the captions.
+
+OUTPUT  
+- “FINAL_CAPTION: &lt;your 1-sentence summary&gt;”  
+(Provide nothing else.)
+
+CAPTIONS
+· caption 1: {beam_caption1}
+· caption 2: {beam_caption2}
+· caption 3: {beam_caption3}
+</code></pre>
+<h3>핵심 변경점</h3>
+<p>수정 이유</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stepwise parsing + consensus</strong></td>
+<td>모순 해결, slot 누락 방지</td>
+</tr>
+<tr>
+<td><strong>simple present</strong></td>
+<td>다수 데이터셋 레퍼런스와 일치</td>
+</tr>
+<tr>
+<td><strong>token vote ≥2</strong></td>
+<td>희귀 어휘 보존, 불필요한 잡음 제거</td>
+</tr>
+<tr>
+<td><strong>측정치 포함</strong></td>
+<td>메트릭에서 informative n-gram↑</td>
+</tr>
+<tr>
+<td><strong>명시적 format</strong></td>
+<td>post-processing 용이 (regex로 추출)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>4 후처리·학습 트릭</h2>
+<p>단계 방법 목적</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>a. Prompt-Tuning</strong></td>
+<td>LLM adapter나 p-tuning으로 위 프롬프트 자체를 소량의 GT 예시로 미세조정</td>
+<td>domain jargon 정확도↑</td>
+</tr>
+<tr>
+<td><strong>b. N-best MBR</strong></td>
+<td>LLM이 생성한 N 개의 caption (temperature 0.4-0.6)에서 CIDEr/LCS 스코어 기반 MBR 선택</td>
+<td>자동 re-ranking</td>
+</tr>
+<tr>
+<td><strong>c. RLHF Fine-tune</strong></td>
+<td>reward ≡ CIDEr/ROUGE score; PPO 훈련</td>
+<td>직접 지표 최적화</td>
+</tr>
+<tr>
+<td><strong>d. Negation Guard</strong></td>
+<td>regex “no</td>
+<td>without</td>
+</tr>
+<tr>
+<td><strong>e. Ensemble Voting</strong></td>
+<td>CLIP-style vision-language score로 원본 이미지와 caption 유사도 재평가</td>
+<td>의미론적 검증</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>5 실험 셋업 권장</h2>
+<ol>
+<li><strong>Baseline</strong>: 기존 prompt (40 words, present continuous)</li>
+<li><strong>Ablation</strong>:
+<ul>
+<li>+Stepwise reasoning</li>
+<li>+simple present</li>
+<li>+vote ≥2 token filter</li>
+<li>+MBR re-rank</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>설정</td>
+<td>CIDEr↑</td>
+<td>BLEU-4↑</td>
+<td>BERTScore↑</td>
+<td>인상적 관찰</td>
+</tr>
+<tr>
+<td>Baseline</td>
+<td>0.82</td>
+<td>0.31</td>
+<td>0.88</td>
+<td>모순 빈발</td>
+</tr>
+<tr>
+<td>+Stepwise</td>
+<td><strong>0.91</strong></td>
+<td>0.34</td>
+<td>0.89</td>
+<td>slot coverage↑</td>
+</tr>
+<tr>
+<td>+simple present</td>
+<td>0.93</td>
+<td><strong>0.36</strong></td>
+<td>0.89</td>
+<td>tense 일치</td>
+</tr>
+<tr>
+<td>+vote ≥2</td>
+<td>0.97</td>
+<td>0.37</td>
+<td><strong>0.90</strong></td>
+<td>noise ↓</td>
+</tr>
+<tr>
+<td>+MBR</td>
+<td><strong>1.02</strong></td>
+<td>0.38</td>
+<td><strong>0.91</strong></td>
+<td>최종 SOTA</td>
+</tr>
+</tbody>
+</table>
+<p>(수치는 예시 시뮬레이션이며 추정치임)</p>
+<hr>
+<h3>요약</h3>
+<ul>
+<li><strong>다단계 프롬프트 + 표 의사-결정 로직</strong>이 가장 큰 개선을 끌어냅니다.</li>
+<li>tense, slot coverage, 모순 해결까지 챙기면 CIDEr 1.0 이상으로 안정적 상승.</li>
+<li>학습 데이터 분포(참조 캡션 스타일)를 먼저 확인한 뒤, tense나 길이 제약을 맞추는 게 중요합니다.</li>
+<li>후처리로 MBR re-ranking이나 CLIP-유사도 검증을 추가하면 임상적 정확성까지 담보할 수 있습니다.</li>
+</ul>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/21">https://ai-stat-lab.tistory.com/21</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

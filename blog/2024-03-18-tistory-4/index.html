@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="References ICCV 2021. [ Paper ] [ Github ] Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, Armand Joulin Facebook AI Research | Inria | Sorbonne University 29 Apr 2021 Abstract Self-supervised learning이 ViT 분야에서 new pro">
+<meta property="og:type" content="article"><meta property="og:title" content="[Paper Review] DINO - Emerging Properties in Self-Supervised Vision Transformers (Mathilde Caron, 2021)">
+<meta property="og:description" content="References ICCV 2021. [ Paper ] [ Github ] Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, Armand Joulin Facebook AI Research | Inria | Sorbonne University 29 Apr 2021 Abstract Self-supervised learning이 ViT 분야에서 new pro">
+<title>[Paper Review] DINO - Emerging Properties in Self-Supervised Vision Transformers (Mathilde Caron, 2021) | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Paper Review</a>
+<div class="article-meta"><time datetime="2024-03-18">2024-03-18</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>[Paper Review] DINO - Emerging Properties in Self-Supervised Vision Transformers (Mathilde Caron, 2021)</h1>
+<p class="article-lead">References ICCV 2021. [ Paper ] [ Github ] Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, Armand Joulin Facebook AI Research | Inria | Sorbonne University 29 Apr 2021 Abstract Self-supervised learning이 ViT 분야에서 new pro</p>
+<img class="article-cover" src="assets/img/blog/tistory-4/001-img.png" alt="" loading="eager">
+<div class="blog-prose"><h3>References</h3>
+<blockquote>
+<p>ICCV 2021. [<a href="https://arxiv.org/abs/2104.14294">Paper</a>] [<a href="https://github.com/facebookresearch/dino">Github</a>]</p>
+<p>Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, Armand Joulin</p>
+<p>Facebook AI Research | Inria | Sorbonne University</p>
+<p>29 Apr 2021</p>
+</blockquote>
+<h2>Abstract</h2>
+<ul>
+<li>Self-supervised learning이 ViT 분야에서 new property를 제공하는지? (CNN과 비교) → ViT에 Self-supervised Learning을 적용하여 그 효과를 확인함</li>
+<li>Self-supervised methods가 ViT에 잘 작동함. 단순히 성능이 높을뿐만 아니라 2가지 이점이 존재함.
+<ol>
+<li>self-supervised ViT features에는 이미지의 semantic segmentation에 대한 explicit information이 포함되어 있음 (이는 supervised ViT나 convnet에서는 나타나지 않음)</li>
+<li>이러한 feature들은 뛰어난 k-NN classifier 이기도 함 (78.3% top-1 on ImageNet with a small ViT)</li>
+</ol>
+</li>
+<li>DINO란?
+<ul>
+<li>a simple self-supervised method</li>
+<li>a form of self-distillation with no labels</li>
+</ul>
+</li>
+<li>다음 3가지 방법이 중요함</li>
+</ul>
+<ol>
+<li>Momentum encoder</li>
+<li>multi-crop training</li>
+<li>the use of small patches with ViT</li>
+</ol>
+<p><strong>⇒ ViT-Base에 DINO를 결합한 방법으로 좋은 시너지를 낼 수 있음</strong></p>
+<h2>1. Introduction</h2>
+<ul>
+<li>Transformer가 visual recognition 분야에서 convnet (convolutional neural network)의 대안으로 떠오르고 있으며, 대부분 NLP에서 영감을 얻은 훈련 전략을 취함 (ex. pre-training on large dataset and fine-tuning on the target dataset)</li>
+<li>그 결과 ViT는 어느정도 성능을 내었지만, 아직 convnet에 비해 명확한 이점을 제시하지 못했음 (반면, 계산 비용이 더 요구되며, 더 많은 학습 데이터가 필요하고, feature들이 unique property를 나타내지 않음)</li>
+<li>⇒ Transformer 모델이 이미지 분류에서 성능이 좋지 않은 이유에 대해서 탐구함 : <strong>pre-training에서 supervision 방식을 사용하기 때문</strong></li>
+</ul>
+<p>본 논문에서는 NLP에서 Transformer가 좋은 성능을 보인 주요한 요인 중 하나는 ***‘self-supervised pre-training’***을 사용했다는 점이라고 말함. (더 풍부한 Learning Signal 전달)</p>
+<p><strong>⇒ Computer Vision 분야에서도 self-supervised pre-training을 사용하여 성능을 향상시킬 수 있는지 연구</strong></p>
+<ul>
+<li>
+<p>Self-supervised pre-training을 사용하여 ViT 모델 학습시켜, Self-supervised Pretraining이 ViT feature에 미치는 영향을 분석함</p>
+<p><img src="assets/img/blog/tistory-4/001-img.png" alt=""></p>
+<p>Figure 1: Self-attention from a Vision Transformer with 8 × 8 patches trained with no supervision. We look at the self-attention of the [CLS] token on the heads of the last layer. This token is not attached to any label nor supervision. These maps show that the model automatically learns class-specific features leading to unsupervised object segmentations</p>
+<ul>
+<li>Self-supervised ViT feature 들은 위의 이미지와 같이 장면 레이아웃(scene layout), 특히 객체 경계(object boundaries)를 명시적으로 포함함. 이 정보는 마지막 블록의 Self-attention 모듈에서 직접 접근할 수 있음Figure 1: Self-attention from a Vision Transformer with 8 × 8 patches trained with no supervision. We look at the self-attention of the [CLS] token on the heads of the last layer. This token is not attached to any label nor supervision. These maps show that the model automatically learns class-specific features leading to unsupervised object segmentations</li>
+<li>Self-supervised ViT feature들은 finetuning, linear classifier, data augmentation 없이 기본 k-NN에서 특히 잘 수행되어 ImageNet에서 78.3%의 top-1 accuracy를 달성하였음</li>
+</ul>
+</li>
+</ul>
+<p>본 연구에서 발견한 이러한 특징은, 레이블이 없는 Knowledge Distillation의 한 형태로 해석될 수 있는 간단한 Self-supervised 방법의 아키텍처를 설계하도록 하였고, 이를 DINO라고 함.</p>
+<p>표준 Cross Entropy Loss를 활용하여 Momentum Encoder로 만들어진 Teacher Network의 출력을 직접 예측하도록 Self-supervised training을 단순화함</p>
+<h3>※ Knowledge Distillation</h3>
+<p>: Pretrained 된 Teacher model을 활용하여, student model에서도 Teacher model과 비슷한 성능을 낼 수 있도록 지식을 전달하는 방법</p>
+<p><img src="assets/img/blog/tistory-4/002-img_1.png" alt=""></p>
+<ul>
+<li><strong>Distillation Loss</strong>
+<ul>
+<li>Teacher model이 가지고 있는 Knowledge를 Student model에게 Distillation을 하기 위한 Loss</li>
+<li>Tempearture hyperparameter로 softning한 각각의 Teacher와 Student의 soft target을 KL divergence Loss를 이용하여 계산</li>
+<li>KL divergence로 두 확률분포의 차이를 계산할 수 있기 때문에 Distillation Loss에서 KL divergence를 사용함으로서 Teacher와 Student의 확률분포가 비슷해지도록 학습을 유도</li>
+</ul>
+</li>
+<li><strong>Student Loss</strong>
+<ul>
+<li>Student Loss를 계산하기 위해 Cross Entropy Loss를 사용하고 soft targets이 아닌 T = 1인 Hard targets을 사용</li>
+<li>Student model는 Distillation Loss를 통해 Teacher model의 knowledge를 전수받고, Student Loss를 통해 더 정확한 값을 학습할 수 있음</li>
+</ul>
+</li>
+</ul>
+<p>또한, DINO Framework는 유연하기 때문에 아키텍처를 수정하거나 내부 정규화를 수정할 필요 없이, Convolution Network와 ViT 모두 작동함</p>
+<p>ImageNet Benchmark를 통해 DINO와 ViT간의 시너지를 검증하였고, Convolution Network와도 함께 작동한다는 사실을 확인함</p>
+<p>+기존의 Self-supervised 방법에서는 segmentation mask 의 출현이 공통 속성으로 나타나는 것으로 보임</p>
+<p>+하지만 k-NN에서 우수한 성능은 <strong>momentum encoder와 multi-crop augmentation과 같은 특정 구성 요소를 결합할 때</strong>만 나타남</p>
+<p>+또한 ViT와 resulting features의 퀄리티를 개선하기 위해선 smaller patch를 사용하는 것이 중요하다는 것을 발견함</p>
+<h2>2. Related work</h2>
+<h3>Self Supervised Learning</h3>
+<p>Supervision 학습 방법과 달리, unlabeled data를 사용하여 모델을 학습시키는 방법</p>
+<p>데이터에서 유용한 feature를 추출, 이후 다양한 task를 수행</p>
+<p>본 논문에서는 BYOL의 방법론을 사용하지만, Loss가 다르고 동일한 구조의 Teacher, Student Network를 사용한다는 차이가 있음</p>
+<h3>Self-training and knowledge distillation</h3>
+<p>이전에 Self-Supervised Learning과 Knowledge Distillation 방법을 결합한 연구가 많지만, 본 논문에서는 Pre-trained Teacher Network를 사용하지 않는다는 차이가 있음</p>
+<h2>3. Approach</h2>
+<ul>
+<li>DINO (Distillation of Non-contrastive Image representations) 제안</li>
+<li>라벨이 없는 knowledge distillation (with no label)의 한 형태로 해석될 수 있는 간단한 <strong>self-supervised</strong> 방법</li>
+<li>Contrastive learning이 아닌, distillation 기반의 self-supervised learning 방법으로, 이미지의 feature를 추출하는 teacher 모델과 student 모델을 사용</li>
+<li><strong>Contrastive learnin</strong>g <strong>(CRL)</strong><br>
+: 입력 샘플 간의 비교를 통해 학습을 하는 것. self-supervised learning에 사용되는 접근법 중 하나. 사전에 정답 데이터를 구축하지 않는(no label) 판별 모델.</li>
+<li>DINO 학습 순서
+<ol>
+<li>Teacher 모델을 먼저 학습시키고, 이를 통해 이미지의 feature를 추출</li>
+<li>Student 모델 학습. 이 때 teacher 모델이 추출한 특징을 distillation을 통해 student 모델에 전달 이를 통해, student 모델은 teacher 모델이 추출한 특징을 학습함</li>
+</ol>
+</li>
+</ul>
+<h2>3.1. SSL with Knowledge Distillation</h2>
+<p><img src="assets/img/blog/tistory-4/003-img_2.png" alt=""></p>
+<ul>
+<li>DINO 는 SSL(Self Supervised Learning) 방법을 사용하고 있으며, Knowledge distillation 형태를 띔</li>
+<li>위 그림에서 볼 수 있듯이 student network $g_s$ 를 학습할 때, teacher network $g_t$와 일치시키는 방법으로 학습</li>
+</ul>
+<ol>
+<li>이미지 x가 주어졌을 때, Teacher, Student network 모두 $K$ 차원의 확률 분포 Ps와 Pt 출력함. 이때, 확률분포 P는 네트워크 g의 출력을 softmax function 으로 정규화하여 얻어짐 (이때, tau &gt; 0는 temperature parameter로 출력 분포의 첨도, 즉 뾰족한 정도를 조절)</li>
+</ol>
+<p><img src="assets/img/blog/tistory-4/004-img_3.png" alt=""></p>
+<ol>
+<li>고정된 teacher network gt가 주어졌을 때, student network의 parameter에 대한 cross-entropy loss 를 최소화하여, 두 신경망의 출력 분포를 일치시킴</li>
+</ol>
+<p><img src="assets/img/blog/tistory-4/005-img_4.png" alt=""></p>
+<p>여기서,</p>
+<p><img src="assets/img/blog/tistory-4/006-img_5.png" alt=""></p>
+<ol>
+<li>Self-supervised learning에 적용되는 부분</li>
+</ol>
+<p>우선, Multi-crop view strategy를 활용하여 다양한 이미지 셋 V를 만들고, 이 때 Local view와 Global view를 포함하여 최종으로 아래와 같은 Loss를 최소화함</p>
+<p><img src="assets/img/blog/tistory-4/007-img_6.png" alt=""></p>
+<p>&lt; DINO 의 pseudo-code &gt;</p>
+<p><img src="assets/img/blog/tistory-4/008-img_7.png" alt=""></p>
+<h3>Teacher Network</h3>
+<p>DINO는 다른 knowledge distillation과는 다르게, pretrained Teacher network를 가지지 않음</p>
+<p>따라서 Iteration의 구성을 Student network 이전으로 구성하였음</p>
+<p>여러 업데이트 규칙을 실험해 본 결과 Student의 가중치에 EMA 방식을 사용하는 Momentum Encoder가 좋았음</p>
+<h3>※ EMA(Exponentially Moving Average; 지수 이동 평균)</h3>
+<p>데이터의 이동 평균을 구할 때 오래된 데이터가 미치는 영향을 지수적으로 감쇠되도록 만들어주는 방법</p>
+<h3>Mean Teacher</h3>
+<p>Mean Teacher 는 self-supervised learning에서 학습하는 student model의 성능을 향상시키기 위해 사용되는 기술임.</p>
+<p>이 기술에서는 student model과 teacher model 두 개의 모델이 사용되는데, <strong>Teacher model은 student model의 가중치의 이동 평균으로, 학습 중에 student model에게 soft target을 제공</strong>하는 데 사용됨</p>
+<p>student model은 teacher model이 제공하는 soft target과의 차이를 최소화하도록 학습함. 이를 통해 student model은 더 강한 특징(두드러지는 특징)을 학습하고, unseen data에 대해 더 일반화된 예측을 할 수 있게 됨</p>
+<p>Mean Teacher 는 self-supervised learning 모델, 특히 <strong>ViT 모델의 성능을 향상시키는 데 효과적</strong>이라는 것이 입증됨. <strong>본</strong> 논문에서는 Momentum Teacher 라는 Mean Teacher의 변형을 사용하는데, <strong>Momentum Teacher는 student model의 가중치의 지수적으로 감소하는 이동 평균을 teacher model로 사용함</strong></p>
+<p><img src="assets/img/blog/tistory-4/009-img_8.png" alt=""></p>
+<p>이와 같은 teacher network의 파라미터는 student의 평균이 되는 데 이는 앙상블한 효과를 가짐 논문에서 실험 결과 teacher의 성능이 student보다 높다는 것을 보여줌</p>
+<h3>Multi-Crop Strategy</h3>
+<p>Multi-crop self-supervised learning 에서 사용되는 data augmentation 기법 중 하나</p>
+<p>이는 이미지를 여러 개의 작은 패치로 나누어 각각을 모델에 입력시키는 방법</p>
+<p>multi-crop을 사용하여 ViT 모델을 학습시키고, 성능을 향상시킴</p>
+<p>두 가지 종류의 crop 사용</p>
+<ol>
+<li>224 x 224 크기의 큰 crop (→ <strong>Global view → teacher network에 사용</strong>)</li>
+<li>96 x 96 크기의 작은 crop <strong>(→ Local view → student network에 사용)</strong></li>
+</ol>
+<ul>
+<li>0.4~1배로 zoom</li>
+</ul>
+<p><img src="assets/img/blog/tistory-4/010-img_9.png" alt=""></p>
+<p>각 이미지에 대해 두 종류의 crop을 적용하여 총 10개의 crop을 얻음</p>
+<p><strong>⇒ 이렇게 smaller patch를 얻은 것이 성능을 향상에 도움이 됨</strong></p>
+<p>같은 이미지를 넣은 것이므로 분포가 유사해야 함 <strong>⇒ Cross-Entropy Loss 계산</strong></p>
+<h3>Centering 과 Sharpning</h3>
+<p>self-supervised learning 에서 ViT 모델의 안정적인 학습을 위해 centering 과 sharpening 이라는 방법을 제안함</p>
+<p>Centering 은 <strong>teacher 네트워크가 생성한 feature 벡터의 평균을 각 벡터에서 빼는 방법.</strong> 이를 통해 어떤 차원도 지배하지 않도록 하고 <strong>feature 벡터가 더 균일하게 분포</strong>되도록 함</p>
+<p>Sharpening 은 <strong>softmax 함수에 적용되는 temperature parameter(</strong>$\Gamma$)<strong>를 조정하여 feature 벡터를 정규화하는 것을 의미함. temperature parameter의</strong> 값이 낮을수록 가장 유사한 feature 벡터에 가장 높은 확률이 할당되는 더 선명한 분포가 생성됨</p>
+<p>이를 통해 feature 벡터를 더 구별 가능하게 만들고 학습 중에 쉽게 구분할 수 있도록 도움 (이는 ViT for small datasets에서도 사용한 기법)</p>
+<p>Centering과 sharpening의 조합은 서로의 효과를 균형있게 조절하여 모델이 학습 중에 <strong>붕괴하는 것을 방지함</strong></p>
+<p>이는 논문에서 self-supervised ViT 모델의 학습을 안정화하고 downstream task에서의 성능을 향상시키는 데 효과적이라는 것이 입증되었다고 함</p>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/4">https://ai-stat-lab.tistory.com/4</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

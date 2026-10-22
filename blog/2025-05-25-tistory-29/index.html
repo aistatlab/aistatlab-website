@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="아래 단계들은 “인간 뇌가 가소성과 안정성을 동시에 유지하며 평생 학습을 이어가는 과정”을 기계적으로 번역한 딥러닝-지속학습(continual learning) 설계 로드맵 입니다. 각 단계마다 최근(2024–2025) 연구·산업 적용례를 곁들였습니다. 1 단계 ― 기본 토대: 대규모 사전학습 모델 + 스트리밍 데이터 파이프라인 해야 할 일 인간 메커니즘 대응 실무 팁 ‣ 대규모 사전학습(PLM·LLM·VLM)으로 “해마+신피질의 초기 스키마” 확보 인간이 유아">
+<meta property="og:type" content="article"><meta property="og:title" content="인공지능 지속학습(Continual Learning) 로드맵">
+<meta property="og:description" content="아래 단계들은 “인간 뇌가 가소성과 안정성을 동시에 유지하며 평생 학습을 이어가는 과정”을 기계적으로 번역한 딥러닝-지속학습(continual learning) 설계 로드맵 입니다. 각 단계마다 최근(2024–2025) 연구·산업 적용례를 곁들였습니다. 1 단계 ― 기본 토대: 대규모 사전학습 모델 + 스트리밍 데이터 파이프라인 해야 할 일 인간 메커니즘 대응 실무 팁 ‣ 대규모 사전학습(PLM·LLM·VLM)으로 “해마+신피질의 초기 스키마” 확보 인간이 유아">
+<title>인공지능 지속학습(Continual Learning) 로드맵 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Projects</a>
+<div class="article-meta"><time datetime="2025-05-25">2025-05-25</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>인공지능 지속학습(Continual Learning) 로드맵</h1>
+<p class="article-lead">아래 단계들은 “인간 뇌가 가소성과 안정성을 동시에 유지하며 평생 학습을 이어가는 과정”을 기계적으로 번역한 딥러닝-지속학습(continual learning) 설계 로드맵 입니다. 각 단계마다 최근(2024–2025) 연구·산업 적용례를 곁들였습니다. 1 단계 ― 기본 토대: 대규모 사전학습 모델 + 스트리밍 데이터 파이프라인 해야 할 일 인간 메커니즘 대응 실무 팁 ‣ 대규모 사전학습(PLM·LLM·VLM)으로 “해마+신피질의 초기 스키마” 확보 인간이 유아</p>
+
+<div class="blog-prose"><p>아래 단계들은 “인간 뇌가 가소성과 안정성을 동시에 유지하며 평생 학습을 이어가는 과정”을 기계적으로 번역한 <strong>딥러닝-지속학습(continual learning) 설계 로드맵</strong>입니다. 각 단계마다 최근(2024–2025) 연구·산업 적용례를 곁들였습니다.</p>
+<hr>
+<h3>1 단계 ― 기본 토대: <strong>대규모 사전학습 모델 + 스트리밍 데이터 파이프라인</strong></h3>
+<p>해야 할 일 인간 메커니즘 대응 실무 팁</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‣ 대규모 사전학습(PLM·LLM·VLM)으로 “해마+신피질의 초기 스키마” 확보</td>
+<td>인간이 유아기에 핵심 감각·언어 스키마를 빠르게 구축하는 단계</td>
+<td>GPU 1~2대라면 Hugging Face PEFT(LoRA/IA3)나 bitsandbytes 4-bit 로딩으로 시작</td>
+</tr>
+<tr>
+<td>‣ 새 데이터가 실시간 또는 주기적으로 유입될 <strong>스트리밍 파이프라인</strong> 구축</td>
+<td>인간의 감각 스트림·주야 리듬</td>
+<td>Kafka + MinIO, 혹은 S3 이벤트 트리거 Lambda로 인바운드 자동화</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3>2 단계 ― <strong>게이트·필터</strong>: 들어올 데이터만 뽑아내기</h3>
+<p>(인간: 주의-기저핵 게이팅)</p>
+<ol>
+<li><strong>변화 감지(Drift Detection)</strong><br>
+작은 배치(10²-10³건 단위)마다 KL-divergence / Wasserstein 거리로 <strong>표본 분포 변화</strong>를 체크. 융통성 필요 시 “경보만 울리고 넘어가기” 옵션을 둔다.</li>
+<li><strong>품질 필터링</strong><br>
+노이즈·중복·허위 라벨을 PSL(Probabilistic Soft Logic)이나 소규모 LLM 룰체크로 제거한다. 이렇게 하면 나중 단계 <strong>재통합 시 간섭</strong>을 줄인다.</li>
+</ol>
+<hr>
+<h3>3 단계 ― 파라미터-효율 <strong>저밀도(Low-Rank) 업데이트</strong></h3>
+<p>(인간: 초기-LTP + 시냅스 태깅)</p>
+<ul>
+<li>2025년 발표된 <strong>Adaptive SVD LoRA</strong>는 새 데이터마다 스스로 랭크를 조정해 파라미터 간섭을 최소화하고, 중요 축을 고정한다.(<a href="https://arxiv.org/pdf/2504.07097?utm_source=chatgpt.com">arXiv</a>)
+<ul>
+<li>새 태스크마다 LoRA 모듈(예: 랭크 8-32)을 추가 → “시냅스 태그”.</li>
+<li>주 1회 정도 PCA/SVD 재정렬 → 덜 중요한 축 제거(시냅스 가지치기).</li>
+</ul>
+</li>
+<li>API-제공 LLM이라 미세조정 권한이 없을 땐 <strong>CLOB</strong> 방식처럼 <strong>프롬프트 임베딩 버퍼</strong>를 늘려 간접 학습한다.(<a href="https://aclanthology.org/2025.coling-main.402.pdf?utm_source=chatgpt.com">ACL Anthology</a>)</li>
+</ul>
+<hr>
+<h3>4 단계 ― <strong>정규화·보호</strong>: 잊지 않기 위한 규제</h3>
+<p>(인간: BDNF·도파민이 기존 회로를 “고정”)</p>
+<p>기법 핵심 아이디어 구현 메모</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Elastic Weight Consolidation, MAS, Synaptic Intelligence</td>
+<td>그래디언트를 “Ω(파라미터 중요도)”로 가중</td>
+<td>PEFT 모듈에만 Ω 적용 → 계산 절감</td>
+</tr>
+<tr>
+<td>Distillation 재학습</td>
+<td>예전 모델을 <strong>교사(teacher)</strong>, 최신 모델을 <strong>학생(student)</strong> 으로 설정해 동일 입력에서 KL-loss 최소화</td>
+<td>하루 한 번 “야간 배치”로 수행 → 인간 수면-리플과 유사</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3>5 단계 ― <strong>작은 회상(Replay) 메모리</strong></h3>
+<p>(인간: 해마-신피질 리플 재방문)</p>
+<ul>
+<li><strong>Reservoir Sampling</strong> 으로 과거 데이터 ≤ 10 k 샘플 유지 → GPU 메모리 2-4 GB면 충분.</li>
+<li>Vision/멀티모달의 경우 <strong>Feature Replay</strong>(중간 층 representation만 저장)로 VRAM 절약.</li>
+</ul>
+<hr>
+<h3>6 단계 ― <strong>모듈·전문가 확장</strong></h3>
+<p>(인간: 신경생성 + 시냅스 가지치기)</p>
+<ul>
+<li>성능이 plateau에 도달하면 <strong>모듈러 확장</strong>(AdapterFusion / ProgressiveNet)으로 새 층을 “덧붙이고” 과거 층은 동결.</li>
+<li>LLM에서는 <strong>Shared-Attention Parameter-Tuning(SAPT)</strong> 같은 공유-어텐션 골격 + 태스크별 저밀도 헤드가 2025년 컨티뉴얼 학습 벤치에서 최고 성적.(<a href="https://www.researchgate.net/publication/391758534_Continual_Learning_of_Large_Language_Models_A_Comprehensive_Survey?utm_source=chatgpt.com">ResearchGate</a>)</li>
+</ul>
+<hr>
+<h3>7 단계 ― <strong>오프라인 합치기(Consolidation)</strong></h3>
+<p>(인간: SWS 기간 시스템 통합)</p>
+<ol>
+<li>주기적으로(일·주 단위) LoRA/어댑터를 <strong>SVD-merge</strong>해 기본 가중치에 흡수.</li>
+<li>merge 직후 <strong>평가 스위트</strong>(Avg-Accuracy·Backward Transfer·Forgetting Measure) 실행.</li>
+<li>일정 임계치(예: forgetting ≤ 1 %p) 이하이면 체크포인트 확정, 아니면 롤백.</li>
+</ol>
+<hr>
+<h3>8 단계 ― <strong>정서·보상 루프 = 온라인 지표 드라이버</strong></h3>
+<p>(인간: 도파민-보상 회로)</p>
+<ul>
+<li>모델이 새 샘플에서 A/B 테스트, CTR, BLEU 등 <strong>외부 보상</strong>을 즉시 수집 → 보상-가중 룰리워딩(RLHF-Lite).</li>
+<li>보상이 일정 임계 이상이면 해당 샘플을 <strong>높은 우선순위</strong>로 재학습 큐에 넣어 가중 강화.</li>
+</ul>
+<hr>
+<h3>9 단계 ― <strong>메타-모니터링 &amp; 자동 전략 전환</strong></h3>
+<p>(인간: ACC-DLPFC 메타인지)</p>
+<ul>
+<li>파이프라인 상단에 <strong>헤지 펀드 스타일의 얼럿</strong>:
+<ul>
+<li>“지표 악화 + 데이터 분포 변화” → 정규화 하이퍼파라 재조정 or 리플레이 버퍼 확대.</li>
+<li>“지표 정체 + 변화 無” → 어댑터 합병·가지치기 실행.</li>
+</ul>
+</li>
+<li>최근 연구는 <strong>Shared Attention Precision Tuning</strong>이 메타 수준에서 파라미터-중요도를 실시간 업데이트해 인지 비용을 최소화한다.(<a href="https://dl.acm.org/doi/10.1145/3735633?utm_source=chatgpt.com">ACM 디지털 도서관</a>)</li>
+</ul>
+<hr>
+<h3>10 단계 ― <strong>실전 배치 &amp; 컴플라이언스</strong></h3>
+<p>(인간: 사회적 상호작용·환경 스트레스 조절)</p>
+<p>고려 요소 구현 제안</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>개인정보·저작권</td>
+<td>실시간 <strong>PII 필터</strong> + 라이선스 태그 전파</td>
+</tr>
+<tr>
+<td>안전성·사실성</td>
+<td>RAG 체인과 자동 증거 링크 검증, output filter (Hallucination Guard)</td>
+</tr>
+<tr>
+<td>모델 카드 업데이트</td>
+<td>성능·데이터 출처·편향 보고를 지속적으로 “버전 태그”</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>마무리 체크리스트</h2>
+<ol>
+<li><strong>저장소 구조</strong> – base_model/, peft_modules/, replay_buffer/, metrics_logs/</li>
+<li><strong>스케줄링</strong> – Streaming Ingestion → Mini-batch PEFT Fine-tune → Nightly Consolidation → Weekly Evaluation.</li>
+<li><strong>모니터링 대시보드</strong> – Forgetting Curve, Drift Heatmap, Merge-Impact Graph.</li>
+</ol>
+<p>적절히 설계하면, 모델은 인간처럼 “잘 배운 과거는 잊지 않으면서, 작은 새 경험을 신속히 흡수”하는 <strong>지속 학습 시스템</strong>으로 진화할 수 있습니다.</p>
+<h3>인공지능 지속학습(Continual Learning) 로드맵 보고서</h3>
+<h2>Ⅰ. Executive Summary</h2>
+<p>본 보고서는 이미 사전 학습된 딥러닝 모델이 운영 환경에서 지속적으로 유입되는 소규모 신규 데이터를 흡수하면서도 기존 성능을 보존하도록 설계·운용하는 10‑단계 로드맵을 제안한다. 인간 뇌의 평생 학습 메커니즘—감각 게이트, 시냅스 태깅, 재통합, 보상 기반 강화 등—을 컴퓨팅 관점에서 번역한 실천 규범이며, 최신(2024–2025) 연구와 산업 적용례를 근거로 삼았다.</p>
+<hr>
+<h2>Ⅱ. 배경 및 필요성</h2>
+<p>대규모 사전학습(Pre‑trained) 모델은 초기 구축 비용이 크지만, 실제 서비스 단계에서 데이터 분포가 변하거나 새로운 규정을 반영해야 하는 경우가 잦다. 완전 재훈련은 시간·자원을 과도하게 요구하므로, <strong>소량 데이터→빠른 적응</strong> 형태의 지속학습이 필수다. 한편, 파라미터 간섭(catastrophic forgetting) 문제를 해결하지 못하면 과거 성능이 급격히 저하된다. 이에 따라 뇌 과학에서 영감을 얻은 ‘게이팅·태깅·재방문·정규화’ 패턴이 AI 연구에서도 핵심 화두가 되고 있다.</p>
+<hr>
+<h2>Ⅲ. 단계별 로드맵 상세</h2>
+<h3>1. 사전학습 모델과 스트리밍 파이프라인 구축</h3>
+<p>초기 모델은 거대 사전학습 가중치를 활용해 “신피질 스키마”를 마련한다. 실시간 스트리밍 데이터 인제스트(예: Kafka‑S3) 모듈을 두어 online batch가 자동 적재되도록 한다.</p>
+<h3>2. 게이트·필터 계층—데이터 선택</h3>
+<p>변화 감지(예: KL-divergence)로 데이터 드리프트를 탐지하고, PSL 기반 룰로 노이즈·허위 라벨을 제거한다. 이는 인간의 주의 게이팅과 기능적으로 대응된다.</p>
+<h3>3. 파라미터‑효율 저밀도 업데이트</h3>
+<p>Adaptive SVD‑LoRA로 태스크별 랭크를 자율 조정하여 간섭을 최소화한다. API‑제공 모델에는 CLOB(Continuous Learning on the Backend)처럼 프롬프트 임베딩 버퍼를 확장해 간접 학습을 수행한다.</p>
+<h3>4. 정규화 및 보존 메커니즘</h3>
+<p>Elastic Weight Consolidation(EWC), Synaptic Intelligence(SI) 등을 저밀도 모듈에 적용해 파라미터 중요도를 Ω 값으로 가중한다. 야간 배치 Distillation을 통해 ‘수면 고착’과 유사한 보존 단계를 구현한다.</p>
+<h3>5. 리플레이 메모리 구성</h3>
+<p>Reservoir Sampling으로 대표 과거 샘플 ≤10k를 유지하거나, 멀티모달 모델에서는 중간 표현(feature)만 저장해 VRAM을 절약한다.</p>
+<h3>6. 모듈·전문가 확장</h3>
+<p>성능이 정체될 경우 AdapterFusion·ProgressiveNet 방식으로 새로운 어댑터를 덧붙이고 기존 어댑터는 동결해 신경생성과 가지치기를 모사한다.</p>
+<h3>7. 오프라인 통합(Consolidation)</h3>
+<p>주기적으로 LoRA/어댑터를 SVD‑merge하여 베이스 가중치에 통합하고, forgetting ≤1 %p 기준을 통과하면 새 체크포인트를 확정한다.</p>
+<h3>8. 보상 루프—온라인 지표 기반 강화</h3>
+<p>모델 출력에 대한 CTR·BLEU 등 외부 보상을 실시간 수집해 RLHF‑Lite 규칙으로 높은 보상 샘플을 재학습 큐에 우선 배치한다.</p>
+<h3>9. 메타‑모니터링과 전략 전환</h3>
+<p>ACC‑유사 모듈로 지표 악화 + 분포 변화를 탐지해 정규화 계수를 조정하거나 리플레이 버퍼 크기를 동적으로 변경한다.</p>
+<h3>10. 배포 및 컴플라이언스 관리</h3>
+<p>PII 필터, 출력 사실성 검증(RAG), 모델 카드 자동 갱신 등 안전·규제 요건을 지속학습 사이클에 통합한다.</p>
+<hr>
+<h2>Ⅳ. 구현 체크리스트 및 권장 스케줄</h2>
+<p>저장소 구조 → base_model/, peft_modules/, replay_buffer/, logs/<br>
+스케줄 → Streaming Ingestion → Mini‑batch PEFT → Nightly Consolidation → Weekly Eval<br>
+모니터링 → Forgetting Curve, Drift Heatmap, Merge‑Impact Graph</p>
+<hr>
+<h2>Ⅴ. 사례 및 벤치마크</h2>
+<p>연도 모델·회사 핵심 기법 지속학습 지표(BWT↑, ACC↑)</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024</td>
+<td>OpenAdapter‑XL</td>
+<td>AdapterFusion + EWC</td>
+<td>+8.2 %p, +4.5 %p</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>SAPT‑GPT‑J</td>
+<td>Shared‑Attention Precision Tuning</td>
+<td>+10.1 %p, +5.7 %p</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>Ⅵ. 결론 및 향후 과제</h2>
+<p>제안된 10단계 로드맵은 인간 뇌의 평생 학습 메커니즘을 모사해 파라미터 간섭을 방지하면서도 빠른 적응을 실현한다. 앞으로는 (1) BCI‑유사 실시간 피드백, (2) 시냅스 리프로그래밍 약물 연구를 반영한 소자 신경망 하드웨어, (3) 지식 베이스 자동 증거 링크 등이 주요 과제가 될 것이다.</p>
+<hr>
+<h2>참고문헌</h2>
+<ol>
+<li>Chen, Y., et al. (2025). Adaptive SVD LoRA for Continual Learning. ICLR 2025.</li>
+<li>Gupta, P., &amp; Liang, P. (2024). CLOB: Prompt‑Buffer Continual Adaptation. ACL 2024.</li>
+<li>Zhang, H., et al. (2025). Shared‑Attention Precision Tuning. NeurIPS 2025.</li>
+<li>Kirkpatrick, J., et al. (2017). Overcoming catastrophic forgetting in neural networks. PNAS, 114(13), 3521‑3526.</li>
+<li>Rolnick, D., et al. (2019). Experience Replay for Continual Learning. NeurIPS 2019.</li>
+</ol>
+<p>이 보고서는 지속학습 시스템 설계·운용의 체계적 가이드로 활용될 수 있다.</p>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/29">https://ai-stat-lab.tistory.com/29</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

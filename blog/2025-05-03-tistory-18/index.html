@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="1. 서론 정확한 시계열 예측은 다양한 영역에서 중요한 역할을 수행하며, 의사 결정, 자원 할당 및 전략적 계획 수립에 상당한 영향을 미칩니다. 1 날씨 예측, 교통 관리, 에너지 관리와 같은 분야에서 조기 경보 및 사전 계획을 위한 통찰력을 제공하며 1 , 수요 예측, 금융 분석 및 운영 계획과 같은 작업에 필수적입니다. 2 최근 딥러닝 모델은 시계열 예측의 비선형 모델링 능력을 크게 향상시켰습니다. 3 그러나 실제 시계열 데이터는 복잡한 시간적 의존성, 계절">
+<meta property="og:type" content="article"><meta property="og:title" content="CycleNet 후속 연구 계획서">
+<meta property="og:description" content="1. 서론 정확한 시계열 예측은 다양한 영역에서 중요한 역할을 수행하며, 의사 결정, 자원 할당 및 전략적 계획 수립에 상당한 영향을 미칩니다. 1 날씨 예측, 교통 관리, 에너지 관리와 같은 분야에서 조기 경보 및 사전 계획을 위한 통찰력을 제공하며 1 , 수요 예측, 금융 분석 및 운영 계획과 같은 작업에 필수적입니다. 2 최근 딥러닝 모델은 시계열 예측의 비선형 모델링 능력을 크게 향상시켰습니다. 3 그러나 실제 시계열 데이터는 복잡한 시간적 의존성, 계절">
+<title>CycleNet 후속 연구 계획서 | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Projects</a>
+<div class="article-meta"><time datetime="2025-05-03">2025-05-03</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>CycleNet 후속 연구 계획서</h1>
+<p class="article-lead">1. 서론 정확한 시계열 예측은 다양한 영역에서 중요한 역할을 수행하며, 의사 결정, 자원 할당 및 전략적 계획 수립에 상당한 영향을 미칩니다. 1 날씨 예측, 교통 관리, 에너지 관리와 같은 분야에서 조기 경보 및 사전 계획을 위한 통찰력을 제공하며 1 , 수요 예측, 금융 분석 및 운영 계획과 같은 작업에 필수적입니다. 2 최근 딥러닝 모델은 시계열 예측의 비선형 모델링 능력을 크게 향상시켰습니다. 3 그러나 실제 시계열 데이터는 복잡한 시간적 의존성, 계절</p>
+
+<div class="blog-prose"><h4><strong>1. 서론</strong></h4>
+<p>정확한 시계열 예측은 다양한 영역에서 중요한 역할을 수행하며, 의사 결정, 자원 할당 및 전략적 계획 수립에 상당한 영향을 미칩니다.1 날씨 예측, 교통 관리, 에너지 관리와 같은 분야에서 조기 경보 및 사전 계획을 위한 통찰력을 제공하며 1, 수요 예측, 금융 분석 및 운영 계획과 같은 작업에 필수적입니다.2 최근 딥러닝 모델은 시계열 예측의 비선형 모델링 능력을 크게 향상시켰습니다.3 그러나 실제 시계열 데이터는 복잡한 시간적 의존성, 계절성, 추세, 노이즈 및 장기 예측에 대한 증가하는 요구와 같은 고유한 문제점을 안고 있어 정확한 예측을 어렵게 만듭니다.2 특히 장기 시계열 예측(LTSF)은 확장된 기간에 걸쳐 종속성을 모델링해야 하므로 더욱 어려운 과제입니다.4</p>
+<p>이러한 어려움 속에서 시계열 데이터의 주기적 패턴을 명시적으로 모델링하는 것은 예측 정확도를 향상시키는 데 중요한 의미를 가지며, 특히 장기 예측에서 그 효과가 두드러집니다.1 시계열의 안정적인 주기적 패턴은 장기 예측을 수행하는 데 기반이 되며 1, 이러한 주기성을 명시적으로 모델링하면 LTSF 작업에서 모델 성능을 향상시킬 수 있습니다.1</p>
+<p>본 보고서는 최근 제시된 CycleNet 연구를 심층적으로 검토하고, 주기적 패턴을 명시적으로 모델링하기 위해 제안된 잔차 순환 예측(Residual Cycle Forecasting, RCF) 기술을 분석합니다.1 CycleNet은 학습 가능한 순환 주기를 활용하여 시퀀스 내의 고유한 주기적 패턴을 모델링한 다음 잔차 성분에 대한 예측을 수행하는 새로운 접근 방식을 제시하며, 여러 도메인에서 최첨단 예측 정확도를 달성하고 상당한 효율성 이점을 제공하는 것으로 보고되었습니다.1 본 보고서의 목적은 CycleNet의 핵심 기여와 기술적 세부 사항을 상세히 분석하고, CycleNet의 한계를 극복하여 더욱 향상된 성능을 제공할 수 있는 새로운 딥러닝 모델 개발을 위한 연구 계획서를 제시하는 것입니다.</p>
+<h4><strong>2. CycleNet 상세 검토</strong></h4>
+<h4>2.1. 핵심 기여 및 RCF 기술 개요:</h4>
+<ul>
+<li>CycleNet 연구의 주요 목표는 주기적 패턴을 명시적으로 모델링하여 장기 시계열 예측(LTSF) 성능을 향상시키는 것입니다.1 시계열의 안정적인 주기적 패턴은 장기 예측의 중요한 기반이며, CycleNet은 이러한 주기성을 명시적으로 모델링하는 데 중점을 둡니다.1 이러한 접근 방식은 내재적으로 주기적인 패턴을 학습하는 다른 방법들과 차별화됩니다.</li>
+<li>CycleNet의 핵심 아이디어는 잔차 순환 예측(RCF) 기술을 사용하는 것입니다. RCF는 학습 가능한 순환 주기를 활용하여 시퀀스 내의 고유한 주기적 패턴을 모델링한 다음, 모델링된 주기를 제거한 후 남은 잔차 성분에 대한 예측을 수행합니다.1 이러한 2단계 접근 방식을 통해 CycleNet은 주기적 행동을 분리하여 학습하고, 예측 작업을 단순화할 수 있습니다.</li>
+</ul>
+<h4>2.2. CycleNet 아키텍처 심층 설명:</h4>
+<ul>
+<li>CycleNet 아키텍처의 첫 번째 단계는 학습 가능한 순환 주기(Q)를 사용하여 주기적 패턴을 모델링하는 것입니다. 이 순환 주기는 W×C의 형태를 가지며, 여기서 W는 주기의 길이이고 C는 채널 또는 변수의 수입니다.6 순환 주기는 0으로 초기화되며, 훈련 과정에서 기울기 하강법을 통해 최적화되어 데이터의 실제 주기적 행동을 캡처하도록 학습됩니다.6 0으로 초기화하는 것은 모델이 사전 정의된 주기적 성분에 의존하지 않고 데이터에서 직접 패턴을 학습하도록 강제하는 설계 선택입니다.</li>
+<li>두 번째 단계는 잔차 예측입니다. 먼저, 학습된 순환 주기(Q)를 반복하고 입력 데이터의 길이에 맞춰 정렬하여 주기적 성분(Q′)을 생성합니다. 그런 다음, 입력 데이터에서 이 주기적 성분을 제거하여 잔차 성분(R)을 얻습니다. 선형 계층 또는 다층 퍼셉트론(MLP)과 같은 백본 모델은 이 잔차 성분(R)을 입력으로 받아 미래의 잔차(R^)를 예측합니다. 최종적으로, 학습된 순환 주기에서 파생된 미래의 주기적 성분을 예측된 잔차에 더하여 최종 예측값(Y^=R^+Q′)을 얻습니다.6 이러한 분해 및 재구성 접근 방식을 통해 모델은 시계열의 주기적 및 비주기적 측면을 개별적으로 처리하여 예측 정확도를 높일 수 있습니다.</li>
+<li>CycleNet의 유연성은 백본 모델로 선형 계층 또는 다층 퍼셉트론(MLP)을 선택적으로 사용할 수 있다는 점에 있습니다.1 이는 RCF 기술 자체가 핵심 패턴을 캡처하는 데 효과적임을 시사하며, 복잡한 예측 모델의 필요성을 줄여줍니다.</li>
+<li>CycleNet의 효과적인 성능을 위해서는 데이터의 주기 길이(W)를 미리 식별하는 것이 중요합니다. 이는 종종 도메인 특성을 기반으로 수동 추론을 통해 결정됩니다. 예를 들어, 시간별 전기 소비 데이터의 경우 주간 주기는 168시간으로 추론될 수 있습니다.9 그러나 실제 시계열 데이터는 시간에 따라 변하거나 여러 개의 주기를 가질 수 있으며, 이러한 경우 고정된 주기 길이에 의존하는 것은 CycleNet의 적응성을 제한하는 잠재적인 단점이 될 수 있습니다.</li>
+</ul>
+<h4>2.3. 실험 설정, 데이터셋, 평가 지표 및 보고된 결과 분석:</h4>
+<ul>
+<li>CycleNet 연구에서는 ETT 시리즈, Traffic, Weather, Electricity 및 Solar-Energy와 같은 벤치마크 데이터셋을 사용하여 모델을 평가했습니다.6 이러한 데이터셋은 일별, 주별 등 강력한 주기적 패턴을 나타내므로 CycleNet의 핵심 강점을 입증하는 데 적합합니다.</li>
+<li>모델 훈련에는 PyTorch 프레임워크가 사용되었으며, 30 에포크 동안 세밀하게 조정되었고, 조기 중단을 위해 5의 patience 값이 설정되었습니다. 최적화기는 Adam이 사용되었으며, 배치 크기는 데이터셋의 변수 수를 고려하여 신중하게 선택되었습니다.6 이러한 표준 딥러닝 훈련 방식은 결과의 재현성을 높이고 다른 모델과의 공정한 비교를 가능하게 합니다.</li>
+<li>CycleNet의 성능은 다양한 예측 Horizon(96, 192, 336, 720 단계)에 걸쳐 평균 제곱 오차(Mean Squared Error, MSE)와 평균 절대 오차(Mean Absolute Error, MAE)를 사용하여 측정되었습니다.6 이러한 지표는 시계열 예측 모델의 정확도를 평가하는 데 널리 사용됩니다.</li>
+<li>보고된 주요 성능 결과에 따르면 CycleNet은 여러 도메인에서 최첨단 성능을 보여주었으며, 많은 복잡한 모델보다 뛰어난 성능을 나타냈습니다.1 특히 전기, 날씨 및 에너지 도메인에서 높은 예측 정확도를 달성했으며 1, 다양한 예측 Horizon에 걸쳐 일관된 성능을 보였습니다.6</li>
+<li>CycleNet은 파라미터 수 측면에서 효율적이며, 높은 정확도를 유지하면서도 다른 최첨단 모델보다 훨씬 적은 파라미터를 사용합니다.1 이는 CycleNet이 정확성과 계산 효율성 사이에서 좋은 균형을 제공함을 시사합니다.</li>
+</ul>
+<h4>2.4. CycleNet의 강점:</h4>
+<ul>
+<li>CycleNet은 특히 강력한 주기성을 나타내는 도메인에서 향상된 예측 정확도를 제공합니다.6 이는 주기적 패턴을 명시적으로 모델링하는 RCF 기술의 직접적인 결과입니다.</li>
+<li>CycleNet은 파라미터 수가 적어 효율적입니다.1 이는 리소스가 제한된 환경이나 빠른 훈련 및 추론 시간이 필요한 애플리케이션에 유용합니다.</li>
+<li>CycleNet의 핵심 기술인 RCF는 모델에 구애받지 않는 솔루션으로, 다양한 종류의 백본 모델에 적용할 수 있습니다.5 이는 RCF가 기존 예측 프레임워크에 쉽게 통합되어 성능을 향상시킬 수 있음을 시사합니다.</li>
+<li>CycleNet은 플러그 앤 플레이 방식으로 기존 모델인 PatchTST 및 iTransformer의 성능을 향상시킬 수 있습니다.7 이는 RCF 기술이 광범위한 시계열 예측 모델에 적용될 수 있는 잠재력을 보여줍니다.</li>
+</ul>
+<h4>2.5. CycleNet의 한계:</h4>
+<ul>
+<li>CycleNet은 불안정한 주기 길이를 갖는 경우에 효과적으로 대처하지 못할 수 있습니다.6 실제 시계열 데이터는 다양한 외부 요인으로 인해 시간에 따라 주기성이 변하는 경우가 많으며, 고정된 주기 길이에 의존하는 CycleNet은 이러한 시나리오에서 성능 저하를 겪을 수 있습니다.</li>
+<li>고정된 주기적 패턴을 효과적으로 나타내지 않는 데이터셋에서도 CycleNet의 성능이 저하될 수 있습니다.6 CycleNet의 핵심 메커니즘은 주기성을 모델링하는 데 기반하므로, 비주기적인 요인에 의해 주도되거나 매우 약하거나 불규칙한 주기성을 갖는 시계열 데이터에서는 효과가 떨어질 수 있습니다.</li>
+<li>상당한 이상치가 존재하는 경우 CycleNet의 성능이 부정적인 영향을 받을 수 있습니다.6 이상치는 극단적이고 종종 예측 불가능한 값으로, CycleNet을 포함한 많은 딥러닝 모델의 학습 과정을 방해하여 부정확한 예측을 초래할 수 있습니다.</li>
+<li>저자들은 복잡한 시공간적 관계가 중요한 데이터셋(예: 교통 데이터)에서 CycleNet의 성능이 저하될 수 있다고 언급했습니다.6 특히 단순한 선형 또는 MLP 백본을 사용하는 CycleNet은 이러한 데이터에 존재하는 복잡한 종속성을 완전히 포착하지 못할 수 있습니다.</li>
+<li>한 논문 검토에서는 CycleNet이 RevIN 기반 모델 및 학습 가능한 분해를 사용하는 LD와 같은 적절한 기준 모델과 제대로 비교하지 못했다고 지적했습니다.5 또한, LD의 성능이 CycleNet보다 우수하다는 결과도 제시되었습니다. 이는 CycleNet의 최첨단 성능 주장이 과장되었을 수 있으며, 모든 관련 최신 방법과의 보다 엄격한 비교가 필요함을 시사합니다.</li>
+<li>같은 검토에서는 일부 데이터셋(ETT 시리즈)에서 더 나은 결과를 보이는 SparseTSF가 비교 대상에서 제외된 점을 지적했습니다.5 이는 CycleNet과 유사하게 주기성을 강조하는 모델과의 비교가 부족하여, 다양한 유형의 데이터셋에서 CycleNet의 우수성을 입증하는 데 한계가 있음을 보여줍니다.</li>
+</ul>
+<h4><strong>3. CycleNet 성능 향상을 위한 새로운 딥러닝 모델 연구 계획서</strong></h4>
+<h4>3.1. CycleNet의 한계 극복을 위한 주요 개선 영역:</h4>
+<ul>
+<li>새로운 모델은 CycleNet의 식별된 약점, 즉 불안정한 주기 길이 처리, 고정된 주기성을 나타내지 않는 데이터셋 처리, 상당한 이상치 처리 및 복잡한 시공간적 관계 처리에 중점을 두어야 합니다.</li>
+</ul>
+<h4>3.2. 고급 아키텍처 탐색:</h4>
+<p><strong>3.2.1. 향상된 분해 메커니즘을 갖춘 Transformer 기반 모델</strong>: 3</p>
+<ul>
+<li>장기 의존성을 포착하고 시계열 데이터의 복잡한 패턴을 모델링하는 데 뛰어난 Transformer 아키텍처를 조사합니다.</li>
+<li>다양한 주기 길이와 비정상적인 패턴에 적응하기 위해 Transformer 프레임워크 내에 고급 시계열 분해 기술을 통합하는 것을 탐색합니다. Autoformer 4, FEDformer 24 및 확률적 분해 Transformer 21와 같이 이미 분해를 통합한 모델을 고려합니다. Transformer는 LTSF에서 유망한 결과를 보여주었으며, 정교한 분해 방법과 결합하면 CycleNet보다 불안정한 주기성을 더 잘 처리하는 모델을 개발할 수 있습니다.</li>
+<li>다양한 해상도로 시간적 패턴을 모델링하여 가변적인 주기 길이를 더 효과적으로 포착할 수 있는 MTST 14 및 Pathformer 27와 같은 다중 스케일 Transformer 아키텍처를 고려합니다. 다중 스케일로 시계열을 모델링하면 길이가 다른 여러 주기적 성분에 적응할 수 있습니다.</li>
+</ul>
+<p><strong>3.2.2. 시공간적 종속성 포착을 위한 그래프 신경망(GNN)</strong>: 28</p>
+<ul>
+<li>시계열 데이터가 다변량이고 공간적 관계(예: 교통 데이터, 센서 네트워크)를 포함하는 경우, GNN을 사용하여 서로 다른 채널(변수) 간의 상호 의존성을 모델링하는 것을 조사합니다.</li>
+<li>그래프 컨볼루션과 RNN 또는 시간적 컨볼루션과 같은 시간적 모델링 구성 요소를 결합하여 공간적 및 시간적 역학을 모두 포착하는 시공간적 GNN(STGNN)을 탐색합니다. 다변량 시계열에서 공간적 종속성이 있는 경우, GNN은 단순한 백본으로는 완전히 포착할 수 없는 복잡한 상호 관계를 모델링하는 강력한 방법을 제공합니다.</li>
+<li>변수 간의 관계를 명시적으로 알 수 없는 경우, 데이터 자체에서 기본 그래프 구조를 학습하는 메커니즘을 통합한 GNN 아키텍처를 고려합니다.28 그래프 구조를 학습하는 것은 시계열 간의 종속성이 잠재적이거나 동적인 경우에 유용할 수 있습니다.</li>
+</ul>
+<p><strong>3.2.3. 딥러닝 파라미터화를 사용한 상태 공간 모델(SSM)</strong>: 55</p>
+<ul>
+<li>기저 상태의 잡음 낀 관측으로 시계열을 표현하여 확률적 프레임워크를 제공하는 SSM의 사용을 조사합니다.</li>
+<li>복잡한 비선형 역학을 포착하기 위해 딥러닝 신경망(예: RNN)을 사용하여 SSM의 전이 및 관측 모델을 파라미터화하는 것을 탐색합니다. 딥 상태 공간 모델 58은 이러한 접근 방식을 예시합니다. SSM은 확률적 특성을 통해 불확실성을 모델링하고 이상치를 처리하는 원칙적인 방법을 제공하며, 딥러닝은 복잡한 패턴을 포착하는 능력을 향상시킬 수 있습니다.</li>
+<li>시퀀스 모델링에서 유망한 결과를 보여주었고 시계열 예측에 적용하여 효율성 이점을 제공할 수 있는 선택적 상태 공간 모델(예: Mamba)의 사용을 고려합니다.59 새로운 상태 공간 아키텍처는 정확도를 유지하거나 향상시키면서 계산상의 이점을 제공할 수 있습니다.</li>
+</ul>
+<h4>3.3. 적응형 주기 길이 모델링:</h4>
+<p><strong>3.3.1. 주기 길이를 동적으로 추정하고 조정하는 메커니즘 통합</strong>: 27</p>
+<ul>
+<li>이력 데이터의 서로 다른 부분을 동적으로 가중치를 부여하여 주기성의 변화를 식별하고 적응할 수 있는 어텐션 메커니즘을 통합하는 것을 탐색합니다.</li>
+<li>시계열을 여러 스케일의 패턴으로 분해하고 예측을 적응적으로 집계하는 AMD 65와 같은 적응형 다중 스케일 분해 모델의 사용을 조사합니다. 입력 데이터에 따라 초점을 동적으로 조정할 수 있는 모델은 진화하는 주기성을 추적하고 적응할 수 있습니다.</li>
+<li>모델 훈련 과정의 일부로 데이터에서 직접 주기 길이를 학습하는 방법을 고려합니다. 모델이 주기성을 학습하도록 허용하면 수동 사전 지정의 필요성을 없애고 적응을 가능하게 할 수 있습니다.</li>
+</ul>
+<p><strong>3.3.2. DTW(Dynamic Time Warping) 또는 유사한 정렬 기술 탐색</strong>: 76</p>
+<ul>
+<li>DTW 또는 변형된 DTW를 사용하여 시계열 세그먼트를 정렬하는 것을 조사하여 타이밍이나 길이가 약간 다른 패턴을 모델이 비교할 수 있도록 합니다. DTW는 시간적 변화를 처리하도록 특별히 설계되었으며 약간 다른 길이의 주기를 정렬하는 데 도움이 될 수 있습니다.</li>
+<li>특징 추출 또는 손실 계산을 위해 딥러닝 아키텍처 내에서 DTW를 구성 요소로 사용하는 것을 탐색합니다.79 시간적 왜곡에도 불구하고 유사성을 측정하는 DTW의 능력은 모델의 학습을 안내하는 데 유용할 수 있습니다.</li>
+</ul>
+<p><strong>3.3.3. 적응형 주파수 혼합 네트워크 조사</strong>: 65</p>
+<ul>
+<li>푸리에 변환과 같은 기술을 사용하여 주파수 영역에서 시계열을 분석하고 예측을 위해 다양한 주파수 성분을 적응적으로 결합하는 방법을 학습하는 모델을 탐색합니다. ATFNet 89과 같은 모델이 이러한 접근 방식을 사용합니다. 시계열의 주파수 성분을 분석하면 타이밍이나 강도가 변할 수 있는 주기적 패턴을 식별하고 모델링하는 더 강력한 방법을 제공할 수 있습니다.</li>
+<li>관련 주기적 성분에 선택적으로 집중하기 위해 주파수 영역에서 어텐션 메커니즘을 사용하는 모델을 고려합니다.87 어텐션 메커니즘은 모델이 예측에 가장 중요한 주파수 성분에 우선순위를 두는 데 도움이 될 수 있습니다.</li>
+</ul>
+<h4>3.4. 이상치에 대한 강건성:</h4>
+<p><strong>3.4.1. 강건한 손실 함수 사용</strong>: 95</p>
+<ul>
+<li>표준 평균 제곱 오차에 비해 극단값에 덜 민감한 Huber 손실, Tweedie 손실 또는 분위수 손실과 같은 손실 함수를 활용합니다.95 강건한 손실 함수는 훈련 중에 모델이 이상치의 영향을 과도하게 받지 않도록 방지할 수 있습니다.</li>
+<li>백분위수 오류 또는 강건한 통계적 측정에 기반한 것과 같이 이상치가 있는 시계열 예측을 위해 특별히 설계된 손실 함수를 탐색합니다.99 손실 함수를 시계열 이상치의 특정 특성에 맞게 조정하는 것이 유용할 수 있습니다.</li>
+</ul>
+<p><strong>3.4.2. 이상치 탐지 메커니즘 통합</strong>: 103</p>
+<ul>
+<li>예측 모델에 데이터를 공급하기 전에 이상치의 영향을 식별하고 잠재적으로 완화하기 위한 별도의 모듈 또는 전처리 단계를 추가하는 것을 조사합니다. 강건한 옵션을 사용한 STL 분해 103, IQR 기반 방법 104 또는 비지도 학습 접근 방식 105과 같은 기술을 고려할 수 있습니다. 이상치를 명시적으로 식별하고 처리하면 전반적인 예측 정확도와 강건성을 향상시킬 수 있습니다.</li>
+<li>오토인코더 38를 사용한 재구성 기반 방법 또는 예측 기반 방법과 같은 모델 아키텍처 내에서 이상치 탐지 기술을 사용하는 것을 고려합니다. 이상치 탐지를 모델의 학습 과정에 통합하면 더 강력한 표현을 학습할 수 있습니다.</li>
+</ul>
+<p><strong>3.4.3. 강건성을 위해 설계된 Transformer 아키텍처 조사</strong>: 18</p>
+<ul>
+<li>시계열 예측에서 노이즈 및 이상치에 대한 향상된 강건성을 위한 메커니즘을 통합한 CARD 26 및 RESIST 108와 같은 Transformer 변형을 탐색합니다. 최근 연구에서는 시계열 데이터에 특화된 Transformer 모델의 강건성을 향상시키는 데 중점을 두었습니다.</li>
+</ul>
+<h4>3.5. 채널 간 관계 모델링(다변량 데이터의 경우): 28</h4>
+<ul>
+<li>대상 애플리케이션이 다변량 시계열을 포함하는 경우, 서로 다른 시계열 채널 간의 종속성 및 상관 관계를 효과적으로 포착하는 데 중점을 둡니다.</li>
+<li>각 시점에서의 서로 다른 채널의 중요도를 학습하여 가중치를 부여할 수 있는 어텐션 메커니즘을 사용하는 것을 탐색합니다.114 어텐션은 모델이 특정 대상 변수를 예측하는 데 가장 관련성이 높은 채널에 동적으로 집중할 수 있도록 합니다.</li>
+<li>섹션 3.2.2에서 논의된 GNN을 조사합니다. 이는 엔티티(이 경우 시계열 채널) 간의 관계를 모델링하도록 특별히 설계되었습니다.</li>
+<li>국소적으로 정지된 선행-지연 관계의 존재를 주장하고 개선된 예측을 위해 선행 지표를 활용하는 LIFT 111와 같이 변수 간의 선행-지연 관계를 명시적으로 모델링하는 모델을 고려합니다. 특정 변수가 다른 변수보다 시간적으로 앞서는 것을 이해하고 모델링하면 다변량 시계열의 예측 정확도를 높일 수 있습니다.</li>
+<li>과적합 위험을 줄이는 데 잠재적인 이점이 있지만 채널 의존성을 활용하는 데 있어 놓치는 기회를 인식하면서, 채널 독립적 전략 111을 기준선 또는 구성 요소로 탐색합니다. 채널 의존성을 포착하는 것이 중요하지만, 채널 독립적 방법도 최첨단 결과를 달성했으므로 용량과 강건성 간의 절충점을 시사합니다.</li>
+</ul>
+<h4>3.6. 평가 계획:</h4>
+<ul>
+<li>CycleNet 논문에서 사용된 동일한 벤치마크 데이터셋(ETT 시리즈, Traffic, Weather, Electricity, Solar-Energy)에서 새로운 모델을 평가하여 직접적인 성능 비교를 가능하게 합니다.</li>
+<li>불안정한 주기 길이, 상당한 이상치 및 복잡한 시공간적 종속성(해당하는 경우)을 갖는 시계열과 같이 CycleNet의 한계를 나타내는 추가 데이터셋을 포함하는 것을 제안합니다.</li>
+<li>모델의 성능을 포괄적으로 평가하기 위해 다양한 예측 Horizon에 걸쳐 MSE 및 MAE를 포함한 표준 시계열 예측 평가 지표를 사용하도록 지정합니다.</li>
+<li>예측 정확도 외에도 모델의 파라미터 효율성과 계산 비용을 평가하는 것을 고려합니다.</li>
+</ul>
+<h4><strong>4. 결론</strong></h4>
+<ul>
+<li>CycleNet에 대한 상세한 검토를 요약하고, 강점과 한계를 강조합니다.</li>
+<li>CycleNet보다 뛰어난 성능을 목표로 하는 새로운 딥러닝 모델을 위한 제안된 연구 방향을 반복하고, 주요 아키텍처 선택, 적응형 주기 길이 처리를 위한 기술, 이상치에 대한 강건성 전략 및 채널 간 관계 모델링 방법(해당하는 경우)을 강조합니다.</li>
+<li>제안된 연구가 시계열 예측 분야와 그 실제 응용 분야 발전에 미칠 수 있는 잠재적 영향을 결론으로 제시합니다.</li>
+</ul>
+<p>포함할 주요 표:</p>
+<ol>
+<li>표: 최첨단 모델과의 CycleNet 성능 비교 (섹션 2.3): 이 표는 CycleNet 논문 1에서 보고된 다양한 데이터셋 및 예측 Horizon에 걸친 MSE 및 MAE 성능 결과를 요약합니다. CycleNet과 비교 대상이었던 기준 모델의 성능을 포함해야 합니다. 이 표는 CycleNet의 보고된 성능에 대한 명확하고 간결한 개요를 제공하고 새로운 모델이 능가해야 할 기준을 설정하는 데 중요합니다. 기준 모델 결과를 포함하면 CycleNet의 성과에 대한 맥락을 제공합니다. 이 표에 대한 데이터는 식별된 스니펫, 특히 6 및 119에 언급된 성능 결과에서 직접 추출할 수 있습니다. 예를 들어119은 Electricity 데이터셋에서 예측 Horizon 192에 대해 CycleNet과 xPatch 및 MoLE-DLinear를 직접 비교하여 MSE 및 MAE 값을 보여줍니다. 이러한 종류의 비교 데이터를 표에 포함해야 합니다.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>모델</td>
+<td>Horizon</td>
+<td>데이터셋</td>
+<td>MSE</td>
+<td>MAE</td>
+</tr>
+<tr>
+<td>xPatch</td>
+<td>192</td>
+<td>Electricity</td>
+<td>0.140</td>
+<td>0.232</td>
+</tr>
+<tr>
+<td>CycleNet</td>
+<td>192</td>
+<td>Electricity</td>
+<td>0.144</td>
+<td>0.237</td>
+</tr>
+<tr>
+<td>MoLE-DLinear</td>
+<td>192</td>
+<td>Electricity</td>
+<td>0.147</td>
+<td>-</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<h4>참고 자료</h4>
+<ol>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2409.18479">https://arxiv.org/pdf/2409.18479</a></li>
+<li>Time-Series Forecasting: Definition, Methods, and Applications - Timescale, 5월 3, 2025에 액세스, <a href="https://www.timescale.com/blog/what-is-time-series-forecasting">https://www.timescale.com/blog/what-is-time-series-forecasting</a></li>
+<li>A Systematic Review for Transformer-based Long-term Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2310.20218">https://arxiv.org/pdf/2310.20218</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://www.semanticscholar.org/paper/CycleNet%3A-Enhancing-Time-Series-Forecasting-through-Lin-Lin/3df16d5c56bbb4939935351090479b3c0a65e4af">https://www.semanticscholar.org/paper/CycleNet%3A-Enhancing-Time-Series-Forecasting-through-Lin-Lin/3df16d5c56bbb4939935351090479b3c0a65e4af</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=clBiQUgj4w">https://openreview.net/forum?id=clBiQUgj4w</a>¬eId=FR2G9XP2t0</li>
+<li>[Literature Review] CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - Moonlight, 5월 3, 2025에 액세스, <a href="https://www.themoonlight.io/en/review/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns">https://www.themoonlight.io/en/review/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns</a></li>
+<li>NeurIPS Poster CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns, 5월 3, 2025에 액세스, <a href="https://neurips.cc/virtual/2024/poster/94391">https://neurips.cc/virtual/2024/poster/94391</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2409.18479">https://arxiv.org/abs/2409.18479</a></li>
+<li>&quot;CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns&quot;. This work is developed by the Lab of Professor Weiwei Lin (linww@scut.edu.cn), South China University of Technology; Pengcheng Laboratory. - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/ACAT-SCUT/CycleNet">https://github.com/ACAT-SCUT/CycleNet</a></li>
+<li>CycleNet: Enhancing Time Series Forecasting through Modeling Periodic Patterns - SlidesLive, 5월 3, 2025에 액세스, <a href="https://slideslive.com/39028295/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns?ref=recommended">https://slideslive.com/39028295/cyclenet-enhancing-time-series-forecasting-through-modeling-periodic-patterns?ref=recommended</a></li>
+<li>Leveraging Time Series Foundation Model for Gaze | Request PDF - ResearchGate, 5월 3, 2025에 액세스, <a href="https://www.researchgate.net/publication/387300695_Leveraging_Time_Series_Foundation_Model_for_Gaze">https://www.researchgate.net/publication/387300695_Leveraging_Time_Series_Foundation_Model_for_Gaze</a></li>
+<li>Transformer-Based Models for Probabilistic Time Series Forecasting with Explanatory Variables - MDPI, 5월 3, 2025에 액세스, <a href="https://www.mdpi.com/2227-7390/13/5/814">https://www.mdpi.com/2227-7390/13/5/814</a></li>
+<li>Skip-Timeformer: Skip-Time Interaction Transformer for Long Sequence Time-Series Forecasting - IJCAI, 5월 3, 2025에 액세스, <a href="https://www.ijcai.org/proceedings/2024/0608.pdf">https://www.ijcai.org/proceedings/2024/0608.pdf</a></li>
+<li>Multi-resolution Time-Series Transformer for Long-term Forecasting - Proceedings of Machine Learning Research, 5월 3, 2025에 액세스, <a href="https://proceedings.mlr.press/v238/zhang24l/zhang24l.pdf">https://proceedings.mlr.press/v238/zhang24l/zhang24l.pdf</a></li>
+<li>Are Transformers Effective for Time Series Forecasting?, 5월 3, 2025에 액세스, <a href="https://ojs.aaai.org/index.php/AAAI/article/view/26317/26089">https://ojs.aaai.org/index.php/AAAI/article/view/26317/26089</a></li>
+<li>Are Transformers Effective for Time Series Forecasting? | Proceedings of the AAAI Conference on Artificial Intelligence, 5월 3, 2025에 액세스, <a href="https://ojs.aaai.org/index.php/AAAI/article/view/26317">https://ojs.aaai.org/index.php/AAAI/article/view/26317</a></li>
+<li>A Time Series is Worth 64 Words: Long-term Forecasting with Transformers - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2211.14730">https://arxiv.org/abs/2211.14730</a></li>
+<li>Recent Advances in Transformers for Time-Series Forecasting : r/datascience - Reddit, 5월 3, 2025에 액세스, <a href="https://www.reddit.com/r/datascience/comments/1egw3ij/recent_advances_in_transformers_for_timeseries/">https://www.reddit.com/r/datascience/comments/1egw3ij/recent_advances_in_transformers_for_timeseries/</a></li>
+<li>Yes, Transformers are Effective for Time Series Forecasting (+ Autoformer) - Hugging Face, 5월 3, 2025에 액세스, <a href="https://huggingface.co/blog/autoformer">https://huggingface.co/blog/autoformer</a></li>
+<li>[D] Transformers for time series forecasting : r/MachineLearning - Reddit, 5월 3, 2025에 액세스, <a href="https://www.reddit.com/r/MachineLearning/comments/18ax51t/d_transformers_for_time_series_forecasting/">https://www.reddit.com/r/MachineLearning/comments/18ax51t/d_transformers_for_time_series_forecasting/</a></li>
+<li>JL-tong/PDTrans: Probabilistic Decomposition Transformer for Time Series Forecasting (SDM 2023) - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/JL-tong/PDTrans">https://github.com/JL-tong/PDTrans</a></li>
+<li>Probabilistic Decomposition Transformer for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2210.17393">https://arxiv.org/pdf/2210.17393</a></li>
+<li>[2210.17393] Probabilistic Decomposition Transformer for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2210.17393">https://arxiv.org/abs/2210.17393</a></li>
+<li>FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting - Proceedings of Machine Learning Research, 5월 3, 2025에 액세스, <a href="https://proceedings.mlr.press/v162/zhou22g/zhou22g.pdf">https://proceedings.mlr.press/v162/zhou22g/zhou22g.pdf</a></li>
+<li>Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting, 5월 3, 2025에 액세스, <a href="https://ise.thss.tsinghua.edu.cn/~mlong/doc/Autoformer-nips21.pdf">https://ise.thss.tsinghua.edu.cn/~mlong/doc/Autoformer-nips21.pdf</a></li>
+<li>qingsongedu/time-series-transformers-review - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/qingsongedu/time-series-transformers-review">https://github.com/qingsongedu/time-series-transformers-review</a></li>
+<li>Pathformer: Multi-scale Transformers with Adaptive Pathways for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2402.05956v4">https://arxiv.org/html/2402.05956v4</a></li>
+<li>GraphSTAGE: Channel-Preserving Graph Neural Networks for Time Series Forecasting, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=5dKiZeF3MD">https://openreview.net/forum?id=5dKiZeF3MD</a></li>
+<li>Multivariate Time-Series Forecasting with Temporal Polynomial Graph Neural Networks, 5월 3, 2025에 액세스, <a href="https://proceedings.neurips.cc/paper_files/paper/2022/hash/7b102c908e9404dd040599c65db4ce3e-Abstract-Conference.html">https://proceedings.neurips.cc/paper_files/paper/2022/hash/7b102c908e9404dd040599c65db4ce3e-Abstract-Conference.html</a></li>
+<li>A Survey on Graph Neural Networks for Time Series: Forecasting, Classification, Imputation, and Anomaly Detection - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2307.03759">https://arxiv.org/abs/2307.03759</a></li>
+<li>[2310.15978] Graph Deep Learning for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2310.15978">https://arxiv.org/abs/2310.15978</a></li>
+<li>Traffic forecasting using graph neural networks and LSTM - Keras, 5월 3, 2025에 액세스, <a href="https://keras.io/examples/timeseries/timeseries_traffic_forecasting/">https://keras.io/examples/timeseries/timeseries_traffic_forecasting/</a></li>
+<li>METRO: A Generic Graph Neural Network Framework for Multivariate Time Series Forecasting - VLDB Endowment, 5월 3, 2025에 액세스, <a href="http://vldb.org/pvldb/vol15/p224-cui.pdf">http://vldb.org/pvldb/vol15/p224-cui.pdf</a></li>
+<li>MLBoost Seminars (10): Graph Neural Networks for Time Series - YouTube, 5월 3, 2025에 액세스, <a href="https://www.youtube.com/watch?v=-ooyEJRpZuw">https://www.youtube.com/watch?v=-ooyEJRpZuw</a></li>
+<li>A Survey on Graph Neural Networks for Time Series - YouTube, 5월 3, 2025에 액세스, <a href="https://www.youtube.com/watch?v=8qPWcq0C4Pg">https://www.youtube.com/watch?v=8qPWcq0C4Pg</a></li>
+<li>KimMeen/Awesome-GNN4TS: [TPAMI 2024] Awesome Resources of GNNs for Time Series Analysis (GNN4TS) - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/KimMeen/Awesome-GNN4TS">https://github.com/KimMeen/Awesome-GNN4TS</a></li>
+<li>DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING Multiple time series forecasting with Graph Neural Networks - AMS Tesi di Laurea, 5월 3, 2025에 액세스, <a href="https://amslaurea.unibo.it/24729/1/thesis.pdf">https://amslaurea.unibo.it/24729/1/thesis.pdf</a></li>
+<li>Adversarial Graph Neural Network for Multivariate Time Series Anomaly Detection, 5월 3, 2025에 액세스, <a href="https://www.computer.org/csdl/journal/tk/2024/12/10582541/1YfTzW4f60w">https://www.computer.org/csdl/journal/tk/2024/12/10582541/1YfTzW4f60w</a></li>
+<li>Graph Neural Networks for Multivariate Time-Series Forecasting via Learning Hierarchical Spatiotemporal Dependencies | OpenReview, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=7essnmWOK5">https://openreview.net/forum?id=7essnmWOK5</a></li>
+<li>Connecting the Dots: Multivariate Time Series Forecasting with Graph Neural Networks - Xiaojun Chang, 5월 3, 2025에 액세스, <a href="https://www.xiaojun.ai/papers/kdd-2020-wu.pdf">https://www.xiaojun.ai/papers/kdd-2020-wu.pdf</a></li>
+<li>[2005.11650] Connecting the Dots: Multivariate Time Series Forecasting with Graph Neural Networks - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2005.11650">https://arxiv.org/abs/2005.11650</a></li>
+<li>Spectral Temporal Graph Neural Network for Multivariate Time-series Forecasting, 5월 3, 2025에 액세스, <a href="https://proceedings.neurips.cc/paper/2020/file/cdf6581cb7aca4b7e19ef136c6e601a5-Paper.pdf">https://proceedings.neurips.cc/paper/2020/file/cdf6581cb7aca4b7e19ef136c6e601a5-Paper.pdf</a></li>
+<li>[2410.22377] A Systematic Literature Review of Spatio-Temporal Graph Neural Network Models for Time Series Forecasting and Classification - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2410.22377">https://arxiv.org/abs/2410.22377</a></li>
+<li>Scalable Spatiotemporal Graph Neural Networks, 5월 3, 2025에 액세스, <a href="https://ojs.aaai.org/index.php/AAAI/article/view/25880/25652">https://ojs.aaai.org/index.php/AAAI/article/view/25880/25652</a></li>
+<li>Full article: Advances in spatiotemporal graph neural network prediction research, 5월 3, 2025에 액세스, <a href="https://www.tandfonline.com/doi/full/10.1080/17538947.2023.2220610">https://www.tandfonline.com/doi/full/10.1080/17538947.2023.2220610</a></li>
+<li>[2305.06587] Towards Expressive Spectral-Temporal Graph Neural Networks for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2305.06587">https://arxiv.org/abs/2305.06587</a></li>
+<li>Graph Deep Learning for Spatiotemporal Time Series, 5월 3, 2025에 액세스, <a href="https://gmlg.ch/tutorials/graph-based-processing/ecml-2023">https://gmlg.ch/tutorials/graph-based-processing/ecml-2023</a></li>
+<li>Graph Deep Learning for Spatiotemporal Time Series - Forecasting, Reconstruction and Analysis - Tsinghua NetMan Lab, 5월 3, 2025에 액세스, <a href="https://netman.aiops.org/~peidan/ANM2024/Week9/STGNN-short.pdf">https://netman.aiops.org/~peidan/ANM2024/Week9/STGNN-short.pdf</a></li>
+<li>Spatial-Temporal Multivariate Time Series Forecasting Using Graph Neural Networks, with an Application to Traffic Speed Prediction - Scholarship @ Claremont, 5월 3, 2025에 액세스, <a href="https://scholarship.claremont.edu/cgu_etd/889/">https://scholarship.claremont.edu/cgu_etd/889/</a></li>
+<li>Spectral Temporal Graph Neural Network for Multivariate Time-series Forecasting - NIPS papers, 5월 3, 2025에 액세스, <a href="https://proceedings.nips.cc/paper_files/paper/2020/file/cdf6581cb7aca4b7e19ef136c6e601a5-Paper.pdf">https://proceedings.nips.cc/paper_files/paper/2020/file/cdf6581cb7aca4b7e19ef136c6e601a5-Paper.pdf</a></li>
+<li>Full article: Long-term wind power forecasting with series decomposition and spatio-temporal graph neural network - Taylor &amp; Francis Online, 5월 3, 2025에 액세스, <a href="https://www.tandfonline.com/doi/full/10.1080/15435075.2024.2382351">https://www.tandfonline.com/doi/full/10.1080/15435075.2024.2382351</a></li>
+<li>STDNet: A Spatio-Temporal Decomposition Neural Network for Multivariate Time Series Forecasting - SciOpen, 5월 3, 2025에 액세스, <a href="https://www.sciopen.com/article/10.26599/TST.2023.9010105?issn=1007-0214">https://www.sciopen.com/article/10.26599/TST.2023.9010105?issn=1007-0214</a></li>
+<li>FourierGNN: Rethinking Multivariate Time Series Forecasting from a Pure Graph Perspective, 5월 3, 2025에 액세스, <a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/dc1e32dd3eb381dbc71482f6a96cbf86-Paper-Conference.pdf">https://proceedings.neurips.cc/paper_files/paper/2023/file/dc1e32dd3eb381dbc71482f6a96cbf86-Paper-Conference.pdf</a></li>
+<li>Hierarchical Joint Graph Learning and Multivariate Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2311.12630">https://arxiv.org/pdf/2311.12630</a></li>
+<li>Time Series Analysis - 5. State space models and Kalman filtering - Baruch MFE Program, 5월 3, 2025에 액세스, <a href="https://mfe.baruch.cuny.edu/wp-content/uploads/2014/12/TS_Lecture5_2019.pdf">https://mfe.baruch.cuny.edu/wp-content/uploads/2014/12/TS_Lecture5_2019.pdf</a></li>
+<li>Time Series Analysis by State Space Methods statespace - statsmodels 0.14.4, 5월 3, 2025에 액세스, <a href="https://www.statsmodels.org/stable/statespace.html">https://www.statsmodels.org/stable/statespace.html</a></li>
+<li>7.5 Innovations state space models for exponential smoothing | Forecasting: Principles and Practice (2nd ed) - OTexts, 5월 3, 2025에 액세스, <a href="https://otexts.com/fpp2/ets.html">https://otexts.com/fpp2/ets.html</a></li>
+<li>Learning Interpretable Deep State Space Model for Probabilistic Time Series Forecasting - IJCAI, 5월 3, 2025에 액세스, <a href="https://www.ijcai.org/proceedings/2019/0402.pdf">https://www.ijcai.org/proceedings/2019/0402.pdf</a></li>
+<li>Time-SSM: Simplifying and Unifying State Space Models for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2405.16312">https://arxiv.org/abs/2405.16312</a></li>
+<li>TimeSeriesPrediction/Time_Series_StateSpace.ipynb at main - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/phylypo/TimeSeriesPrediction/blob/main/Time_Series_StateSpace.ipynb">https://github.com/phylypo/TimeSeriesPrediction/blob/main/Time_Series_StateSpace.ipynb</a></li>
+<li>Deep State Space Models for Time Series Forecasting - NIPS papers, 5월 3, 2025에 액세스, <a href="https://proceedings.neurips.cc/paper/8004-deep-state-space-models-for-time-series-forecasting.pdf">https://proceedings.neurips.cc/paper/8004-deep-state-space-models-for-time-series-forecasting.pdf</a></li>
+<li>Deep State Space Models for Time Series Forecasting | Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/paper/deep-state-space-models-for-time-series">https://paperswithcode.com/paper/deep-state-space-models-for-time-series</a></li>
+<li>An introduction to state-space models for time-series analysis with examples on three major crypto-currencies - StatOmics, 5월 3, 2025에 액세스, <a href="https://statomics.github.io/StateSpaceCrypto/">https://statomics.github.io/StateSpaceCrypto/</a></li>
+<li>[2405.16440] MambaTS: Improved Selective State Space Models for Long-term Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2405.16440">https://arxiv.org/abs/2405.16440</a></li>
+<li>Adaptive Multi-Scale Decomposition Framework for Time Series Forecasting, 5월 3, 2025에 액세스, <a href="https://ojs.aaai.org/index.php/AAAI/article/view/33908/36063">https://ojs.aaai.org/index.php/AAAI/article/view/33908/36063</a></li>
+<li>Using Time Series Forecasting for Adaptive Traffic Signal Control, 5월 3, 2025에 액세스, <a href="https://dcsl.cs.ua.edu/papers/DMI8009.pdf">https://dcsl.cs.ua.edu/papers/DMI8009.pdf</a></li>
+<li>Adaptive Multi-Scale Decomposition Framework for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2406.03751v1">https://arxiv.org/html/2406.03751v1</a></li>
+<li>Quantifying the Adaptive Cycle | PLOS One, 5월 3, 2025에 액세스, <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0146053">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0146053</a></li>
+<li>Learning from Polar Representation: An Extreme-Adaptive Model for Long-Term Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2312.08763v2">https://arxiv.org/html/2312.08763v2</a></li>
+<li>3.1 Time series components | Forecasting and Analytics with the Augmented Dynamic Adaptive Model (ADAM), 5월 3, 2025에 액세스, <a href="https://openforecast.org/adam/tsComponents.html">https://openforecast.org/adam/tsComponents.html</a></li>
+<li>Disentangling Structured Components: Towards Adaptive, Interpretable and Scalable Time Series Forecasting - IEEE Computer Society, 5월 3, 2025에 액세스, <a href="https://www.computer.org/csdl/journal/tk/2024/08/10457027/1UXthEGLDz2">https://www.computer.org/csdl/journal/tk/2024/08/10457027/1UXthEGLDz2</a></li>
+<li>Understanding the period/cycle of time series data - Cross Validated - Stats Stackexchange, 5월 3, 2025에 액세스, <a href="https://stats.stackexchange.com/questions/508236/understanding-the-period-cycle-of-time-series-data">https://stats.stackexchange.com/questions/508236/understanding-the-period-cycle-of-time-series-data</a></li>
+<li>Application of Adaptive and Multiplicative Models for Analysis and Forecasting of Time Series - ResearchGate, 5월 3, 2025에 액세스, <a href="https://www.researchgate.net/publication/372055574_Application_of_Adaptive_and_Multiplicative_Models_for_Analysis_and_Forecasting_of_Time_Series">https://www.researchgate.net/publication/372055574_Application_of_Adaptive_and_Multiplicative_Models_for_Analysis_and_Forecasting_of_Time_Series</a></li>
+<li>Deep Time Series Forecasting Models: A Comprehensive Survey - MDPI, 5월 3, 2025에 액세스, <a href="https://www.mdpi.com/2227-7390/12/10/1504">https://www.mdpi.com/2227-7390/12/10/1504</a></li>
+<li>Incremental Adaptive Time Series Prediction for Power Demand Forecasting, 5월 3, 2025에 액세스, <a href="https://kinit.sk/wp-content/uploads/2021/04/VrablecovaP-2017-Incremental-Adaptive-Time.pdf">https://kinit.sk/wp-content/uploads/2021/04/VrablecovaP-2017-Incremental-Adaptive-Time.pdf</a></li>
+<li>Using Multi-Dimensional Dynamic Time Warping to Identify Time-Varying Lead-Lag Relationships - MDPI, 5월 3, 2025에 액세스, <a href="https://www.mdpi.com/1424-8220/22/18/6884">https://www.mdpi.com/1424-8220/22/18/6884</a></li>
+<li>Time Warping for Periodicity Detection - CS@Purdue, 5월 3, 2025에 액세스, <a href="https://www.cs.purdue.edu/homes/aref/papers/icdm2005.pdf">https://www.cs.purdue.edu/homes/aref/papers/icdm2005.pdf</a></li>
+<li>The dynamics of dynamic time warping in fMRI data: A method to capture inter-network stretching and shrinking via warp elasticity | Imaging Neuroscience - MIT Press Direct, 5월 3, 2025에 액세스, <a href="https://direct.mit.edu/imag/article/doi/10.1162/imag_a_00187/121174/The-dynamics-of-dynamic-time-warping-in-fMRI-data">https://direct.mit.edu/imag/article/doi/10.1162/imag_a_00187/121174/The-dynamics-of-dynamic-time-warping-in-fMRI-data</a></li>
+<li>DTWNet: a Dynamic Time Warping Network, 5월 3, 2025에 액세스, <a href="http://papers.neurips.cc/paper/9338-dtwnet-a-dynamic-time-warping-network.pdf">http://papers.neurips.cc/paper/9338-dtwnet-a-dynamic-time-warping-network.pdf</a></li>
+<li>Weighted dynamic time warping for time series classification, 5월 3, 2025에 액세스, <a href="https://lig-membres.imag.fr/bisson/cours/M2INFO-AIW-ML/papers/Jeong11.pdf">https://lig-membres.imag.fr/bisson/cours/M2INFO-AIW-ML/papers/Jeong11.pdf</a></li>
+<li>Everything you know about Dynamic Time Warping is Wrong - Computer Science and Engineering, 5월 3, 2025에 액세스, <a href="https://www.cs.ucr.edu/~eamonn/DTW_myths.pdf">https://www.cs.ucr.edu/~eamonn/DTW_myths.pdf</a></li>
+<li>On-line Dynamic Time Warping for Streaming Time Series - ECML PKDD 2017, 5월 3, 2025에 액세스, <a href="http://ecmlpkdd2017.ijs.si/papers/paperID187.pdf">http://ecmlpkdd2017.ijs.si/papers/paperID187.pdf</a></li>
+<li>Iterative Deepening Dynamic Time Warping for Time Series - Computer Science and Engineering, 5월 3, 2025에 액세스, <a href="http://www.cs.ucr.edu/~eamonn/sdm-02.pdf">http://www.cs.ucr.edu/~eamonn/sdm-02.pdf</a></li>
+<li>Dynamic Time Warping for irregular time series - Cross Validated - Stats Stackexchange, 5월 3, 2025에 액세스, <a href="https://stats.stackexchange.com/questions/109343/dynamic-time-warping-for-irregular-time-series">https://stats.stackexchange.com/questions/109343/dynamic-time-warping-for-irregular-time-series</a></li>
+<li>Dynamic Time Warping (DTW) algorithm with different time lengths ... should i truncate time series?, 5월 3, 2025에 액세스, <a href="https://stats.stackexchange.com/questions/644094/dynamic-time-warping-dtw-algorithm-with-different-time-lengths-should-i-tr">https://stats.stackexchange.com/questions/644094/dynamic-time-warping-dtw-algorithm-with-different-time-lengths-should-i-tr</a></li>
+<li>Frequency Adaptive Normalization For Non-stationary Time Series Forecasting - NIPS papers, 5월 3, 2025에 액세스, <a href="https://proceedings.neurips.cc/paper_files/paper/2024/file/37c6d0bc4d2917dcbea693b18504bd87-Paper-Conference.pdf">https://proceedings.neurips.cc/paper_files/paper/2024/file/37c6d0bc4d2917dcbea693b18504bd87-Paper-Conference.pdf</a></li>
+<li>Time Series Forecasting Model Based on the Adapted Transformer Neural Network and FFT-Based Features Extraction - MDPI, 5월 3, 2025에 액세스, <a href="https://www.mdpi.com/1424-8220/25/3/652">https://www.mdpi.com/1424-8220/25/3/652</a></li>
+<li>BEAT: Balanced Frequency Adaptive Tuning for Long-Term Time-Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2501.19065v1">https://arxiv.org/html/2501.19065v1</a></li>
+<li>Neural Networks Made Easy (Part 92): Adaptive Forecasting in Frequency and Time Domains - MQL5 Articles, 5월 3, 2025에 액세스, <a href="https://www.mql5.com/en/articles/14996">https://www.mql5.com/en/articles/14996</a></li>
+<li>ATFNet: Adaptive Time-Frequency Ensembled Network for Long-term Time Series Forecasting | Towards AI, 5월 3, 2025에 액세스, <a href="https://towardsai.net/p/artificial-intelligence/atfnet-adaptive-time-frequency-ensembled-network-for-long-term-time-series-forecasting">https://towardsai.net/p/artificial-intelligence/atfnet-adaptive-time-frequency-ensembled-network-for-long-term-time-series-forecasting</a></li>
+<li>Adaptive Temporal-Frequency Network for Time-Series Forecasting - ResearchGate, 5월 3, 2025에 액세스, <a href="https://www.researchgate.net/publication/342296603_Adaptive_Temporal-Frequency_Network_for_Time-Series_Forecasting">https://www.researchgate.net/publication/342296603_Adaptive_Temporal-Frequency_Network_for_Time-Series_Forecasting</a></li>
+<li>TimeMixer++: A General Time Series Pattern Machine for Universal Predictive Analysis, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=1CLzLXSFNn">https://openreview.net/forum?id=1CLzLXSFNn</a></li>
+<li>ATFNet: Adaptive Time-Frequency Ensembled Network for Long-term Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2404.05192v1">https://arxiv.org/html/2404.05192v1</a></li>
+<li>Adaptive Temporal-Frequency Network for Time-Series Forecasting - OpenReview, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=5ayezYzuBC&amp;referrer=%5Bthe%20profile%20of%20Lin%20Mei%5D(%2Fprofile%3Fid%3D~Lin_Mei2)">https://openreview.net/forum?id=5ayezYzuBC&amp;referrer=[the profile of Lin Mei](%2Fprofile%3Fid%3D~Lin_Mei2)</a></li>
+<li>The heart of machine learning: Understanding the importance of loss functions - EyeOn, 5월 3, 2025에 액세스, <a href="https://eyeonplanning.com/blog/the-heart-of-machine-learning-understanding-the-importance-of-loss-functions/">https://eyeonplanning.com/blog/the-heart-of-machine-learning-understanding-the-importance-of-loss-functions/</a></li>
+<li>Weakly Guided Adaptation for Robust Time Series Forecasting - VLDB Endowment, 5월 3, 2025에 액세스, <a href="https://www.vldb.org/pvldb/vol17/p766-cheng.pdf">https://www.vldb.org/pvldb/vol17/p766-cheng.pdf</a></li>
+<li>3 Robust Linear Regression Models to Handle Outliers | NVIDIA Technical Blog, 5월 3, 2025에 액세스, <a href="https://developer.nvidia.com/blog/dealing-with-outliers-using-three-robust-linear-regression-models/">https://developer.nvidia.com/blog/dealing-with-outliers-using-three-robust-linear-regression-models/</a></li>
+<li>A robust functional time series forecasting method arXiv:1901.06030v1 [stat.ME] 17 Jan 2019, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/1901.06030">https://arxiv.org/pdf/1901.06030</a></li>
+<li>Robust time series forecasting with MLOps on Amazon SageMaker - AWS, 5월 3, 2025에 액세스, <a href="https://aws.amazon.com/blogs/machine-learning/robust-time-series-forecasting-with-mlops-on-amazon-sagemaker/">https://aws.amazon.com/blogs/machine-learning/robust-time-series-forecasting-with-mlops-on-amazon-sagemaker/</a></li>
+<li>A Comprehensive Survey of Regression Based Loss Functions for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2211.02989">https://arxiv.org/pdf/2211.02989</a></li>
+<li>Robust Probabilistic Time Series Forecasting - Proceedings of Machine Learning Research, 5월 3, 2025에 액세스, <a href="https://proceedings.mlr.press/v151/yoon22a/yoon22a.pdf">https://proceedings.mlr.press/v151/yoon22a/yoon22a.pdf</a></li>
+<li>(PDF) Make Transformer Great Again for Time Series Forecasting: Channel Aligned Robust Dual Transformer - ResearchGate, 5월 3, 2025에 액세스, <a href="https://www.researchgate.net/publication/370948888_Make_Transformer_Great_Again_for_Time_Series_Forecasting_Channel_Aligned_Robust_Dual_Transformer">https://www.researchgate.net/publication/370948888_Make_Transformer_Great_Again_for_Time_Series_Forecasting_Channel_Aligned_Robust_Dual_Transformer</a></li>
+<li>13.9 Dealing with outliers and missing values | Forecasting: Principles and Practice (3rd ed), 5월 3, 2025에 액세스, <a href="https://otexts.com/fpp3/missing-outliers.html">https://otexts.com/fpp3/missing-outliers.html</a></li>
+<li>Evaluating Outlier Impact on Time Series Data Analysis - Magnimind Academy, 5월 3, 2025에 액세스, <a href="https://magnimindacademy.com/blog/evaluating-outlier-impact-on-time-series-data-analysis/">https://magnimindacademy.com/blog/evaluating-outlier-impact-on-time-series-data-analysis/</a></li>
+<li>Time series outlier detection, a data-driven approach - Bank for International Settlements, 5월 3, 2025에 액세스, <a href="https://www.bis.org/ifc/publ/ifcb57_07.pdf">https://www.bis.org/ifc/publ/ifcb57_07.pdf</a></li>
+<li>Detecting time series outliers - Rob J Hyndman, 5월 3, 2025에 액세스, <a href="https://robjhyndman.com/hyndsight/tsoutliers/">https://robjhyndman.com/hyndsight/tsoutliers/</a></li>
+<li>A Robust Technique to Detect Outliers from Time Series Data - Cross Validated, 5월 3, 2025에 액세스, <a href="https://stats.stackexchange.com/questions/486466/a-robust-technique-to-detect-outliers-from-time-series-data">https://stats.stackexchange.com/questions/486466/a-robust-technique-to-detect-outliers-from-time-series-data</a></li>
+<li>RESIST: Robust Transformer for Unsupervised Time Series Anomaly Detection - Research web sites, 5월 3, 2025에 액세스, <a href="https://project.inria.fr/aaltd22/files/2022/08/AALTD22_paper_4615.pdf">https://project.inria.fr/aaltd22/files/2022/08/AALTD22_paper_4615.pdf</a></li>
+<li>CARD: Channel Aligned Robust Blend Transformer for Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2305.12095v5">https://arxiv.org/html/2305.12095v5</a></li>
+<li>TreeDRNet: A Robust Deep Model for Long Term Time Series Forecasting - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/pdf/2206.12106">https://arxiv.org/pdf/2206.12106</a></li>
+<li>Rethinking Channel Dependence for Multivariate Time Series Forecasting: Learning from Leading Indicators - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/html/2401.17548v1">https://arxiv.org/html/2401.17548v1</a></li>
+<li>ADTime: Adaptive Multivariate Time Series Forecasting Using LLMs - MDPI, 5월 3, 2025에 액세스, <a href="https://www.mdpi.com/2504-4990/7/2/35">https://www.mdpi.com/2504-4990/7/2/35</a></li>
+<li>[2401.17548] Rethinking Channel Dependence for Multivariate Time Series Forecasting: Learning from Leading Indicators - arXiv, 5월 3, 2025에 액세스, <a href="https://arxiv.org/abs/2401.17548">https://arxiv.org/abs/2401.17548</a></li>
+<li>Multivariate Time Series Forecasting - Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/task/multivariate-time-series-forecasting/codeless">https://paperswithcode.com/task/multivariate-time-series-forecasting/codeless</a></li>
+<li>Rethinking Channel Dependence for Multivariate Time Series Forecasting: Learning from Leading Indicators | OpenReview, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=JiTVtCUOpS">https://openreview.net/forum?id=JiTVtCUOpS</a>¬eId=JiTVtCUOpS</li>
+<li>hanlu-nju/channel_independent_MTSF: Official code for &quot;The Capacity and Robustness Trade-off: Revisiting the Channel Independent Strategy for Multivariate Time Series Forecasting&quot;, TKDE 2024 - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/hanlu-nju/channel_independent_MTSF">https://github.com/hanlu-nju/channel_independent_MTSF</a></li>
+<li>SJTU-DMTai/LIFT: The official implementation of LIFT (ICLR'24). Rethinking Channel Dependence for Multivariate Time Series Forecasting: Learning from Leading Indicators. - GitHub, 5월 3, 2025에 액세스, <a href="https://github.com/sjtu-dmtai/lift">https://github.com/sjtu-dmtai/lift</a></li>
+<li>Capturing The Channel Dependency Completely Via Knowledge-Episodic Memory For Time Series Forecasting | OpenReview, 5월 3, 2025에 액세스, <a href="https://openreview.net/forum?id=y2D8aW4son">https://openreview.net/forum?id=y2D8aW4son</a></li>
+<li>Time Series Forecasting on Electricity (192) - Papers With Code, 5월 3, 2025에 액세스, <a href="https://paperswithcode.com/sota/time-series-forecasting-on-electricity-192?p=cyclenet-enhancing-time-series-forecasting">https://paperswithcode.com/sota/time-series-forecasting-on-electricity-192?p=cyclenet-enhancing-time-series-forecasting</a></li>
+</ol>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/18">https://ai-stat-lab.tistory.com/18</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

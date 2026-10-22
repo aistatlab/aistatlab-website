@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="paper: https://arxiv.org/abs/2102.04306 TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation Medical image segmentation is an essential prerequisite for developing healthcare systems, especially for disease diagnosis and treatment planni">
+<meta property="og:type" content="article"><meta property="og:title" content="[Paper Review] TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation">
+<meta property="og:description" content="paper: https://arxiv.org/abs/2102.04306 TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation Medical image segmentation is an essential prerequisite for developing healthcare systems, especially for disease diagnosis and treatment planni">
+<title>[Paper Review] TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Uncategorized</a>
+<div class="article-meta"><time datetime="2024-04-17">2024-04-17</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>[Paper Review] TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation</h1>
+<p class="article-lead">paper: https://arxiv.org/abs/2102.04306 TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation Medical image segmentation is an essential prerequisite for developing healthcare systems, especially for disease diagnosis and treatment planni</p>
+<img class="article-cover" src="assets/img/blog/tistory-8/001-architecher.png" alt="" loading="eager">
+<div class="blog-prose"><p>paper: <a href="https://arxiv.org/abs/2102.04306">https://arxiv.org/abs/2102.04306</a></p>
+<p>[TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation</p>
+<p>Medical image segmentation is an essential prerequisite for developing healthcare systems, especially for disease diagnosis and treatment planning. On various medical image segmentation tasks, the u-shaped architecture, also known as U-Net, has become the</p>
+<p>arxiv.org](https://arxiv.org/abs/2102.04306)</p>
+<p>TransUNet은 UNet의 이점과 Transformer의 이점을 가지고 있는 medical image segmentaion model이다.</p>
+<ul>
+<li>UNet - CNN을 통한 local feature 획득에 이점</li>
+<li>Transformer - Self Attention을 사용하여 global feature 획득에 이점</li>
+</ul>
+<p>논문을 통하여 위의 두 이점이 TransUNet에서 어떻게 적용되었는지 살펴보고자 한다.</p>
+<h3>Method</h3>
+<p><img src="assets/img/blog/tistory-8/001-architecher.png" alt=""></p>
+<p>TransUNet의 architecture는 기본적으로 Unet의 구조를 따르며 아래와 같은 순서로 진행된다.</p>
+<ul>
+<li>CNN Block : Input data를 CNN을 통하여 local feature map을 생성</li>
+<li>Transformer Block : 생성된 feature map을 Transformer Encoder에 통과시켜 global feature를 생성</li>
+<li>Upsample Block: Upsample과정에서 skip connection을 통해 local &amp; global feature를 반영</li>
+</ul>
+<p>이제 모델의 간단한 흐름은 알았으니, 각 Block이 어떻게 진행되는지 자세히 살펴보기로 한다.</p>
+<h4>CNN Block</h4>
+<p><img src="assets/img/blog/tistory-8/002-CNN.png" alt=""></p>
+<p>목적: CNN을 통하여 원래 크기의 1/2, 1/4, 1/8에 해당하는 local feature맵을 저장하는 것.</p>
+<ol>
+<li>Input data를 받아 downsample을 진행한다.</li>
+</ol>
+<ul>
+<li>Input data : x ∈ R^(H*W*C) / H = H, W = W, C = input channel</li>
+</ul>
+<ol>
+<li>downsample 단계마다 size는 1/2, channel은 2 배씩 영향을 받는다. (단, 첫 downsample에서만 output channel은 output channel을 받아서 사용한다.)</li>
+</ol>
+<ul>
+<li>1 downsample : H = H , W = W, C = input channel -&gt; H = 1/2 *H=,  W = 1/2 *W, C = output channel</li>
+<li>2 downsample : H = 1/2 *H=,  W = 1/2 *W, C = output channel -&gt; H = 1/4 *H=,  W = 1/4 *W, C = 2*output channel</li>
+<li>3 downsample : H = 1/4 *H=,  W = 1/4 *W, C = 2*output channel -&gt; H = 1/8 *H=,  W = 1/8 *W, C = 4*output channel</li>
+<li>4 downsample : H = 1/8 *H=,  W = 1/8 *W, C = 4*output channel -&gt; H = 1/16 *H=,  W = 1/16 *W, C = 8*output channel</li>
+</ul>
+<ol>
+<li>각 downsample 단계마다 local feature map을 저장한다. (x1, x2, x3, x)</li>
+</ol>
+<ul>
+<li>xi : i번 downsample을 진행한 local feature map -&gt; skip connection에 이용되는 데이터</li>
+<li>x: 4번 downsample을 진행한 local feature map으로, Transformer encoder에 이용</li>
+</ul>
+<h4>Transformer Block</h4>
+<p><img src="assets/img/blog/tistory-8/003-transformer.png" alt=""></p>
+<p>목적: CNN에서는 파악하기 힘든 global feature를 생성</p>
+<ol>
+<li>1/16크기의 x를 sequence of flattened 2D patches로 reshape</li>
+</ol>
+<p><img src="assets/img/blog/tistory-8/004-3.png" alt=""></p>
+<ol>
+<li>x_p에 위치정보를 추가하여  Z_0를 생성</li>
+</ol>
+<p><img src="assets/img/blog/tistory-8/005-44.png" alt=""></p>
+<ol>
+<li>Z_0를 Transformer encoder에 통과시켜 Z_l를 생성</li>
+</ol>
+<p><img src="assets/img/blog/tistory-8/006-55.png" alt=""></p>
+<h4>Upsample Block: Upsample</h4>
+<p><img src="assets/img/blog/tistory-8/007-upsample.png" alt=""></p>
+<p>목적: global feature map과 local feature map을 원래의 H,W으로 회복.</p>
+<ol>
+<li>Transformer에서 나온 Z_l을 (D,H/16,W16)으로 reshape + D -&gt; 512   channel로 convolution (downsample 부분)</li>
+</ol>
+<p><img src="assets/img/blog/tistory-8/008-upsample---2.png" alt=""></p>
+<ol>
+<li>x ∈ R^(512*1/16H*1/16W) 에 대하여 upsample을 진행</li>
+</ol>
+<p><img src="assets/img/blog/tistory-8/009-upsample.png" alt=""></p>
+<ul>
+<li>1 upsample : H = 1/16*H , 1/16*W = W, C = 512 -&gt; H = 1/8 *H=,  W = 1/8 *W, C = 128</li>
+<li>2 upsample : H = 1/8*H , 1/8*W = W, C = 256 -&gt; H = 1/4 *H=,  W = 1/4 *W, C = 64</li>
+<li>3 upsample : H = 1/4*H , 1/4*W = W, C = 128 -&gt; H = 1/2 *H=,  W = 1/2 *W, C = 32</li>
+<li>4 upsample : H = 1/2*H , 1/2*W = W, C = 64 -&gt; H = H=,  W = W, C = 16</li>
+</ul>
+<ol>
+<li>1,2,3 upsample의 결과물을 x1,x2,x3와 channel에 대하여 concat을 진행 (skip connection)</li>
+</ol>
+<p><img src="assets/img/blog/tistory-8/010-upsample---3.png" alt=""></p>
+<ul>
+<li>upsample 1, x1 를 channel에 대하여 concat을 진행  -&gt;  H = 1/8*H , 1/8*W = W, C = 256</li>
+<li>upsample 2, x2 를 channel에 대하여 concat을 진행  -&gt;  H = 1/4*H , 1/4*W = W, C = 128</li>
+<li>upsample 3, x3 를 channel에 대하여 concat을 진행  -&gt;  H = 1/2*H , 1/2*W = W, C = 64</li>
+</ul>
+<p>각 upsample 과정에서 channel에 대하여 합치기 때문에 upsample 이전 채널의 1/2이 되며, local feature map의 정보를 저장하게 된다.</p>
+<ol>
+<li>원하는 class의 segmentaion 된 image 획득</li>
+</ol>
+<ul>
+<li>upsample 4의 데이터를 이용하여 3*3 convolution을 진행</li>
+<li>(16,H,W)의 데이터를 원하는 class의 (class,H,W)의 데이터로 convolution을 진행</li>
+</ul>
+<p>위와 같은 과정을 통하여, CNN을 통한 고해상도의 local feature map과 Transformer의 global feature map이 어떻게 segmentation에 적용되는지 알아보았다. 이제 TransUNet이 정말로 medical image segmentation에 효과적인지 저자의 비교실험결과를 통하여 살펴보고자 한다.</p>
+<h3>Experiments and Discussion</h3>
+<p><img src="assets/img/blog/tistory-8/011-1.png" alt=""></p>
+<ul>
+<li>당시의 SOTA모델들과의 비교실험을 통해 TransUNet의 성능을 입증함.</li>
+<li>V-Net(3D segmentaion)과의 비교를 통해 3D보다도 좋은 성능을 보이는 것을 확인함.</li>
+<li>R20-ViT-CUP은 skip connection을 적용하지 않은 모델로 TransUNet과 DSC에서 6.19%의 성능 차이를 보임.</li>
+</ul>
+<p><img src="assets/img/blog/tistory-8/012-2.png" alt=""></p>
+<ul>
+<li>skip connection의 중요도를 보여주는 지표로 0,1,3번의 skip에 대하여 3번 skip한 결과가 가장 우수하다고 보여짐.</li>
+</ul>
+<p><img src="assets/img/blog/tistory-8/013-3.png" alt=""></p>
+<ul>
+<li>input size에 대하여 224, 512를 비교한 지표로, size를 512로 하였을 때 224 대비 약 6%성능이 높은 것을 확인.</li>
+<li>512의 경우 계산비용이 너무 늘어나 224에 비하여 비효율적임으로 저자는 224의 size를 채택</li>
+</ul>
+<p><img src="assets/img/blog/tistory-8/014-4.png" alt=""></p>
+<ul>
+<li>patch size를 비교실험한 결과로 patch size가 작을수록 더 높은 성능을 보이는 것을 확인.</li>
+<li>저자의 경우 16의 patch size를 채택</li>
+</ul>
+<p><img src="assets/img/blog/tistory-8/015-5.png" alt=""></p>
+<p><img src="assets/img/blog/tistory-8/016-2-base_large.png" alt=""></p>
+<ul>
+<li>Transformer encoder의 hyperparameters에 대하여 비교실험한 결과로 Large scale에서 더 좋은 성능을 보임.</li>
+<li>모델의 계산비용의 문제로 저자는 Base scale을 채택함</li>
+</ul>
+<p><img src="assets/img/blog/tistory-8/017-media.png" alt=""></p>
+<ul>
+<li>visualization을 제시한 결과로, 각 model과 round-truth를 비교함</li>
+</ul>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/8">https://ai-stat-lab.tistory.com/8</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

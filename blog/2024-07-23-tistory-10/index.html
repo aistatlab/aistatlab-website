@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="paper : https://arxiv.org/abs/1907.11320 NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation Pulmonary nodule detection, false positive reduction and segmentation represent three of the most common tasks in the computer">
+<meta property="og:type" content="article"><meta property="og:title" content="[Paper Review] NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation">
+<meta property="og:description" content="paper : https://arxiv.org/abs/1907.11320 NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation Pulmonary nodule detection, false positive reduction and segmentation represent three of the most common tasks in the computer">
+<title>[Paper Review] NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Uncategorized</a>
+<div class="article-meta"><time datetime="2024-07-23">2024-07-23</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>[Paper Review] NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation</h1>
+<p class="article-lead">paper : https://arxiv.org/abs/1907.11320 NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation Pulmonary nodule detection, false positive reduction and segmentation represent three of the most common tasks in the computer</p>
+<img class="article-cover" src="assets/img/blog/tistory-10/001-img.png" alt="" loading="eager">
+<div class="blog-prose"><p>paper : <a href="https://arxiv.org/abs/1907.11320">https://arxiv.org/abs/1907.11320</a></p>
+<p>[NoduleNet: Decoupled False Positive Reductionfor Pulmonary Nodule Detection and Segmentation</p>
+<p>Pulmonary nodule detection, false positive reduction and segmentation represent three of the most common tasks in the computeraided analysis of chest CT images. Methods have been proposed for eachtask with deep learning based methods heavily favored recent</p>
+<p>arxiv.org](https://arxiv.org/abs/1907.11320)</p>
+<h2>특징</h2>
+<ul>
+<li>흉부 CT이미지에서 <strong>폐 결절 검출</strong>, <strong>거짓 양성 감소, 결절 분할 세 가지 Task 진행</strong></li>
+<li>결절 검출과 거짓 양성 감소를 위한 <strong>분리된(decoupled) 특징맵</strong></li>
+<li>결절의 segmentation의 정밀도를 높이기 위한 <strong>Segmentation refinement</strong> subnet</li>
+</ul>
+<h2></h2>
+<h2>기존 모델의 한계</h2>
+<ul>
+<li>결절 탐지를 위한 SOTA 프레임워크는 일반적으로 결적 탐색을 위한 <strong>3D RPN</strong>에 이어 거짓 양성 감소를 위해 <strong>3D분류</strong>를 사용하고 결절 Segmentation을 위해 U-Net과 V-Net을 사용한다.</li>
+</ul>
+<ol>
+<li>태스크를 완전히 독립적으로 처리하는 방법의 한계</li>
+</ol>
+<ul>
+<li>여러 딥 컨볼루션 신경망을 훈련하는 것은 많은<strong>이 발생</strong></li>
+<li>시스템의 전체 성능이 <strong>최적이 아닐 수 있음 ⇒</strong> 여러 시스템을 별도로 훈련하여 서로간의 소통을 방지하고 본질적인 특성 표현을 학습하는 것을 방해함</li>
+</ul>
+<p>2.  태스크를 Multi-task learning과 feature sharing을 이용할때 한계</p>
+<ul>
+<li>localization과 classification의 <strong>목표가 같지 않기에</strong> 두 작업을 같은 특성 맵을 사용하여 수행하는 것은 부적합</li>
+<li>큰 receptive field는 이미지의 다른 관련 없는 정보를 통합시킬 수 있음 ⇒ 특히 작은 결절 분류에 부정적인 여향을 줌</li>
+</ul>
+<p>3. localization과 classification을 분리시키자니</p>
+<ul>
+<li>특징 추출 백본을 공유하지 않고 두 작업을 완전히 분리시키면 cross-talk를 방해하여 효율적이지 않음</li>
+</ul>
+<p>⇒ 이러한 문제 해결을 위해 <strong>특징 추출 백본의 초기 스케일</strong>에서 특징을 풀링하는 <strong>분리된(decoupled) false positive reduction</strong>가 제안되어 <strong>task독립적인 특징과 task 종속적인 특징</strong>을 모두 학습이 가능</p>
+<h2>Nodule Net의 구성</h2>
+<p><img src="assets/img/blog/tistory-10/001-img.png" alt=""></p>
+<ol>
+<li>nodule candidate screening(NCS)</li>
+<li>false positive reduction(FPR) →RCNN</li>
+<li>segmentation refinement(SR)</li>
+</ol>
+<p>⇒ 위 세가지 요소들이 같은 특징 추출 backbone을 공유하고 모든 network는 end-to-end방식으로 학습된다.</p>
+<h3>1. Nodule Candidate screening</h3>
+<p><img src="assets/img/blog/tistory-10/002-img_1.png" alt=""></p>
+<ol>
+<li>Feature map4에 3x3x3 3D Conv Layer를 적용시켜 결절 후보를 생성</li>
+<li>각 앵커에 대해 classification probability와 여섯개의 회귀항을 생성하기 위해 두 개의 평행한 1x1x1 conv 3d layer를 사용</li>
+</ol>
+<ul>
+<li>이 작업에서는 크기가 5,10,20,30,50인 큐브를 5개의 앵커로 선택</li>
+<li>Faster R-CNN에서와 동일하게 멀티태스크 손실 함수를 최소화함</li>
+</ul>
+<p>→ BCross_entropy+smooth_l1_loss</p>
+<h3>2. Decoupled False Positive Reduction(DFPR)</h3>
+<p><img src="assets/img/blog/tistory-10/003-img_2.png" alt=""></p>
+<ul>
+<li>Faster r-cnn에서 RPN의 값은 특성 맵(feature_map_4)에서 feature를 풀링하여 분류를 수행하는방법 : 연결된 특성 맵을 사용하여 학습하는 것으로 두 task의 sub-optimal solution으로 이어질 수 있음</li>
+<li>대신 receptive filed가 작은 초기 특성 맵(down_4) 3D ROI Pooling layer를 사용한다.</li>
+<li>⇒거짓 양성 감소 네트워크가 NCS네트워크와는 상당히 다른 특성 표현을 학습하도록 보장</li>
+<li>NCS와 동일한 멀티태스크 손실 함수를 최소화</li>
+</ul>
+<p>→ BCross_entropy(코드에는 cross_entropy이지만 어차피 class는 결절 유무만하니 이진 크로스 엔트로피 사용)+smooth_l1_loss</p>
+<h3>3.segmentation refinement</h3>
+<p><img src="assets/img/blog/tistory-10/004-img_3.png" alt=""></p>
+<ul>
+<li>segmentation은 원본 입력 CT이미지와 동일한 스케일에서 수행</li>
+<li>고수준 crop된 feature map(feature_map 4)를 점진적으로 업샘플링하고, 저수준의 의미론적으로 강한 특징들과 concat해서 segmentation 진행</li>
+<li>⇒ mask R-CNN에서는 저자들은 다운샘플링된 특성맵을 사용하여 분할을 수행한 다음 예측된 마스크를 원본 이미지 스케일로 조정</li>
+<li>해당 방법은 결절이 있는 영역만 원본 이미지 스케일로 업샘플링되어 전체 입력 이미지의 작은 영역만을 차지함</li>
+<li>입력 이미지의 예측마스크 세트{m}과 ground truth mask set의 {g}의 <strong>soft dice loss</strong>를 최소화하는 방향으로 학습</li>
+</ul>
+<p><img src="assets/img/blog/tistory-10/005-img_4.png" alt=""></p>
+<h2>결과</h2>
+<ul>
+<li>성능 평가를 위해 LIDC-LDRI데이터셋을 사용함</li>
+<li>LIDC-LDRI:
+<ul>
+<li>다양한 슬라이스 두께를 가진 여러 사이트에서 수집된 1,018개의 CT 스캔 세트를 포함하는 대규모 공개 데이터셋임</li>
+<li>직경이 3mm이상인 결절만을 고려하여 네 명의 방사선 전문의가 윤곽을 표시함</li>
+</ul>
+</li>
+<li>6 fold CV를 수행하여 NoduleNet의 성능을 입증함</li>
+<li>학습 관련 설정
+<ul>
+<li>초기학습률: 0.01</li>
+<li>모멘텀 : 0.9</li>
+<li>L2패널티: 0.0001</li>
+<li>optimize: SGD</li>
+<li>epoch : 200
+<ul>
+<li>100에포크 후 학습률 0.001</li>
+<li>그후 60에포크 후: 0.0001로감소</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Detection 성능</h3>
+<ul>
+<li>평가: CPM LUNA16 [민감도]</li>
+<li>밑의 표에는 각 방법의 평균 거짓 양성 수에 따라 결정 감지도(민감도)가 0.125~8 일곱 가지 예정된 거짓 양성/스캔 임계값을 기준으로 나열함</li>
+</ul>
+<p><img src="assets/img/blog/tistory-10/006-img_5.png" alt=""></p>
+<p><img src="assets/img/blog/tistory-10/007-img_6.png" alt=""></p>
+<p><img src="assets/img/blog/tistory-10/008-img_7.png" alt=""></p>
+<p><strong>결과 분석</strong></p>
+<p><strong>1. 추가된 branch 성능</strong></p>
+<ul>
+<li>추가된 결절 segmentation 네트워크로 인해 민감도는 환자당 8개의 거짓 양성 비율에서 공통 일괄적으로 1.0%~1.5%로 개선됐음</li>
+</ul>
+<p><strong>2. 분리형vs결합형</strong></p>
+<ul>
+<li>분리형 오탐 감소를 사용하는 노듈넷의 평균 민감도는 결합형 오탐을 사용하는 노듈넷보다 약 3%~4% 향상되었음</li>
+</ul>
+<p><strong>3. 증강 유뮤</strong></p>
+<ul>
+<li>데이터 증강에 로테이션을 추가하면 FPR분기의 성능은 약 2.5% 더 향상되는 반면 NCS 분기의 성능은 거의 동일하게 유지된다.</li>
+</ul>
+<p>⇒ 본질적으로 서로 다른 작업을 학습하는 모듈을 분리하는 것이 중요하다는 것을 보여줌</p>
+<p>⇒ 오탐감소 및 segmentation refine 네트워크를 추가하면서 기준 검출기(NCS)의 성능이 그에따라 향상되어 멀티태스크 학습 및 특징 공유의 효과를 보여줌</p>
+<p>⇒ 전체적으로 노듈넷은 강력한 기본 단일 검출기보다 10.27% 더 나은 성능을 보임</p>
+<h3>3. 결절 segmentation 성능</h3>
+<ul>
+<li>평가지표</li>
+</ul>
+<p><img src="assets/img/blog/tistory-10/009-img_8.png" alt=""></p>
+<p><img src="assets/img/blog/tistory-10/010-img_9.png" alt=""></p>
+<ul>
+<li>표 2에서 노듈넷의 세그먼트 성능을 LIDC데이터 세트에서 훈련 및 테스트한 다른 딥러닝 기반 방법과 비교를함</li>
+<li>노듈 넷은 결절 세분화를 위한 별도의 전용 3D DCNN을 학습시킬 필요 없이 DSC에서 이전의 최첨단 딥러닝 기반 방법보다 0.95% 더 우수한 성능을 보임</li>
+</ul>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/10">https://ai-stat-lab.tistory.com/10</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>

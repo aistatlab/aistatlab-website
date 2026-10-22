@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<base href="../../">
+<meta name="description" content="Paper : https://openaccess.thecvf.com/content/CVPR2022/papers/Tang_Self-Supervised_Pre-Training_of_Swin_Transformers_for_3D_Medical_Image_Analysis_CVPR_2022_paper.pdf 2022 CVPR, IEEE published 2021년에 ViT 의 모델 중 하나인 Swin Transformers와 SSL 을 연관지어 발전시킨 논문들이 정말 많았">
+<meta property="og:type" content="article"><meta property="og:title" content="[Paper Review] Self-Supervised_Pre-Training of Swin Transformers for 3D Medical Image Analysis (Yucheng Tang, 2022)">
+<meta property="og:description" content="Paper : https://openaccess.thecvf.com/content/CVPR2022/papers/Tang_Self-Supervised_Pre-Training_of_Swin_Transformers_for_3D_Medical_Image_Analysis_CVPR_2022_paper.pdf 2022 CVPR, IEEE published 2021년에 ViT 의 모델 중 하나인 Swin Transformers와 SSL 을 연관지어 발전시킨 논문들이 정말 많았">
+<title>[Paper Review] Self-Supervised_Pre-Training of Swin Transformers for 3D Medical Image Analysis (Yucheng Tang, 2022) | AI Stat Lab</title>
+<link rel="icon" href="assets/img/favicon.png"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/blog.css">
+</head><body class="article-page">
+<header class="article-topbar"><div class="shell article-topbar-inner"><a href="./#home" class="article-logo" aria-label="AI Stat Lab home"><img src="assets/img/ai-stat-lab-full-logo.png" alt="AI Stat Lab"></a><a class="article-back" href="./#blog">← 블로그 목록</a></div></header>
+<main class="article-main"><article class="shell article-container">
+<a href="./#blog" class="article-breadcrumb">BLOG / Paper Review</a>
+<div class="article-meta"><time datetime="2024-03-18">2024-03-18</time><span>·</span><span>AI Stat Lab</span><span>·</span><span>한국어</span></div>
+<h1>[Paper Review] Self-Supervised_Pre-Training of Swin Transformers for 3D Medical Image Analysis (Yucheng Tang, 2022)</h1>
+<p class="article-lead">Paper : https://openaccess.thecvf.com/content/CVPR2022/papers/Tang_Self-Supervised_Pre-Training_of_Swin_Transformers_for_3D_Medical_Image_Analysis_CVPR_2022_paper.pdf 2022 CVPR, IEEE published 2021년에 ViT 의 모델 중 하나인 Swin Transformers와 SSL 을 연관지어 발전시킨 논문들이 정말 많았</p>
+<img class="article-cover" src="assets/img/blog/tistory-3/001-img.png" alt="" loading="eager">
+<div class="blog-prose"><p>Paper : <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Tang_Self-Supervised_Pre-Training_of_Swin_Transformers_for_3D_Medical_Image_Analysis_CVPR_2022_paper.pdf">https://openaccess.thecvf.com/content/CVPR2022/papers/Tang_Self-Supervised_Pre-Training_of_Swin_Transformers_for_3D_Medical_Image_Analysis_CVPR_2022_paper.pdf</a></p>
+<p>2022 CVPR, IEEE published</p>
+<p>2021년에 ViT 의 모델 중 하나인 Swin Transformers와 SSL 을 연관지어 발전시킨 논문들이 정말 많았으며, 본 논문도 그 중 하나임</p>
+<h1>Background : UNETR</h1>
+<ul>
+<li>UNETR은 3D UNET의 Encoder 경로를 Transformer 구조로 대체한 모델</li>
+<li>Transformer는 특성 상 Input과 Output Shape이 같으므로, Skip Connection 단계에서 서로 다른 Deconvolution을 진행해서 UNet과 shape를 맞춰줌</li>
+</ul>
+<p><strong>UNETR Architecture</strong></p>
+<p><img src="assets/img/blog/tistory-3/001-img.png" alt=""></p>
+<p>UNETR Architecture</p>
+<p>이 모델은 Transformer의 Attention 연산을 통해 Global 정보를 더 잘 획득하므로, 넓게 분포된 Tumor 영역도 잘 예측할 수 있다는 장점을 지님</p>
+<p><img src="assets/img/blog/tistory-3/002-img_1.png" alt=""></p>
+<p>3D U-NET Architecture</p>
+<p>베이직한 3d U-Net과 비교하면, Encoder 부분이 Transformer 구조로 대체되고, skip connection 경로에 Dconv block이 추가된 것을 살펴볼 수 있다.</p>
+<h1>Background : Swin Transformer</h1>
+<ul>
+<li>Transformer Encoder를 계층적으로 쌓은 모델</li>
+<li>Low Stage에서는 Patch Size를 작게 하는 전략 → Local Attention을 통한 local 정보 획득</li>
+<li>High Stage에서는 Patch Size를 크게 하는 전략 → Global Attention을 통한 global 정보 획득</li>
+<li>Shifted Window 알고리즘을 통해 window 간 attention도 진행함</li>
+</ul>
+<p>⇒ 기존 ViT 대비 Local과 Global 정보를 효율적으로 획득할 수 있음</p>
+<p><strong>Swin Transformer Architecture</strong></p>
+<p><img src="assets/img/blog/tistory-3/003-img_2.png" alt=""></p>
+<h3></h3>
+<h3><strong>Swin Transformer</strong></h3>
+<p><img src="assets/img/blog/tistory-3/004-img_3.png" alt=""></p>
+<p>Swin Transformer vs ViT</p>
+<h3><strong>Shifted Window Based Self-Attention</strong></h3>
+<p><img src="assets/img/blog/tistory-3/005-img_4.png" alt=""></p>
+<p>An illustration of the shifted window approach for computing self-attention in the proposed Swin Transformer architecture</p>
+<p><strong>1. Window Based Self-Attention (W-MSA)</strong></p>
+<p>Self-attention is computed within local windows.</p>
+<p>각 window가 M X M patches를 포함한다고 가정할 때, h X w patch 이미지를 기반으로 한 계산 복잡도는 다음과 같이 계산된다.</p>
+<p><img src="assets/img/blog/tistory-3/006-img_5.png" alt=""></p>
+<p>? Global self-attention computation (in standard <a href="https://sh-tsang.medium.com/review-vision-transformer-vit-406568603de0">ViT</a>) is generally unaffordable for a large hw, while the <strong>window based self-attention is scalable.</strong></p>
+<p><strong>2. Shifted Window Partitioning in Successive Blocks (SW-MSA)</strong></p>
+<p><img src="assets/img/blog/tistory-3/007-img_6.png" alt=""></p>
+<h1></h1>
+<h1>Background : <a href="https://sh-tsang.medium.com/review-self-supervised-pre-training-of-swin-transformers-for-3d-medical-image-analysis-74cc626b76be">Breaf Review of Swin UNETR</a></h1>
+<p>Swin UNETR 리뷰 참고 : <a href="https://sh-tsang.medium.com/review-swin-unetr-swin-transformers-for-semantic-segmentation-of-brain-tumors-in-mri-images-4fb757ad2915">https://sh-tsang.medium.com/review-swin-unetr-swin-transformers-for-semantic-segmentation-of-brain-tumors-in-mri-images-4fb757ad2915</a></p>
+<ul>
+<li>Swin UNet Transformers (Swin UNETR)은 3D brain tumor semantic segmentation task를 sequence to sequence prediction 문제로 재구성함</li>
+<li>multi-modal input data → 1D sequence of embedding</li>
+<li>이를 Swin Transformer의 input으로 사용</li>
+</ul>
+<h4>Swin Transformer Block</h4>
+<p><img src="assets/img/blog/tistory-3/008-img_7.png" alt=""></p>
+<p>Overview of the shifted windowing mechanism.</p>
+<p><img src="assets/img/blog/tistory-3/009-img_8.png" alt=""></p>
+<p>Overview of the Siwin UNETR architecture.</p>
+<p>(수정중)</p>
+<hr>
+<p>원문: <a href="https://ai-stat-lab.tistory.com/3">https://ai-stat-lab.tistory.com/3</a></p>
+</div>
+<div class="article-end"><a href="./#blog">← 블로그 목록 ↗</a><span>중앙대학교 · AI Stat Lab</span></div>
+</article></main>
+<footer class="footer"><div class="shell article-footer">Artificial Intelligence &amp; Statistics Lab · Chung-Ang University</div></footer>
+<script src="assets/article-math.js" defer></script>
+</body></html>
