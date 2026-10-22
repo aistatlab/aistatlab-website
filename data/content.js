@@ -765,144 +765,168 @@ window.LAB_CONTENT = {
   "members": [
     {
       "name": "이태원",
+      "email": "ltwon100@naver.com",
       "image": "assets/img/member/이태원.jpg",
       "role": "PhD",
       "area": "Robust statistics · Text mining · Machine learning"
     },
     {
       "name": "김민종",
+      "email": "kkmj9327@naver.com",
       "image": "assets/img/member/김민종.jpg",
       "role": "PhD",
       "area": "Deep learning · Data mining"
     },
     {
       "name": "박정훈",
+      "email": "pjh940820@naver.com",
       "image": "assets/img/member/박정훈.jpg",
       "role": "PhD",
       "area": "Machine learning · Computer vision"
     },
     {
       "name": "김현준",
+      "email": "kimhyunjun0910@gmail.com",
       "image": "assets/img/member/김현준.jpg",
       "role": "PhD",
       "area": "Machine learning · Anomaly detection"
     },
     {
       "name": "김정래",
+      "email": "8kjr3333@gmail.com",
       "image": "assets/img/member/김정래.jpg",
       "role": "PhD",
       "area": "Computer vision · Video object segmentation"
     },
     {
       "name": "김민준",
+      "email": "rlaalswns2@naver.com",
       "image": "assets/img/member/김민준.jpg",
       "role": "PhD",
       "area": "Anomalous sound detection · Machine learning"
     },
     {
       "name": "신희승",
+      "email": "s007dds@naver.com",
       "image": "assets/img/member/신희승.jpg",
       "role": "PhD",
       "area": "Computer vision · Medical imaging"
     },
     {
       "name": "이현경",
+      "email": "lgusrud3912@naver.com",
       "image": "assets/img/member/이현경.jpg",
       "role": "PhD",
       "area": "Computer vision · Anomaly detection"
     },
     {
       "name": "최인영",
+      "email": "gyen97@gmail.com",
       "image": "assets/img/member/최인영.jpg",
       "role": "Researcher",
       "area": "Biostatistics"
     },
     {
       "name": "김유라",
+      "email": "mormongu@naver.com",
       "image": "assets/img/member/김유라.jpg",
       "role": "Master",
       "area": "Deep learning · Machine learning"
     },
     {
       "name": "김우석",
+      "email": "kws8178@naver.com",
       "image": "assets/img/member/김우석.png",
       "role": "Master",
       "area": "Computer vision · Deep learning"
     },
     {
       "name": "정호준",
+      "email": "winner947@gmail.com",
       "image": "assets/img/member/정호준.jpg",
       "role": "Master",
       "area": "Machine learning · Deep learning"
     },
     {
       "name": "김채현",
+      "email": "reahyun828@gmail.com",
       "image": "assets/img/member/김채현.jpg",
       "role": "Master",
       "area": "Computer vision · Anomaly detection"
     },
     {
       "name": "최승호",
+      "email": "chltmdgh1304@naver.com",
       "image": "assets/img/member/최승호.jpg",
       "role": "Master",
       "area": "Data mining · Machine learning"
     },
     {
       "name": "김민혁",
+      "email": "kmh0851@naver.com",
       "image": "assets/img/member/김민혁.png",
       "role": "Master",
       "area": "Deep learning · Machine learning"
     },
     {
       "name": "서정호",
+      "email": "jeongho0715@outlook.com",
       "image": "assets/img/member/서정호.jpg",
       "role": "Undergraduate",
       "area": "Deep learning · Machine learning"
     },
     {
       "name": "박상춘",
+      "email": "sangchun241@gmail.com",
       "image": "assets/img/member/박상춘.jpg",
       "role": "Undergraduate",
       "area": "Deep learning · Machine learning"
     },
     {
       "name": "조성호",
+      "email": "aaffdd5588@naver.com",
       "image": "assets/img/member/조성호.jpg",
       "role": "Undergraduate",
       "area": "Computer vision"
     },
     {
       "name": "송현민",
+      "email": "kateminhyunsong@gmail.com",
       "image": "assets/img/member/송현민.jpg",
       "role": "Undergraduate",
       "area": "Machine learning · Deep learning"
     },
     {
       "name": "황수환",
+      "email": "hwangsuhwan0109@gmail.com",
       "image": "assets/img/member/황수환.jpg",
       "role": "Undergraduate",
       "area": "Deep learning · Mathematical foundations"
     },
     {
       "name": "박예원",
+      "email": "yeawon0224@gmail.com",
       "image": "assets/img/member/박예원.jpg",
       "role": "Undergraduate",
       "area": "Computer vision · Machine learning"
     },
     {
       "name": "신승우",
+      "email": "hawar410@naver.com",
       "image": "assets/img/member/신승우.jpg",
       "role": "Undergraduate",
       "area": "Machine learning · Deep learning"
     },
     {
       "name": "최보은",
+      "email": "bonychoi05@gmail.com",
       "image": "assets/img/member/최보은.jpg",
       "role": "Undergraduate",
       "area": "Computer vision · Deep learning"
     },
     {
       "name": "임무빈",
+      "email": "moobin4330@gmail.com",
       "image": "assets/img/member/임무빈.jpg",
       "role": "Undergraduate",
       "area": "Machine learning · Deep learning"
