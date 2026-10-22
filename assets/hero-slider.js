@@ -17,12 +17,12 @@
   const DELAY=6000;
   const captions=[
     {en:['AI STAT LAB','At the intersection of AI & Statistics','Chung-Ang University · Seoul','AI and Statistics Lab concept illustration inspired by Chung-Ang University'],ko:['AI STAT LAB','인공지능과 통계학의 만남','중앙대학교 · 서울','중앙대학교를 모티브로 한 AI·통계 연구실 콘셉트 이미지']},
-    {en:['AI STAT LAB','AI Statistics in Seoul','The city · Data · Discovery','AI and Statistics Lab concept art overlooking Seoul at sunset'],ko:['AI STAT LAB','서울의 AI·통계 연구','도시 · 데이터 · 새로운 발견','서울 노을 풍경을 배경으로 한 AI·통계 연구실 콘셉트 이미지']},
-    {en:['AI STAT LAB','Intelligence Beyond Boundaries','Artificial intelligence meets statistical thinking','AI and Statistics Lab futuristic Seoul night skyline concept illustration'],ko:['AI STAT LAB','경계를 넘는 지능','인공지능과 통계적 사고의 만남','미래 도시 야경을 배경으로 한 AI·통계 연구실 콘셉트 이미지']},
-    {en:['MEDICAL AI','Medical & Healthcare AI','Clinical data · medical imaging · patient trajectories','Abstract visualization of healthcare AI and biological signals'],ko:['의료 인공지능','의료·헬스케어 AI','임상 데이터 · 의료영상 · 환자 경과 예측','의료 AI 및 생체신호를 표현한 추상 시각화']},
-    {en:['COMPUTER VISION','Computer Vision & Industrial AI','Visual intelligence for complex environments','Abstract computer vision scene with visual tracking boxes'],ko:['컴퓨터 비전','컴퓨터 비전·산업 AI','복잡한 환경을 이해하는 영상 인공지능','객체 추적과 컴퓨터 비전을 표현한 추상 시각화']},
-    {en:['AUDIO & LANGUAGE AI','Audio & Multimodal Intelligence','Acoustic understanding · audio question answering','Abstract audio waveform and multimodal sound visualization'],ko:['오디오·언어 AI','오디오·멀티모달 지능','음향 이해 · 오디오 질의응답','오디오 파형 및 멀티모달 분석을 표현한 추상 시각화']},
-    {en:['STATISTICAL LEARNING','Statistics & Machine Learning','Inference · uncertainty · data-driven discovery','Abstract statistical curves and uncertainty visualization'],ko:['통계적 기계학습','통계학·기계학습','통계적 추론 · 불확실성 · 데이터 기반 탐구','확률곡선과 불확실성을 표현한 추상 통계 시각화']}
+    {en:['ORIGINAL HOMEPAGE','AI Statistics in Seoul','The city · Data · Discovery','AI and Statistics Lab concept art overlooking Seoul at sunset'],ko:['기존 홈페이지 이미지','서울의 AI·통계 연구','도시 · 데이터 · 새로운 발견','서울 노을 풍경을 배경으로 한 AI·통계 연구실 콘셉트 이미지']},
+    {en:['ORIGINAL HOMEPAGE','Intelligence Beyond Boundaries','Artificial intelligence meets statistical thinking','AI and Statistics Lab futuristic Seoul night skyline concept illustration'],ko:['기존 홈페이지 이미지','경계를 넘는 지능','인공지능과 통계적 사고의 만남','미래 도시 야경을 배경으로 한 AI·통계 연구실 콘셉트 이미지']},
+    {en:['MEDICAL AI','Medical & Healthcare AI','Clinical data · medical imaging · patient trajectories','Photorealistic AI-generated concept scene of medical imaging research'],ko:['의료 인공지능','의료·헬스케어 AI','임상 데이터 · 의료영상 · 환자 경과 예측','의료영상 연구를 묘사한 AI 생성 콘셉트 이미지']},
+    {en:['COMPUTER VISION','Computer Vision & Industrial AI','Visual intelligence for complex environments','Photorealistic AI-generated concept scene of industrial port monitoring'],ko:['컴퓨터 비전','컴퓨터 비전·산업 AI','복잡한 환경을 이해하는 영상 인공지능','항만 산업 AI 관제를 묘사한 AI 생성 콘셉트 이미지']},
+    {en:['AUDIO & LANGUAGE AI','Audio & Multimodal Intelligence','Acoustic understanding · audio question answering','Photorealistic AI-generated concept scene of audio AI research'],ko:['오디오·언어 AI','오디오·멀티모달 지능','음향 이해 · 오디오 질의응답','음향 AI 연구를 묘사한 AI 생성 콘셉트 이미지']},
+    {en:['STATISTICAL LEARNING','Statistics & Machine Learning','Inference · uncertainty · data-driven discovery','Photorealistic AI-generated concept scene of statistical modeling'],ko:['통계적 기계학습','통계학·기계학습','통계적 추론 · 불확실성 · 데이터 기반 탐구','통계 모델링 연구를 묘사한 AI 생성 콘셉트 이미지']}
   ];
   let index=0,timer=null,userPaused=motion.matches,hovered=false,focused=false;
   const l=()=>document.documentElement.lang==='ko'?'ko':'en';
