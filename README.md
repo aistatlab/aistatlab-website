@@ -20,7 +20,7 @@ Official website draft for the Artificial Intelligence & Statistics Lab at Chung
 ## Public launch checklist
 
 - Confirm research members and paper acceptance/submission statuses before declaring the site an official source. The previous site data may be stale; for instance, at least one manuscript publication status requires review.
-- Obtain permission for any student photos before uploading. Until then the site uses initials, not invented images.
+- Member portraits are linked by name from `assets/img/member/` in `data/content.js`. Keep each image path updated when replacing a portrait.
 - The campus-themed hero illustration is a conceptual graphic, **not a real campus photograph**.
 - Keep the original Google Sites website until the public site is reviewed.
 - This release is static and does not require server-side code or secret credentials.
