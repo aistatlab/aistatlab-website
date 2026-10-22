@@ -21,7 +21,7 @@ import yaml
 from markdown_it import MarkdownIt
 
 ROOT = Path(__file__).resolve().parents[1]
-CATEGORIES = {"Research Insights", "Technical Notes", "Lab Stories", "Tutorials"}
+CATEGORIES = {'Paper Review', 'Research Insights', 'Lab Stories', 'Projects', 'Statistics', 'Uncategorized', '기타', 'Technical Notes', 'Tutorials'}
 MARKDOWN = MarkdownIt('commonmark', {"html": False, "linkify": False}).enable('table')
 ALLOWED_TAGS = {
     'p','h1','h2','h3','h4','h5','h6','strong','em','a','img','blockquote','pre','code',
