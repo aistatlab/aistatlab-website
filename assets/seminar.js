@@ -12,7 +12,6 @@
  function render(){
   const ko=document.documentElement.lang==='ko',t=labels[ko?'ko':'en'];
   root.querySelector('.seminar-lead').textContent=t.lead;
-  root.querySelector('.seminar-source').textContent=t.source;
   search.placeholder=t.search;search.setAttribute('aria-label',t.search);year.setAttribute('aria-label',t.all);
   const selected=year.value||'all';
   const years=[...new Set(entries.map(e=>e.date.slice(0,4)).filter(Boolean))].sort().reverse();

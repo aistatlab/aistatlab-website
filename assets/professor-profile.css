@@ -1,0 +1,21 @@
+body.professor-profile-open{overflow:hidden}
+.professor-profile-trigger{border:0;background:transparent;padding:0;font-family:inherit;text-align:left;cursor:pointer}
+.professor-profile{box-sizing:border-box;width:min(860px,calc(100vw - 32px));max-height:85dvh;padding:44px 32px 32px;border:0;border-radius:16px;color:var(--ink);background:#fff;box-shadow:0 24px 80px #0005}
+.professor-profile::backdrop{background:#07152bb3}
+.professor-profile-close{position:absolute;right:12px;top:8px;width:36px;height:36px;border:0;border-radius:50%;background:transparent;font-size:28px;cursor:pointer;color:var(--ink)}
+.professor-profile-close:hover{background:var(--pale)}
+.professor-profile-intro{display:grid;grid-template-columns:220px minmax(0,1fr);gap:30px;align-items:start}
+.professor-profile-intro>img{display:block;width:100%;height:auto;max-height:340px;object-fit:contain;border-radius:10px;background:var(--pale)}
+.professor-profile h2{font-size:28px;letter-spacing:-1px;margin:12px 0}
+.professor-profile h2 span{font-size:17px;color:var(--muted);white-space:nowrap}
+.professor-profile p,.professor-profile address{font-size:13px;line-height:1.85;color:var(--muted);font-style:normal}
+.professor-profile .professor-profile-position{font-weight:700;color:var(--ink)}
+.professor-profile section{margin-top:30px;border-top:1px solid var(--line);padding-top:22px}
+.professor-profile h3{font-size:19px;margin:0 0 18px}
+.professor-profile-history{margin:0;display:grid;gap:17px}
+.professor-profile-history>div{display:grid;grid-template-columns:135px minmax(0,1fr);gap:16px;font-size:13px;line-height:1.6}
+.professor-profile-history dt{color:var(--blue);font-weight:700}
+.professor-profile-history dd{margin:0}.professor-profile-history dd span{display:block;color:var(--muted)}
+@media(max-width:600px){.professor-profile{padding:44px 20px 24px}.professor-profile-intro{grid-template-columns:1fr;gap:20px}.professor-profile-intro>img{width:170px;max-height:240px}.professor-profile-history>div{grid-template-columns:1fr;gap:3px}}
+
+.professor-profile{font-family:inherit}.professor-profile button{font-family:inherit}
