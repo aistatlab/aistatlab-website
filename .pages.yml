@@ -62,6 +62,11 @@ content:
             - Technical Notes
             - Lab Stories
             - Tutorials
+            - Paper Review
+            - Projects
+            - Statistics
+            - 기타
+            - Uncategorized
       - name: summary
         label: Short summary / 요약
         type: text
