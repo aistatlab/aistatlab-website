@@ -6,7 +6,8 @@ window.LAB_ALUMNI = [
     "graduation": null,
     "thesis": null,
     "category": "former",
-    "remark": ""
+    "remark": "",
+    "email": "hyunhee09@gmail.com"
   },
   {
     "name": "안소현",
@@ -14,7 +15,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-08",
     "thesis": "Quantile Prediction of Length of Stay for Urology Inpatients Using Multimodal Fusion of Structured Clinical Data and Clinical Text",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "thgus8746597@naver.com"
   },
   {
     "name": "최은신",
@@ -22,7 +24,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-08",
     "thesis": "Cross-Dataset Robust Audio-Based Depression Detection via Audio Mamba Embeddings and Symptom-Guided LLM Representations",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "eunsin_choi@naver.com"
   },
   {
     "name": "이윤정",
@@ -30,7 +33,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-02",
     "thesis": "Enhancing Audio Captioning via Q-Former and Temporal Contrastive Learning",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "dldbswjd106@naver.com"
   },
   {
     "name": "김정래",
@@ -38,7 +42,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-02",
     "thesis": "SAM2Dual: Dual memory banks for long videos",
     "category": "graduate",
-    "remark": "current"
+    "remark": "current",
+    "email": "8kjr3333@gmail.com"
   },
   {
     "name": "김민준",
@@ -46,7 +51,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-02",
     "thesis": "Two-Stage Framework for Industrial Machine Anomalous Sound Detection Based on Unsupervised Learning Using Vision Transformer",
     "category": "graduate",
-    "remark": "current"
+    "remark": "current",
+    "email": "rlaalswns2@naver.com"
   },
   {
     "name": "신희승",
@@ -54,7 +60,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-02",
     "thesis": "MaViCoN-FFT: Mamba–Vision Convolutional Network with Patch /Volume FFT for Brain Tumor Segmentation",
     "category": "graduate",
-    "remark": "current"
+    "remark": "current",
+    "email": "s007dds@naver.com"
   },
   {
     "name": "이윤서",
@@ -62,7 +69,8 @@ window.LAB_ALUMNI = [
     "graduation": "2026-02",
     "thesis": "Towards Clinically Faithful Medical Image Captioning via Enhanced Vision–Language Alignment",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "34_04@naver.com"
   },
   {
     "name": "김희원",
@@ -70,7 +78,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-08",
     "thesis": "Advancements and Trends in Brain Tumor Segmentation Models: A Comprehensive Review",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "khwon4271@naver.com"
   },
   {
     "name": "노지현",
@@ -78,7 +87,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-08",
     "thesis": "IDTrack: Independent Sequence Prediction in Decoder for Visual Object Tracking",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "ggpji59105@naver.com"
   },
   {
     "name": "임재승",
@@ -86,7 +96,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-08",
     "thesis": "Contrastive learning for long term time series forecasing with ξ- correlation",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "yimyh1231@gmail.com"
   },
   {
     "name": "박상제",
@@ -94,7 +105,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-08",
     "thesis": "Robust Depression Detection in Small Speech Datasets using Two-Step Transfer Learning",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "parksj2480@naver.com"
   },
   {
     "name": "황재원",
@@ -102,7 +114,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-02",
     "thesis": "A comparison study on Oversampling and Molecular Feature Extraction methods for multi-label toxicity prediction",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "dch222@cau.ac.kr"
   },
   {
     "name": "황대환",
@@ -110,7 +123,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-02",
     "thesis": "A Study on the Toxicity Prediction Deep Learning Model Using the Molecular Structure of Chemical Substances",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "ppn0303@naver.com"
   },
   {
     "name": "박지원",
@@ -118,7 +132,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-02",
     "thesis": "A study on methodology for language-based audio retrieval with contrastive learning",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "jiwonlolol@naver.com"
   },
   {
     "name": "정은아",
@@ -126,7 +141,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-02",
     "thesis": "3D Pulmonary Nodule Segmentation Network with Self-Supervised Learning and Attention Mechanism",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "eunah320@naver.com"
   },
   {
     "name": "문정현",
@@ -134,7 +150,8 @@ window.LAB_ALUMNI = [
     "graduation": "2023-02",
     "thesis": "Current trend and development in automatic speech recognition and its applications to Korean speech data",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "answjdgus1gh@naver.com"
   },
   {
     "name": "이재용",
@@ -142,7 +159,8 @@ window.LAB_ALUMNI = [
     "graduation": "2023-02",
     "thesis": "Transformer model for long-term forecast using multiple time series",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "oiuyy207@gmail.com"
   },
   {
     "name": "김수빈",
@@ -150,7 +168,8 @@ window.LAB_ALUMNI = [
     "graduation": "2023-02",
     "thesis": "The Embedding methods for speaker verification with self-supervised representation learning",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "camilkim46@naver.com"
   },
   {
     "name": "김백승",
@@ -158,7 +177,8 @@ window.LAB_ALUMNI = [
     "graduation": "2023-02",
     "thesis": "Stethoscope Sound Classification & Automated Audio Captioning Using Audio Data",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "kbs778@naver.com"
   },
   {
     "name": "김수연",
@@ -166,7 +186,8 @@ window.LAB_ALUMNI = [
     "graduation": "2022-08",
     "thesis": "Data augmentation based on adversarial examples for visual question answering",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "alsk3568@naver.com"
   },
   {
     "name": "최현빈",
@@ -174,7 +195,8 @@ window.LAB_ALUMNI = [
     "graduation": "2021-08",
     "thesis": "SiamMask++: More accurate object tracking through layer wise aggregation in Visual Object Tracking",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "wow_hb@naver.com"
   },
   {
     "name": "김영동",
@@ -182,7 +204,8 @@ window.LAB_ALUMNI = [
     "graduation": "2021-02",
     "thesis": "Dynamic Attention Network for Image-Text Matching",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "nasa1993@naver.com"
   },
   {
     "name": "이종가",
@@ -190,7 +213,8 @@ window.LAB_ALUMNI = [
     "graduation": "2021-02",
     "thesis": "Comparing Effectiveness of Regularization Methods on Text Classification : Simple and Complex Model in Data Shortage Situation",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "closingprice@naver.com"
   },
   {
     "name": "강준서",
@@ -198,7 +222,8 @@ window.LAB_ALUMNI = [
     "graduation": "2021-02",
     "thesis": "Using Similarity Based Image Caption to Aid Visual Question Answering",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "vqa@kakao.com"
   },
   {
     "name": "김은빈",
@@ -206,7 +231,8 @@ window.LAB_ALUMNI = [
     "graduation": "2020-08",
     "thesis": "Two-Dimensional Attention-Based Multi-Input LSTM for Time Series Prediction",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "imej94@naver.com"
   },
   {
     "name": "조성철",
@@ -214,7 +240,8 @@ window.LAB_ALUMNI = [
     "graduation": "2020-02",
     "thesis": "A Study on Area-wise Relational Knowledge Distillation",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "chosc@cau.ac.kr"
   },
   {
     "name": "정혜린",
@@ -222,7 +249,8 @@ window.LAB_ALUMNI = [
     "graduation": "2020-02",
     "thesis": "Visualization of Explainable AI Techniques Using Variable Importance",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "gpflswjd0793@gmail.com"
   },
   {
     "name": "배강일",
@@ -230,7 +258,8 @@ window.LAB_ALUMNI = [
     "graduation": "2019-02",
     "thesis": "Data Fusion with Multi-view Learning: Application in Flower Classification with Modified Multimodal Convolutional Neural Networks",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "bki1990@gmail.com"
   },
   {
     "name": "선현석",
@@ -238,7 +267,8 @@ window.LAB_ALUMNI = [
     "graduation": "2019-02",
     "thesis": "A Study on Text-Mining and Word-Embedding Using Public Documents Research and Application",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "sunhs92@gmail.com"
   },
   {
     "name": "김보경",
@@ -246,7 +276,8 @@ window.LAB_ALUMNI = [
     "graduation": "2019-02",
     "thesis": "Predictive Research and Application on Structured and Unstructured Data Using Machine Learning",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "bk31031@gmail.com"
   },
   {
     "name": "우호영",
@@ -254,7 +285,8 @@ window.LAB_ALUMNI = [
     "graduation": "2018-08",
     "thesis": "Image Noise Reduction Algorithms Using Nonparametric Bayesian and Nonparametric Method",
     "category": "former",
-    "remark": "postdoc"
+    "remark": "postdoc",
+    "email": "woohy101@gmail.com"
   },
   {
     "name": "이동녘",
@@ -262,7 +294,8 @@ window.LAB_ALUMNI = [
     "graduation": "2024-05",
     "thesis": "Advancing Precision Medicine Through Machine Learning",
     "category": "former",
-    "remark": "external_phd"
+    "remark": "external_phd",
+    "email": "eastk98@naver.com"
   },
   {
     "name": "조승규",
@@ -270,14 +303,16 @@ window.LAB_ALUMNI = [
     "graduation": "2017-08",
     "thesis": "Robust M-estimation of Huber with Tuning Constant based on Data in Nonlinear Regression Model",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "tmdrb0707@gmail.com"
   },
   {
     "name": "박초롱",
     "graduation": "2017-08",
     "thesis": "Analysis of qHTS assay Data Using a Robust Nonlinear Mixed Model Estimation",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "cholong7700@nate.com"
   },
   {
     "name": "남혜진",
@@ -292,7 +327,8 @@ window.LAB_ALUMNI = [
     "graduation": "2017-02",
     "thesis": "Analysis of High Throughput Screening Assay Data using Robust Two-Stage Estimation for Nonlinear Mixed Effects Models",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "hmy3012@gmail.com"
   },
   {
     "name": "유지선",
@@ -307,7 +343,8 @@ window.LAB_ALUMNI = [
     "graduation": "2017-02",
     "thesis": "Preliminary Test Estimation Method for Nonlinear Mixed Effects Models with Applications to High Throughput Screening Assay Data",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "ji870310@gmail.com"
   },
   {
     "name": "정혜윤",
@@ -315,7 +352,8 @@ window.LAB_ALUMNI = [
     "graduation": "2016-02",
     "thesis": "Comparison of Results from Structural Equation Modelling Analysis and Principal Component Regression Analysis for the Relation between Psychological Self-Sufficiency Including Employment Hope and Perceived Employment Barrier and Economic Self-Sufficiency",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "jhy1204kr@naver.com"
   },
   {
     "name": "유혜원",
@@ -323,7 +361,8 @@ window.LAB_ALUMNI = [
     "graduation": "2016-02",
     "thesis": "Preliminary Test Estimation Method Accounting for Error Variance Structure in Nonlinear Regression Models",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "yhw1638@naver.com"
   },
   {
     "name": "리예화",
@@ -331,6 +370,7 @@ window.LAB_ALUMNI = [
     "graduation": "2016-02",
     "thesis": "Study on Robust Inference in Nonlinear Regression Under Heteroscedasticity",
     "category": "graduate",
-    "remark": ""
+    "remark": "",
+    "email": "yihua12282@gmail.com"
   }
 ];

@@ -62,7 +62,8 @@ function renderAlumni(){
   const degreeNote=p.remark==='postdoc'?a.alumniPostdoc:p.remark==='external_phd'?a.alumniExternalPhD:p.category==='former'?a.alumniFormerTag:a.alumniGraduated;
   const current=p.remark==='current'?`<span class="alumni-tag alumni-tag-current">${esc(a.alumniCurrent)}</span>`:'';
   const thesis=p.thesis?`<p class="alumni-thesis"><strong>${esc(a.alumniThesis)} · </strong>${esc(p.thesis)}</p>`:'';
-  return `<article class="alumni-card"><div class="alumni-card-head"><div class="alumni-identity">${p.image?`<img class="alumni-photo" src="${esc(p.image)}" alt="${esc(p.name)}" width="56" height="56" loading="lazy">`:``}<h5>${esc(p.name)}</h5></div><span class="alumni-date">${esc(dt)}</span></div><div class="alumni-card-tags"><span class="alumni-tag">${esc(degreeNote)}</span>${current}</div>${thesis}</article>`;
+  const email=p.email?`<a class="text-link alumni-email" href="mailto:${esc(p.email)}">${esc(p.email)} ↗</a>`:'';
+  return `<article class="alumni-card"><div class="alumni-card-head"><div class="alumni-identity">${p.image?`<img class="alumni-photo" src="${esc(p.image)}" alt="${esc(p.name)}" width="56" height="56" loading="lazy">`:``}<h5>${esc(p.name)}</h5></div><span class="alumni-date">${esc(dt)}</span></div><div class="alumni-card-tags"><span class="alumni-tag">${esc(degreeNote)}</span>${current}</div>${email}${thesis}</article>`;
  };
  const limit=(alumniExpanded||query||alumniYear!=='all')?grads.length:12;
  $('#alumniResults').innerHTML=grads.length?grads.slice(0,limit).map(makeCard).join(''):`<div class="alumni-empty">${esc(a.alumniNone)}</div>`;
