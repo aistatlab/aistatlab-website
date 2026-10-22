@@ -91,3 +91,45 @@
 @media(max-width:760px){.memory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.memory-intro{flex-wrap:wrap;padding:18px}.memory-gallery-link{margin-left:0}.memory-footer{display:grid}.memory-card-body{padding:15px 13px}.memory-visual{height:145px}.memory-card h3{font-size:14px}}
 @media(max-width:460px){.memory-grid{grid-template-columns:1fr}.memory-visual{height:165px}.memory-card-body{min-height:125px}}
 @media(prefers-reduced-motion:reduce){.memory-card{transition:none}}
+
+/* Alumni in People — intentional continuation of the existing academic design */
+.alumni-panel{margin-top:74px;padding-top:48px;border-top:1px solid #d9e3f0}
+.alumni-topline{display:flex;align-items:center;justify-content:space-between}
+.alumni-flourish{font-size:29px;color:#9ab3e3}
+.alumni-heading-row{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-top:8px}
+.alumni-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,4.5vw,56px);letter-spacing:-2.5px;margin:5px 0 8px;color:#0a1c34}
+.alumni-lead{margin:0;color:#6a7c95;font-size:15px;line-height:1.7}
+.alumni-stat{text-align:right;min-width:145px;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.alumni-stat strong{font-family:'Space Grotesk',sans-serif;font-size:46px;line-height:1;color:#16469d;font-weight:700}
+.alumni-stat span{font-size:11px;line-height:1.5;color:#72829c;max-width:155px}
+.alumni-filter-row{display:flex;gap:12px;margin:32px 0 27px}
+.alumni-search{display:flex;align-items:center;gap:12px;flex:1;min-width:0;background:#fff;border:1px solid #dce5f0;border-radius:9px;padding:0 15px}
+.alumni-search span{font-size:22px;color:#748ba8}
+.alumni-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;padding:14px 0;font-size:13px;color:#152943}
+.alumni-select-label{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #dce5f0;border-radius:9px;padding:0 12px;color:#63748e}
+.alumni-select-label span{font-size:11px;white-space:nowrap}
+.alumni-select-label select{background:transparent;border:0;outline:0;min-height:45px;color:#152943;font-size:13px;font-weight:700;cursor:pointer}
+.alumni-section-header{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid #142e56;padding:0 0 12px;gap:15px}
+.alumni-section-header h4{margin:0;font:700 18px 'Space Grotesk',Arial,sans-serif;color:#0b203d}
+.alumni-section-count{font-size:12px;color:#72839b}
+.alumni-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:15px}
+.alumni-card{background:#fff;border:1px solid #e0e7f1;border-radius:11px;padding:17px 19px;min-width:0;display:flex;flex-direction:column;gap:9px;box-shadow:0 2px 6px #071e3905;transition:border-color .15s,box-shadow .15s}
+.alumni-card:hover{border-color:#b8ccef;box-shadow:0 7px 24px #0c2d6210}
+.alumni-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.alumni-card h5{font-size:16px;letter-spacing:-.3px;margin:0;color:#122943}
+.alumni-date{font-size:11px;white-space:nowrap;color:#3e66a6;font-weight:700}
+.alumni-card-tags{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.alumni-tag{font-size:10px;line-height:1.4;background:#eff5fe;color:#35639b;padding:4px 7px;border-radius:4px}
+.alumni-tag-current{background:#e8f7f4;color:#176e60}
+.alumni-thesis{font-size:12px;color:#657893;line-height:1.65;margin:0;overflow-wrap:anywhere}
+.alumni-more-wrap{display:flex;justify-content:center;margin:22px 0 0}
+.alumni-more{background:#fff;border:1px solid #ccdaec;color:#1a4076;border-radius:8px;padding:12px 20px;font-size:13px;font-weight:700}
+.alumni-more:hover{background:#eaf1fd}
+.alumni-more[hidden]{display:none}
+.alumni-former-header{margin-top:40px}
+.alumni-note{display:flex;align-items:flex-start;gap:12px;margin-top:28px;padding:14px 0 0;border-top:1px solid #dce5f0}
+.alumni-note>span{color:#4174c9;font-size:18px}
+.alumni-note p{font-size:12px;line-height:1.75;color:#7a8aa1;margin:0}
+.alumni-note a{color:#3165b5;font-weight:700;white-space:nowrap}
+.alumni-empty{grid-column:1/-1;padding:25px;background:#fff;border:1px dashed #c5d5ea;color:#697d99;border-radius:10px;font-size:13px}
+@media(max-width:760px){.alumni-panel{margin-top:52px;padding-top:34px}.alumni-heading-row{align-items:flex-start}.alumni-stat{min-width:90px}.alumni-stat strong{font-size:36px}.alumni-stat span{font-size:9px}.alumni-filter-row{flex-direction:column}.alumni-select-label{justify-content:space-between;padding:0 14px}.alumni-list{grid-template-columns:1fr}.alumni-card{padding:16px}.alumni-title{font-size:42px}}
