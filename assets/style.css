@@ -184,3 +184,119 @@
 .memory-thumbnails{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}
 .memory-thumbnails img{display:block;width:100%;height:72px;object-fit:cover;border-radius:5px}
 .alumni-card-head{align-items:center}
+
+
+/* =====================================================================
+   AI Stat Lab — responsive university-style masthead, 25 October 2026
+   Based on GitHub main at 071a341a. Desktop + phone portrait/landscape.
+   Only header + home hero layout: content, blog and secondary sections unchanged.
+   ===================================================================== */
+.brand-lab{display:flex;align-items:center;gap:11px;min-width:0;white-space:normal;flex:0 0 auto}
+.brand-logo-symbol{display:block!important;width:60px;height:48px;max-height:none;flex:0 0 auto;object-fit:contain}
+.brand-lab-title{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1px;font-family:'Space Grotesk',Arial,sans-serif;font-size:14px;letter-spacing:-.35px;line-height:1.18;color:#0b203e}
+.brand-lab-title strong{font-weight:700;display:block;white-space:nowrap}
+.brand-lab-title small{margin-top:5px;font-family:'DM Sans',Arial,sans-serif;font-size:8px;font-weight:800;letter-spacing:1.15px;color:#4d729c;white-space:nowrap}
+.nav{gap:16px}
+.navlinks{gap:11px}
+.navlinks a{white-space:nowrap}
+@media(min-width:1121px) and (max-width:1310px){
+  .brand-logo-symbol{width:53px;height:44px}
+  .brand-lab-title{font-size:12px}
+  .brand-lab-title small{font-size:7px;letter-spacing:.7px}
+  .nav{gap:9px}
+  .navlinks{gap:7px}
+  .navlinks a{font-size:10px}
+  .lang{padding:8px}
+}
+/* Keep the compact menu for intermediate widths; no squeezed desktop links. */
+@media(min-width:761px) and (max-width:1120px){
+  .menu-btn{display:block!important}
+  .navlinks{display:none!important;position:absolute;top:69px;left:0;right:0;padding:22px;background:#fff;box-shadow:0 18px 25px #00162b18;flex-direction:column;align-items:stretch;gap:17px}
+  .navlinks.open{display:flex!important}
+  .navlinks a{font-size:14px}
+  .lang{align-self:flex-start}
+}
+/* Both phone portrait and landscape use the same balanced stacked hero. */
+@media(max-width:760px), (max-width:1020px) and (max-height:620px) and (orientation:landscape){
+  html{scroll-padding-top:70px}
+  body{background:#fff}
+  .shell{width:min(calc(100% - 32px),1180px)}
+  .header{position:sticky;top:0;left:auto;right:auto;background:#fff!important;border-bottom:1px solid #ebeff5!important;box-shadow:none!important;backdrop-filter:blur(16px);z-index:50}
+  .nav{height:68px;gap:9px;display:flex;align-items:center;justify-content:space-between}
+  .brand-lab{gap:8px;min-width:0;flex:0 1 auto}
+  .brand-logo-symbol{display:block!important;width:48px;height:42px;flex:0 0 48px}
+  .brand-lab-title{font-size:12.6px;letter-spacing:-.32px;line-height:1.12;min-width:0}
+  .brand-lab-title strong{white-space:nowrap}
+  .brand-lab-title small{font-size:7px;letter-spacing:.7px;margin-top:5px}
+  .menu-btn{display:grid!important;place-items:center;flex:0 0 44px;width:44px;height:44px;padding:0;border-radius:50%;background:#eff4fa;border:1px solid #e3ebf5;color:#173454;font-size:25px;line-height:1}
+  .navlinks{display:none!important;position:absolute;top:67px;left:0;right:0;padding:18px 24px 22px;gap:15px;flex-direction:column;align-items:stretch;background:#fff;border-top:1px solid #e9eff7;box-shadow:0 18px 30px #071a3030}
+  .navlinks.open{display:flex!important}
+  .navlinks a{font-size:14px}
+  .lang{align-self:flex-start}
+  .hero{background:#07152b;color:#fff}
+  .hero-glow{background:radial-gradient(circle at 80% 70%,rgba(46,91,176,.36),transparent 43%),radial-gradient(circle at 15% 100%,rgba(24,54,106,.4),transparent 48%)}
+  .hero-grid{display:grid;grid-template-columns:1fr;min-height:0;gap:0;align-items:start;padding-top:0}
+  .hero-content{padding:28px 0 0;min-width:0}
+  .eyebrow.light{font-size:9.5px;letter-spacing:2px;line-height:1.4}
+  .hero h1{font-size:clamp(40px,10.7vw,52px);letter-spacing:-2.7px;line-height:1.065;margin:16px 0 14px}
+  .hero-content>p{font-size:14px;line-height:1.56;max-width:520px;color:#c2d2ed;margin:0}
+  .hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:21px;max-width:540px}
+  .hero-actions .button{display:flex;align-items:center;justify-content:space-between;gap:7px;min-height:45px;padding:12px 12px;font-size:11px;line-height:1.25;border-radius:9px}
+  .hero-meta{margin-top:23px;gap:7px 10px;font-size:8px;letter-spacing:1px;line-height:1.45}
+  .hero-art-photo{display:block;position:relative;justify-self:center;max-width:min(100%,550px);width:100%;min-height:0;height:auto;margin:20px auto 22px;filter:none}
+  .hero-photo-frame.hero-carousel{position:relative;display:block;aspect-ratio:16 / 9;width:100%;height:auto;min-height:0;max-height:none;border-radius:15px;border:1px solid #48658d;background:#0b2348;box-shadow:0 18px 40px #010a1f52}
+  .hero-slide-image{object-fit:cover}
+  .hero-caption{left:15px;right:15px;bottom:57px;max-width:calc(100% - 30px);gap:4px}
+  .hero-caption-title{font-size:clamp(17px,4.5vw,23px)}
+  .hero-caption-description{font-size:10px}
+  .hero-caption-kicker{font-size:8px}
+  .hero-slider-controls{left:13px;right:13px;bottom:9px;gap:7px}
+  .hero-slide-button{width:30px;height:30px;min-width:30px}
+  .hero-counter{display:none}
+  .hero-brand-plate,.photo-side-tag{display:none}
+  .hero-bottom{display:flex;padding:0 0 17px;justify-content:flex-end}
+  .hero-bottom span:first-child{display:none}
+  .hero-bottom span:last-child{font-size:9px}
+}
+@media(max-width:360px){
+  .brand-logo-symbol{width:41px;height:37px;flex-basis:41px}
+  .brand-lab-title{font-size:11px}
+  .brand-lab-title small{font-size:6.2px;letter-spacing:.4px}
+  .hero h1{font-size:39px}
+  .hero-actions{grid-template-columns:1fr}
+  .hero-actions .button{min-height:41px}
+  .hero-meta{margin-top:14px}
+  .hero-art-photo{margin-top:16px}
+}
+@media (max-width:1020px) and (max-height:620px) and (orientation:landscape){
+  .hero-content{padding-top:18px}
+  .hero h1{font-size:clamp(36px,5.7vw,48px);line-height:1.06;margin:12px 0 10px}
+  .hero-content>p{font-size:13px;line-height:1.45}
+  .hero-actions{margin-top:15px}
+  .hero-meta{margin-top:15px}
+  .hero-art-photo{margin-top:16px;max-width:min(100%,600px)}
+}
+
+/* Short phone landscape: show the contained image immediately, beside the text. */
+@media (min-width:580px) and (max-width:1020px) and (max-height:620px) and (orientation:landscape){
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);column-gap:22px;align-items:center;min-height:calc(100svh - 68px)}
+  .hero-content{padding:14px 0 12px}
+  .hero h1{font-size:clamp(30px,4.45vw,42px);letter-spacing:-2px;line-height:1.05;margin:12px 0 10px}
+  .hero-content>p{font-size:12px;line-height:1.45}
+  .hero-actions{margin-top:14px;gap:7px}
+  .hero-actions .button{font-size:10px;min-height:39px;padding:9px 10px}
+  .hero-meta{display:none}
+  .hero-art-photo{margin:0;max-width:100%;min-height:0;align-self:center;justify-self:stretch}
+  .hero-photo-frame.hero-carousel{width:100%;aspect-ratio:16/9}
+  .hero-caption{bottom:48px;gap:2px}
+  .hero-caption-title{font-size:clamp(15px,2.1vw,18px)}
+  .hero-caption-description{font-size:9px}
+  .hero-caption-kicker{font-size:8px}
+  .hero-slider-controls{bottom:8px}
+  .hero-bottom{padding-bottom:12px}
+}
+
+/* Ensure every item, including language switch, stays reachable in short landscape viewports. */
+@media(max-width:760px), (max-width:1020px) and (max-height:620px) and (orientation:landscape){
+  .navlinks.open{max-height:calc(100dvh - 69px);overflow-y:auto;overscroll-behavior:contain}
+}
