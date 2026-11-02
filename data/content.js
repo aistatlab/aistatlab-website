@@ -4,6 +4,28 @@ window.LAB_CONTENT = {
   "publications": [
     {
       "year": 2026,
+      "authors": "Kim, J., Jung, H., Park, Y., and Lim, C.",
+      "title": "QAM-DETR: Quality-Aware Mamba DETR for Audio Moment Retrieval from Long Audio",
+      "venue": "Proceedings of the DCASE 2026 Workshop",
+      "type": "Conference",
+      "url": "https://dcase.community/documents/workshop2026/proceedings/DCASE2026Workshop_Kim_35.pdf",
+      "tags": [
+        "Audio & Language AI"
+      ]
+    },
+    {
+      "year": 2026,
+      "authors": "Kim, H. J., Kim, B., Ryu, J. C., Kim, Y. R., Oh, Y., Choi, B. E., Lim, C., and Kwak, I.-Y.",
+      "title": "Acoustic Tagger-Assisted Inference and Audio-Contrastive Adaptation for Audio-Dependent Question Answering",
+      "venue": "Proceedings of the DCASE 2026 Workshop",
+      "type": "Conference",
+      "url": "https://dcase.community/documents/workshop2026/proceedings/DCASE2026Workshop_Jun_36.pdf",
+      "tags": [
+        "Audio & Language AI"
+      ]
+    },
+    {
+      "year": 2026,
       "authors": "Kim, M., Song, H., and Lim, C.",
       "title": "Visual Dependence Does Not Imply Answerability: A Systematic Analysis of Answerability Signals in Frozen InstructBLIP",
       "venue": "arXiv:2610.17902",
