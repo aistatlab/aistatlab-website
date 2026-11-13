@@ -934,13 +934,6 @@ window.LAB_CONTENT = {
       "area": "Computer vision"
     },
     {
-      "name": "송현민",
-      "email": "kateminhyunsong@gmail.com",
-      "image": "assets/img/member/송현민.jpg",
-      "role": "Undergraduate",
-      "area": "Machine learning · Deep learning"
-    },
-    {
       "name": "황수환",
       "email": "hwangsuhwan0109@gmail.com",
       "image": "assets/img/member/황수환.jpg",
