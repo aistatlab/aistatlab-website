@@ -83,9 +83,9 @@ window.LAB_CONTENT = {
       "year": 2026,
       "authors": "Kang, D., Bae, J. B., Yoo, S., Kim, H. J., Kim, P., Mo, J., et al., including Lim, C.",
       "title": "A Stroma-Sensing TGF-β Blockade Reprograms CAF–Myeloid Niches to Induce Durable Tumor Immunity",
-      "venue": "Cancer Cell · in revision",
-      "type": "In revision",
-      "url": "",
+      "venue": "Cancer Cell",
+      "type": "Journal",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1535610826004733",
       "tags": [
         "Computer Vision"
       ]
@@ -181,7 +181,7 @@ window.LAB_CONTENT = {
     {
       "year": 2026,
       "authors": "Lee, Y., Kim, K., Park, S., Cho, D., Kim, W. B., Kang, B. J., Lim, C., and Choi, S. Y.",
-      "title": "Comparing TURP and HoLEP for Benign Prostatic Hyperplasia Treatment: A Meta-Analysis Using Common Data Model (CDM) Data from Korean Hospitals",
+      "title": "Holmium laser enucleation of the prostate versus transurethral resection of the prostate for benign prostatic hyperplasia: evidence from a Korean retrospective analysis using the Common Data Model",
       "venue": "Prostate International, 14(2), 144–150",
       "type": "Journal",
       "url": "",
