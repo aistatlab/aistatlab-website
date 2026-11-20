@@ -10,6 +10,7 @@ The builder does not require a database or expose a GitHub access token to visit
 import argparse
 import datetime as dt
 import html
+import hashlib
 import json
 import re
 import shutil
@@ -30,6 +31,22 @@ ALLOWED_TAGS = {
 ALLOWED_ATTRS = {'a':['href','title'], 'img':['src','alt','title','loading'], 'th':['align'], 'td':['align']}
 SAFE_IMAGE = re.compile(r'^(?:assets/img/blog/|https://)', re.I)
 SAFE_SLUG = re.compile(r'^[a-z0-9][a-z0-9_-]*$')
+
+
+def version_index_assets(output):
+    """Refresh local script and stylesheet URLs after all generated assets exist."""
+    index = output / 'index.html'
+    markup = index.read_text(encoding='utf-8')
+    pattern = re.compile(r'((?:src|href)=")((?:assets|data)/[^"?]+\.(?:js|css))(?:\?[^"#]*)?("|#)')
+
+    def version(match):
+        asset = output / match.group(2)
+        if not asset.is_file():
+            return match.group(0)
+        digest = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
+        return f'{match.group(1)}{match.group(2)}?v={digest}{match.group(3)}'
+
+    index.write_text(pattern.sub(version, markup), encoding='utf-8')
 
 
 def safe_image(value):
@@ -147,6 +164,7 @@ def main():
         page_dir=blogroot/post['slug']
         page_dir.mkdir(parents=True,exist_ok=True)
         (page_dir/'index.html').write_text(article_html(post),encoding='utf-8')
+    version_index_assets(output)
     # ensure Jekyll cannot interfere with the static assets.
     (output/'.nojekyll').touch()
     print(f'Built {len(posts)} published blog posts -> {output}')
