@@ -1,6 +1,16 @@
 // Source: https://sites.google.com/view/cwlim/activity/lab-seminar
 window.LAB_SEMINARS = [
   {
+    "title": "HINT: Human-Intent Inception for Agentic Robot Manipulation",
+    "presenter": "김우석",
+    "date": "2026-11-20",
+    "type": "paper",
+    "url": "assets/seminar/1Ii32x1wgOQVhY7dz15aV6T2ExoFDuafl.pdf",
+    "format": "pdf",
+    "sourceUrl": "https://drive.google.com/file/d/1Ii32x1wgOQVhY7dz15aV6T2ExoFDuafl/view?usp=sharing",
+    "topics": []
+  },
+  {
     "title": "DyC-CLIP: Dynamic context-aware multi-modal prompt learning for zero-shot anomaly detection",
     "presenter": "서정호",
     "date": "2026-08-14",
