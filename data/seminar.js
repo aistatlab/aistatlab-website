@@ -1,6 +1,16 @@
 // Source: https://sites.google.com/view/cwlim/activity/lab-seminar
 window.LAB_SEMINARS = [
   {
+    "title": "Denoising Diffusion Probabilistic Models",
+    "presenter": "신희승",
+    "date": "2026-11-20",
+    "type": "paper",
+    "url": "https://drive.google.com/file/d/1PBNmIJ4v_PBUHm1UzAK6npaBTNfvZe0v/view?usp=sharing",
+    "format": "external",
+    "sourceUrl": "https://drive.google.com/file/d/1PBNmIJ4v_PBUHm1UzAK6npaBTNfvZe0v/view?usp=sharing",
+    "topics": []
+  },
+  {
     "title": "HINT: Human-Intent Inception for Agentic Robot Manipulation",
     "presenter": "김우석",
     "date": "2026-11-20",
