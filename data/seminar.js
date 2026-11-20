@@ -5,9 +5,9 @@ window.LAB_SEMINARS = [
     "presenter": "신희승",
     "date": "2026-11-20",
     "type": "paper",
-    "url": "https://drive.google.com/file/d/1PBNmIJ4v_PBUHm1UzAK6npaBTNfvZe0v/view?usp=sharing",
+    "url": "https://drive.google.com/file/d/1UZ2OKS-cNHYXBx5XtO9Lo0oKltLhqUCC/view?usp=sharing",
     "format": "external",
-    "sourceUrl": "https://drive.google.com/file/d/1PBNmIJ4v_PBUHm1UzAK6npaBTNfvZe0v/view?usp=sharing",
+    "sourceUrl": "https://drive.google.com/file/d/1UZ2OKS-cNHYXBx5XtO9Lo0oKltLhqUCC/view?usp=sharing",
     "topics": []
   },
   {
